@@ -20,6 +20,7 @@ dependencies {
     compile("de.swirtz:ktsRunner:0.0.7")
     compile(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
     compile(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.1.1")
+    compile(group = "junit", name = "junit", version = "4.12")
 }
 
 tasks.withType<KotlinCompile> {
