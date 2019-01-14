@@ -1,15 +1,9 @@
 package com.horcacorp.testing.keb.core
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.edge.EdgeDriver
-import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.ie.InternetExplorerDriver
-import org.openqa.selenium.opera.OperaDriver
 import java.net.URI
 
-class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport {
+class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, SelectorSupport {
 
     companion object {
         fun drive(block: Browser.() -> Unit) {
@@ -22,9 +16,8 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-    private val driver by lazy { resolveWebDriver() }
+    private val driver = config.driver ?: throw IllegalStateException("Browser is not initialized.")
 
-    override fun cssSelector(query: String) = CssSelector(query, driver)
     override fun css(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
         SingleWebElementDelegate(
             CssSelector(selector, driver),
@@ -32,33 +25,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             this,
             waitParam ?: false
         )
-
-    override fun css(
-        selector: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = SingleWebElementDelegate(
-        ScopedCssSelector(selector, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun css(
-        selector: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): SingleWebElementDelegate {
-        val scope by scopeDelegate
-        return SingleWebElementDelegate(
-            ScopedCssSelector(selector, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
 
     override fun cssList(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
         WebElementsListDelegate(
@@ -68,35 +34,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             waitParam ?: false
         )
 
-    override fun cssList(
-        selector: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = WebElementsListDelegate(
-        ScopedCssSelector(selector, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun cssList(
-        selector: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): WebElementsListDelegate {
-        val scope by scopeDelegate
-        return WebElementsListDelegate(
-            ScopedCssSelector(selector, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
-
-    override fun htmlSelector(query: String) = HtmlSelector(query, driver)
-
     override fun html(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
         SingleWebElementDelegate(
             HtmlSelector(tag, driver),
@@ -104,33 +41,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             this,
             waitParam ?: false
         )
-
-    override fun html(
-        tag: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = SingleWebElementDelegate(
-        ScopedHtmlSelector(tag, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun html(
-        tag: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): SingleWebElementDelegate {
-        val scope by scopeDelegate
-        return SingleWebElementDelegate(
-            ScopedHtmlSelector(tag, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
 
     override fun htmlList(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
         WebElementsListDelegate(
@@ -140,35 +50,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             waitParam ?: false
         )
 
-    override fun htmlList(
-        tag: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = WebElementsListDelegate(
-        ScopedHtmlSelector(tag, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun htmlList(
-        tag: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): WebElementsListDelegate {
-        val scope by scopeDelegate
-        return WebElementsListDelegate(
-            ScopedHtmlSelector(tag, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
-
-    override fun xpathSelector(query: String) = XPathSelector(query, driver)
-
     override fun xpath(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
         SingleWebElementDelegate(
             XPathSelector(xpath, driver),
@@ -177,33 +58,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             waitParam ?: false
         )
 
-    override fun xpath(
-        xpath: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = SingleWebElementDelegate(
-        ScopedXpathSelector(xpath, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun xpath(
-        xpath: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): SingleWebElementDelegate {
-        val scope by scopeDelegate
-        return SingleWebElementDelegate(
-            ScopedXpathSelector(xpath, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
-
     override fun xpathList(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
         WebElementsListDelegate(
             XPathSelector(xpath, driver),
@@ -211,33 +65,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             this,
             waitParam ?: false
         )
-
-    override fun xpathList(
-        xpath: String,
-        scope: WebElement,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ) = WebElementsListDelegate(
-        ScopedXpathSelector(xpath, scope),
-        fetch ?: config.elementsFetchType,
-        this,
-        waitParam ?: false
-    )
-
-    override fun xpathList(
-        xpath: String,
-        scopeDelegate: SingleWebElementDelegate,
-        fetch: ContentFetchType?,
-        waitParam: Any?
-    ): WebElementsListDelegate {
-        val scope by scopeDelegate
-        return WebElementsListDelegate(
-            ScopedXpathSelector(xpath, scope),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-    }
 
     override fun <T : Module> module(factory: (Browser) -> T) = ModuleDelegate(factory, this)
     override fun <T : ScopedModule> scopedModule(
@@ -252,6 +79,10 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         this,
         waitParam ?: false
     )
+
+    override fun htmlSelector(query: String) = HtmlSelector(query, driver)
+    override fun cssSelector(query: String) = CssSelector(query, driver)
+    override fun xpathSelector(query: String) = XPathSelector(query, driver)
 
     override fun <T> waitFor(waitParam: Any, desc: String?, f: () -> T): T {
         return when (waitParam) {
@@ -325,29 +156,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         driver.quit()
     }
 
-    private fun resolveWebDriver() = when (config.browserType) {
-        BrowserType.CHROME -> {
-            WebDriverManager.chromedriver().setup()
-            ChromeDriver()
-        }
-        BrowserType.FIREFOX -> {
-            WebDriverManager.firefoxdriver().setup()
-            FirefoxDriver()
-        }
-        BrowserType.OPERA -> {
-            WebDriverManager.operadriver().setup()
-            OperaDriver()
-        }
-        BrowserType.EDGE -> {
-            WebDriverManager.edgedriver().setup()
-            EdgeDriver()
-        }
-        BrowserType.IE -> {
-            WebDriverManager.iedriver().setup()
-            InternetExplorerDriver()
-        }
-    }
-
     private fun resolveUrl(urlSuffix: String): String {
         val urlPrefix = config.urlPrefix
         val url = if (urlPrefix.isEmpty()) urlSuffix else "$urlPrefix/$urlSuffix"
@@ -366,8 +174,4 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-}
-
-enum class BrowserType {
-    CHROME, FIREFOX, OPERA, EDGE, IE
 }

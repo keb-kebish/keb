@@ -2,6 +2,8 @@
 
 package com.horcacorp.testing.keb.core
 
+import org.openqa.selenium.WebDriver
+
 fun kebConfig(conf: Configuration.() -> Unit) = Configuration().apply { conf() }
 
 class Configuration {
@@ -11,9 +13,9 @@ class Configuration {
 
     val DEFAULT_WAIT_PRESET_NAME = "DEFAULT"
 
+    var driver: WebDriver? = null
     var elementsFetchType = ContentFetchType.ON_EVERY_ACCESS
     var modulesFetchType = ContentFetchType.ON_FIRST_ACCESS
-    var browserType = BrowserType.FIREFOX
     var urlPrefix = ""
     val waitPresets = mutableMapOf(
         DEFAULT_WAIT_PRESET_NAME to WaitPreset(DEFAULT_WAIT_TIMEOUT, DEFAULT_WAIT_RETRY_INTERVAL)

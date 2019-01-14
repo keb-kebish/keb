@@ -1,7 +1,7 @@
 package com.horcacorp.testing.keb.core
 
 abstract class Page(private val browser: Browser) : ContentSupport by browser, NavigationSupport by browser,
-    WaitSupport by browser {
+    WaitSupport by browser, SelectorSupport by browser {
 
     open fun url(): String = ""
     open fun at(): Any = true
