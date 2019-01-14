@@ -10,16 +10,16 @@ class ModuleDelegate<T>(factory: (Browser) -> T, browser: Browser) {
 }
 
 class ScopedModuleDelegate<T>(
-    private val scope: SingleWebElementDelegate,
+    private val scope: Selector,
     private val factory: (Browser, WebElement) -> T,
     private val fetchType: ContentFetchType,
     private val browser: Browser,
     private val wait: Any
 ) {
     private var _value: T? = null
-    val value: T
+    private val value: T
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
-            _value = factory(browser, scope.value)
+            _value = factory(browser, scope.getWebElement())
             _value!!
         } else {
             _value!!
@@ -32,6 +32,6 @@ class ScopedModuleDelegate<T>(
     }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>) =
-        browser.waitFor(wait, "Module scope '$scope'") { value }
+        browser.waitFor(wait, "Module scope by '$scope'") { value }
 
 }

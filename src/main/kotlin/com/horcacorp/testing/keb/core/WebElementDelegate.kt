@@ -10,7 +10,7 @@ class SingleWebElementDelegate(
     private val wait: Any
 ) {
     private var _value: WebElement? = null
-    val value: WebElement
+    private val value: WebElement
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
             _value = selector.getWebElement()
             _value!!
@@ -24,6 +24,8 @@ class SingleWebElementDelegate(
         "Web element not initialized yet."
     }
 
+    fun text() = value.text
+
     operator fun getValue(thisRef: Any?, property: KProperty<*>) =
         waitSupport.waitFor(wait, "Page content by $selector") { value }
 
@@ -34,9 +36,9 @@ class WebElementsListDelegate(
     private val fetchType: ContentFetchType,
     private val waitSupport: WaitSupport,
     private val wait: Any
-) {
+) : Iterable<WebElement> {
     private var _value: List<WebElement>? = null
-    val value: List<WebElement>
+    private val value: List<WebElement>
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
             _value = selector.getWebElements()
             _value!!
@@ -48,6 +50,15 @@ class WebElementsListDelegate(
         value.toString()
     } else {
         "List of web elements not initialized yet."
+    }
+
+    override fun iterator(): Iterator<WebElement> {
+        return object : Iterator<WebElement> {
+            private var index = 0
+            override fun hasNext() = index < value.size
+
+            override fun next() = value[index++]
+        }
     }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>) =
