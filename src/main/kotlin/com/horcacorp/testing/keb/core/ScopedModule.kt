@@ -2,75 +2,75 @@ package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.WebElement
 
-abstract class ScopedModule(private val browser: Browser, private val scope: WebElement) : ContentSupport,
-    SelectorSupport, NavigationSupport by browser, WaitSupport by browser {
+abstract class ScopedModule(val browser: Browser, private val scope: WebElement) : ContentSupport,
+    NavigationSupport by browser, WaitSupport by browser, ModuleSupport by browser {
 
-    override fun css(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            ScopedCssSelector(selector, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-    override fun cssList(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            ScopedCssSelector(selector, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-
-    override fun html(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            ScopedHtmlSelector(tag, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-    override fun htmlList(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            ScopedHtmlSelector(tag, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-
-    override fun xpath(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            ScopedXpathSelector(xpath, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-    override fun xpathList(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            ScopedXpathSelector(xpath, scope),
-            fetch ?: browser.config.elementsFetchType,
-            browser,
-            waitParam ?: false
-        )
-
-    override fun <T : Module> module(factory: (Browser) -> T): ModuleDelegate<T> = ModuleDelegate(factory, browser)
-    override fun <T : ScopedModule> scopedModule(
-        factory: (Browser, WebElement) -> T,
-        scope: Selector,
+    override fun css(
+        selector: String,
+        scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ) = ScopedModuleDelegate(
-        scope,
-        factory,
-        fetch ?: browser.config.modulesFetchType,
+    ): WebElementDelegate = WebElementDelegate(
+        scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope),
+        fetch ?: browser.config.elementsFetchType,
         browser,
         waitParam ?: false
     )
 
-    override fun cssSelector(query: String) = ScopedCssSelector(query, scope)
-    override fun htmlSelector(query: String) = ScopedHtmlSelector(query, scope)
-    override fun xpathSelector(query: String) = ScopedHtmlSelector(query, scope)
+    override fun cssList(
+        selector: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate = WebElementsListDelegate(
+        scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope),
+        fetch ?: browser.config.elementsFetchType,
+        browser,
+        waitParam ?: false
+    )
+
+    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElementDelegate =
+        WebElementDelegate(
+            scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope),
+            fetch ?: browser.config.elementsFetchType,
+            browser,
+            waitParam ?: false
+        )
+
+    override fun htmlList(
+        tag: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate = WebElementsListDelegate(
+        scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope),
+        fetch ?: browser.config.elementsFetchType,
+        browser,
+        waitParam ?: false
+    )
+
+    override fun xpath(
+        xpath: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementDelegate = WebElementDelegate(
+        scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope),
+        fetch ?: browser.config.elementsFetchType,
+        browser,
+        waitParam ?: false
+    )
+
+    override fun xpathList(
+        xpath: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate = WebElementsListDelegate(
+        scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope),
+        fetch ?: browser.config.elementsFetchType,
+        browser,
+        waitParam ?: false
+    )
 
 }

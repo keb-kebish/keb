@@ -15,7 +15,6 @@ class Configuration {
 
     var driver: WebDriver? = null
     var elementsFetchType = ContentFetchType.ON_EVERY_ACCESS
-    var modulesFetchType = ContentFetchType.ON_FIRST_ACCESS
     var urlPrefix = ""
     val waitPresets = mutableMapOf(
         DEFAULT_WAIT_PRESET_NAME to WaitPreset(DEFAULT_WAIT_TIMEOUT, DEFAULT_WAIT_RETRY_INTERVAL)

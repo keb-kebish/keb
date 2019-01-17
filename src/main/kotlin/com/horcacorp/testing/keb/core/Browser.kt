@@ -2,8 +2,10 @@ package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.WebElement
 import java.net.URI
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
-class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, SelectorSupport {
+class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, ModuleSupport {
 
     companion object {
         fun drive(block: Browser.() -> Unit) {
@@ -16,73 +18,96 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-    private val driver = config.driver ?: throw IllegalStateException("Browser is not initialized.")
+    val driver = config.driver ?: throw IllegalStateException("Browser is not initialized.")
 
-    override fun css(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun cssList(selector: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun html(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            HtmlSelector(tag, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun htmlList(tag: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            HtmlSelector(tag, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun xpath(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
-        SingleWebElementDelegate(
-            XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun xpathList(xpath: String, fetch: ContentFetchType?, waitParam: Any?) =
-        WebElementsListDelegate(
-            XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
-        )
-
-    override fun <T : Module> module(factory: (Browser) -> T) = ModuleDelegate(factory, this)
-    override fun <T : ScopedModule> scopedModule(
-        factory: (Browser, WebElement) -> T,
-        scope: Selector,
+    override fun css(
+        selector: String,
+        scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ) = ScopedModuleDelegate(
-        scope,
-        factory,
-        fetch ?: config.modulesFetchType,
-        this,
-        waitParam ?: false
-    )
+    ): WebElementDelegate =
+        WebElementDelegate(
+            scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
 
-    override fun htmlSelector(query: String) = HtmlSelector(query, driver)
-    override fun cssSelector(query: String) = CssSelector(query, driver)
-    override fun xpathSelector(query: String) = XPathSelector(query, driver)
+    override fun cssList(
+        selector: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate =
+        WebElementsListDelegate(
+            scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
+
+    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElementDelegate =
+        WebElementDelegate(
+            scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
+
+    override fun htmlList(
+        tag: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate =
+        WebElementsListDelegate(
+            scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
+
+    override fun xpath(
+        xpath: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementDelegate =
+        WebElementDelegate(
+            scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
+
+    override fun xpathList(
+        xpath: String,
+        scope: WebElement?,
+        fetch: ContentFetchType?,
+        waitParam: Any?
+    ): WebElementsListDelegate =
+        WebElementsListDelegate(
+            scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
+            fetch ?: config.elementsFetchType,
+            this,
+            waitParam ?: false
+        )
+
+    override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
+
+    override fun <T : Module> module(klass: KClass<T>): T =
+        klass.primaryConstructor?.call(this)
+            ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
+
+    override fun <T : ScopedModule> scopedModule(
+        factory: (Browser, WebElementDelegate) -> T,
+        scope: WebElementDelegate
+    ): T =
+        factory(this, scope)
+
+    override fun <T : ScopedModule> scopedModule(klass: KClass<T>, scope: WebElementDelegate): T =
+        klass.primaryConstructor?.call(this, scope)
+            ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
 
     override fun <T> waitFor(waitParam: Any, desc: String?, f: () -> T): T {
         return when (waitParam) {
@@ -148,8 +173,37 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         verifyAt(waitParam)
     }
 
+    override fun <T : Page> to(klass: KClass<T>, waitParam: Any?): T =
+        klass.primaryConstructor?.let { ctor ->
+            ctor.call(this).apply {
+                driver.get(resolveUrl(resolveUrl(url())))
+                verifyAt(waitParam)
+            }
+        } ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
+
     override fun <T : Page> at(factory: (Browser) -> T, waitParam: Any?): T = factory(this).apply {
         verifyAt(waitParam)
+    }
+
+    override fun <T : Page> at(klass: KClass<T>, waitParam: Any?): T =
+        klass.primaryConstructor?.let { ctor ->
+            ctor.call(this).apply {
+                verifyAt(waitParam)
+            }
+        } ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
+
+    override fun <T> withNewTab(action: () -> T): T {
+        val currentTabIndex = driver.windowHandles.indexOf(driver.windowHandle)
+        val nextTabHandle = driver.windowHandles.elementAt(currentTabIndex + 1)
+        driver.switchTo().window(nextTabHandle)
+        return action()
+    }
+
+    override fun <T> withClosedTab(action: () -> T): T {
+        val currentTabIndex = driver.windowHandles.indexOf(driver.windowHandle)
+        val previous = driver.windowHandles.elementAt(currentTabIndex - 1)
+        driver.switchTo().window(previous)
+        return action()
     }
 
     fun quit() {

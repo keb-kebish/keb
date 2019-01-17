@@ -35,8 +35,8 @@ class KotlinPage(browser: Browser) : Page(browser) {
     override fun at() = header
 
     val header by css(".global-header-logo")
-    val menu by scopedModule(::NavMenuModule, cssSelector(".nav-links"))
-    val footer by scopedModule(::FooterModule, htmlSelector("footer"))
+    val menu = scopedModule(::NavMenuModule, css(".nav-links"))
+    val footer = scopedModule(::FooterModule, html("footer"))
 
     fun openDocumentation(): DocsPage {
         menu.menuItems.first { it.text == "LEARN" }.click()
