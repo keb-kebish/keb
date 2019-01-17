@@ -100,12 +100,12 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
 
     override fun <T : ScopedModule> scopedModule(
-        factory: (Browser, WebElementDelegate) -> T,
-        scope: WebElementDelegate
+        factory: (Browser, WebElement) -> T,
+        scope: WebElement
     ): T =
         factory(this, scope)
 
-    override fun <T : ScopedModule> scopedModule(klass: KClass<T>, scope: WebElementDelegate): T =
+    override fun <T : ScopedModule> scopedModule(klass: KClass<T>, scope: WebElement): T =
         klass.primaryConstructor?.call(this, scope)
             ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
 
