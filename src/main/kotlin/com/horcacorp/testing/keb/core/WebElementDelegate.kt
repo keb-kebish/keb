@@ -26,7 +26,8 @@ class WebElementDelegate(
         waitSupport.waitFor(wait, "Page content by $selector") { delegate }
 
     override fun toString() =
-        if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "Web element by $selector" else "Web element not initialized yet."
+        if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "Web element by $selector ($delegate)."
+        else "Web element not initialized yet."
 
     override fun isDisplayed(): Boolean = delegate.isDisplayed
     override fun clear() = delegate.clear()
@@ -66,7 +67,8 @@ class WebElementsListDelegate(
         waitSupport.waitFor(wait, "Page content by $selector") { delegate }
 
     override fun toString() =
-        if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "List of web elements by $selector" else "List of web elements not initialized yet."
+        if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "List of web elements by $selector ($delegate)."
+        else "List of web elements not initialized yet."
 
     override val size: Int get() = delegate.size
     override fun contains(element: WebElement): Boolean = delegate.contains(element)
