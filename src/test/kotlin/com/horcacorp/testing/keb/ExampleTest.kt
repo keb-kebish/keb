@@ -1,4 +1,4 @@
-package com.horcacorp.testing.keb.junit
+package com.horcacorp.testing.keb
 
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page
