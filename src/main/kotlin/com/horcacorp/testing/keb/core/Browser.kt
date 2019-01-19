@@ -2,8 +2,6 @@ package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.WebElement
 import java.net.URI
-import kotlin.reflect.KClass
-import kotlin.reflect.full.primaryConstructor
 
 class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, ModuleSupport {
 
@@ -95,19 +93,11 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
 
     override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
 
-    override fun <T : Module> module(klass: KClass<T>): T =
-        klass.primaryConstructor?.call(this)
-            ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
-
     override fun <T : ScopedModule> scopedModule(
         factory: (Browser, WebElement) -> T,
         scope: WebElement
     ): T =
         factory(this, scope)
-
-    override fun <T : ScopedModule> scopedModule(klass: KClass<T>, scope: WebElement): T =
-        klass.primaryConstructor?.call(this, scope)
-            ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
 
     override fun <T> waitFor(waitParam: Any, desc: String?, f: () -> T): T {
         return when (waitParam) {
@@ -173,24 +163,9 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         verifyAt(waitParam)
     }
 
-    override fun <T : Page> to(klass: KClass<T>, waitParam: Any?): T =
-        klass.primaryConstructor?.let { ctor ->
-            ctor.call(this).apply {
-                driver.get(resolveUrl(resolveUrl(url())))
-                verifyAt(waitParam)
-            }
-        } ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
-
     override fun <T : Page> at(factory: (Browser) -> T, waitParam: Any?): T = factory(this).apply {
         verifyAt(waitParam)
     }
-
-    override fun <T : Page> at(klass: KClass<T>, waitParam: Any?): T =
-        klass.primaryConstructor?.let { ctor ->
-            ctor.call(this).apply {
-                verifyAt(waitParam)
-            }
-        } ?: throw IllegalStateException("Scoped module ${klass.simpleName} has no primary constructor.")
 
     override fun <T> withNewTab(action: () -> T): T {
         val currentTabIndex = driver.windowHandles.indexOf(driver.windowHandle)
