@@ -7,4 +7,4 @@ interface NavigationSupport {
     fun <T> withNewTab(action: () -> T): T
     fun <T> withClosedTab(action: () -> T): T
 
-}1
+}
