@@ -25,7 +25,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementDelegate =
+    ): WebElement =
         WebElementDelegate(
             scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
             fetch ?: config.elementsFetchType,
@@ -38,7 +38,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate =
+    ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
             fetch ?: config.elementsFetchType,
@@ -46,7 +46,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             waitParam ?: false
         )
 
-    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElementDelegate =
+    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElement =
         WebElementDelegate(
             scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
             fetch ?: config.elementsFetchType,
@@ -59,7 +59,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate =
+    ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
             fetch ?: config.elementsFetchType,
@@ -72,7 +72,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementDelegate =
+    ): WebElement =
         WebElementDelegate(
             scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
             fetch ?: config.elementsFetchType,
@@ -85,7 +85,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate =
+    ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
             fetch ?: config.elementsFetchType,

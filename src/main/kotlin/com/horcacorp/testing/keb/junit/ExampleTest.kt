@@ -34,7 +34,7 @@ class KotlinPage(browser: Browser) : Page(browser) {
     override fun url() = "https://kotlinlang.org"
     override fun at() = header
 
-    val header by css(".global-header-logo")
+    val header = css(".global-header-logo")
     val menu = scopedModule(::NavMenuModule, css(".nav-links"))
     val footer = scopedModule(::FooterModule, html("footer"))
 
@@ -51,15 +51,15 @@ class DocsPage(browser: Browser) : Page(browser) {
     override fun url() = "https://kotlinlang.org/docs/reference"
     override fun at() = title
 
-    val title by html("h1")
+    val title = html("h1")
 
 }
 
 class NavMenuModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
-    val menuItems by htmlList("a")
+    val menuItems = htmlList("a")
 }
 
 class FooterModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
-    val licenseNotice by css(".terms-copyright")
-    val sponsor by css(".terms-sponsor")
+    val licenseNotice = css(".terms-copyright")
+    val sponsor = css(".terms-sponsor")
 }

@@ -1,7 +1,6 @@
 package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.*
-import kotlin.reflect.KProperty
 
 enum class ContentFetchType {
     ON_EVERY_ACCESS, ON_FIRST_ACCESS
@@ -16,14 +15,13 @@ class WebElementDelegate(
     private var _value: WebElement? = null
     private val delegate: WebElement
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
-            _value = selector.getWebElement()
+            _value = waitSupport.waitFor(wait, "Page content by $selector") {
+                selector.getWebElement()
+            }
             _value!!
         } else {
             _value!!
         }
-
-    operator fun getValue(thisRef: Any?, property: KProperty<*>) =
-        waitSupport.waitFor(wait, "Page content by $selector") { delegate }
 
     override fun toString() =
         if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "Web element by $selector ($delegate)."
@@ -57,14 +55,13 @@ class WebElementsListDelegate(
     private var _value: List<WebElement>? = null
     private val delegate: List<WebElement>
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
-            _value = selector.getWebElements()
+            _value = waitSupport.waitFor(wait, "Page content by $selector") {
+                selector.getWebElements()
+            }
             _value!!
         } else {
             _value!!
         }
-
-    operator fun getValue(thisRef: Any?, property: KProperty<*>) =
-        waitSupport.waitFor(wait, "Page content by $selector") { delegate }
 
     override fun toString() =
         if (_value != null || fetchType == ContentFetchType.ON_EVERY_ACCESS) "List of web elements by $selector ($delegate)."

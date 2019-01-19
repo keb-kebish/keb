@@ -10,7 +10,7 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementDelegate = WebElementDelegate(
+    ): WebElement = WebElementDelegate(
         scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope),
         fetch ?: browser.config.elementsFetchType,
         browser,
@@ -22,14 +22,14 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate = WebElementsListDelegate(
+    ): List<WebElement> = WebElementsListDelegate(
         scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope),
         fetch ?: browser.config.elementsFetchType,
         browser,
         waitParam ?: false
     )
 
-    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElementDelegate =
+    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElement =
         WebElementDelegate(
             scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope),
             fetch ?: browser.config.elementsFetchType,
@@ -42,7 +42,7 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate = WebElementsListDelegate(
+    ): List<WebElement> = WebElementsListDelegate(
         scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope),
         fetch ?: browser.config.elementsFetchType,
         browser,
@@ -54,7 +54,7 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementDelegate = WebElementDelegate(
+    ): WebElement = WebElementDelegate(
         scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope),
         fetch ?: browser.config.elementsFetchType,
         browser,
@@ -66,7 +66,7 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
         scope: WebElement?,
         fetch: ContentFetchType?,
         waitParam: Any?
-    ): WebElementsListDelegate = WebElementsListDelegate(
+    ): List<WebElement> = WebElementsListDelegate(
         scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope),
         fetch ?: browser.config.elementsFetchType,
         browser,
