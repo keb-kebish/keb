@@ -6,8 +6,8 @@ import java.net.URI
 class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, ModuleSupport {
 
     companion object {
-        fun drive(block: Browser.() -> Unit) {
-            val browser = Browser(Configuration())
+        fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
+            val browser = Browser(config)
             try {
                 block(browser)
             } finally {
