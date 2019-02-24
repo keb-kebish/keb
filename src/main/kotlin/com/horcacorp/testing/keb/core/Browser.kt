@@ -199,7 +199,6 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             is CharSequence -> value.length > 0
             is Boolean -> value
             is Collection<*> -> if (value.isEmpty()) false else value.all { resolveTruthiness(it) }
-            is WebElement -> value.isDisplayed
             null -> false
             else -> true
         }
