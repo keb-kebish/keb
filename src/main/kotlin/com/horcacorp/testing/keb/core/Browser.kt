@@ -101,7 +101,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
 
     override fun <T> waitFor(waitParam: Any, desc: String?, f: () -> T): T {
         return when (waitParam) {
-            is String -> waitFor(waitParam.toUpperCase(), desc, f)
+            is String -> waitFor(waitParam, desc, f)
             is Pair<*, *> -> {
                 if (waitParam.first is Number && waitParam.second is Number) {
                     waitFor((waitParam.first as Number).toLong(), (waitParam.second as Number).toLong(), desc, f)
