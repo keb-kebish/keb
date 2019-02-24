@@ -25,7 +25,7 @@ class Configuration {
         timeoutMillis: Long = DEFAULT_WAIT_TIMEOUT,
         retryIntervalMillis: Long = DEFAULT_WAIT_RETRY_INTERVAL
     ) {
-        waitPresets[name] = WaitPreset(timeoutMillis, retryIntervalMillis)
+        waitPresets[name.toUpperCase()] = WaitPreset(timeoutMillis, retryIntervalMillis)
     }
 
 }
