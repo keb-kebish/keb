@@ -49,10 +49,17 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
 
 ## Usage
 ```kotlin
-Browser.drive {
+// configuration
+val config = kebConfig {
+    driver = FirefoxDriver()
+}
+Browser.drive(config) {
     val kotlinHomePage = to(::KotlinHomePage)
     kotlinHomePage.menu.first().click()
     // ...
 }
 ```
-For full example and how to use keb with JUnit please refer to /src/test/kotlin/com/horcacorp/testing/keb
+For full usage example and how to use keb with JUnit please refer to [keb example](/src/test/kotlin/com/horcacorp/testing/keb).
+
+## TODOs
+* load configuration from external file
