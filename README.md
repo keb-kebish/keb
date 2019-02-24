@@ -48,7 +48,7 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
 ```
 
 ## Waiting
-Waiting for some page element to be present, its text changed...
+Waiting for some page element to be present, you can use waitFor method.
 ```kotlin
 css(".form-input").click()
 val result = waitFor {
