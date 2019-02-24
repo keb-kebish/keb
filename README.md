@@ -59,7 +59,7 @@ Browser.drive(config) {
     // ...
 }
 ```
-For full usage example and how to use keb with JUnit please refer to [keb example](/src/test/kotlin/com/horcacorp/testing/keb).
+For full usage example and how to use keb with JUnit please refer to [/src/test/kotlin/com/horcacorp/testing/keb](/src/test/kotlin/com/horcacorp/testing/keb).
 
 ## TODOs
 * load configuration from external file
