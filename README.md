@@ -1,6 +1,6 @@
 # keb
 ## Page pattern
-Main purpose of keb library is to modularize pages of your web application into logic units represented by Java/Kotlin classes.
+Main purpose of keb library is to modularize pages of your web application into logic units represented by Kotlin classes.
 ```kotlin
 class KotlinHomePage(browser: Browser) : Page(browser) {
     override fun url() = "https://kotlinlang.org"
@@ -13,7 +13,7 @@ To select web element on your page use following methods.
 ```kotlin
 css(".my-selector") // returns single DOM element by CSS selector
 ccsList(".my-select") // returns list of all elements found by CSS selector
-// following selector are also available
+// following selectors are also available
 html("h1")
 htmlList("h1")
 xpath("/html/body/h1")
@@ -46,6 +46,15 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
     val menu = scopedModule(::NavMenuModule, css(".nav-links"))
 }
 ```
+
+## Waiting
+Waiting for some page element to be present, its text changed...
+```kotlin
+css(".form-input").click()
+val result = waitFor {
+    css(".result")
+}
+``` 
 
 ## Usage
 ```kotlin
