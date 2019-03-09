@@ -1,6 +1,6 @@
-# keb
-## Page pattern
-Main purpose of keb library is to modularize pages of your web application into logic units represented by Kotlin classes.
+# Keb
+## Page object pattern
+Keb is a Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes. Design of Keb is heavily inspired by https://gebish.org.
 ```kotlin
 class KotlinHomePage(browser: Browser) : Page(browser) {
     override fun url() = "https://kotlinlang.org"
@@ -72,3 +72,4 @@ For full usage example and how to use keb with JUnit please refer to [/src/test/
 
 ## TODOs
 * load configuration from external file
+* Maven repo
