@@ -15,7 +15,7 @@ repositories {
 dependencies {
     compile(kotlin("stdlib-jdk8"))
     compile(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
-    testCompile(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.1.1")
+    testCompile(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.3.0")
     testCompile(group = "junit", name = "junit", version = "4.12")
 }
 
