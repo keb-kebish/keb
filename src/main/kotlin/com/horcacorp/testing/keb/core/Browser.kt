@@ -21,74 +21,57 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
     override fun css(
         selector: String,
         scope: WebElement?,
-        fetch: ContentFetchType?,
-        waitParam: Any?
+        fetch: ContentFetchType?
     ): WebElement =
         WebElementDelegate(
             scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
     override fun cssList(
         selector: String,
         scope: WebElement?,
-        fetch: ContentFetchType?,
-        waitParam: Any?
+        fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
-    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?, waitParam: Any?): WebElement =
+    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?): WebElement =
         WebElementDelegate(
             scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
     override fun htmlList(
         tag: String,
         scope: WebElement?,
-        fetch: ContentFetchType?,
-        waitParam: Any?
+        fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
     override fun xpath(
         xpath: String,
         scope: WebElement?,
-        fetch: ContentFetchType?,
-        waitParam: Any?
+        fetch: ContentFetchType?
     ): WebElement =
         WebElementDelegate(
             scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
     override fun xpathList(
         xpath: String,
         scope: WebElement?,
-        fetch: ContentFetchType?,
-        waitParam: Any?
+        fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
             scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType,
-            this,
-            waitParam ?: false
+            fetch ?: config.elementsFetchType
         )
 
     override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
@@ -99,23 +82,10 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
     ): T =
         factory(this, scope)
 
-    override fun <T> waitFor(waitParam: Any, desc: String?, f: () -> T): T {
-        return when (waitParam) {
-            is String -> waitFor(waitParam, desc, f)
-            is Pair<*, *> -> {
-                if (waitParam.first is Number && waitParam.second is Number) {
-                    waitFor((waitParam.first as Number).toLong(), (waitParam.second as Number).toLong(), desc, f)
-                } else {
-                    throw IllegalArgumentException("Expecting pair of numbers signaling timeout and retry interval in millis.")
-                }
-            }
-            is Boolean -> if (waitParam) waitFor(config.DEFAULT_WAIT_PRESET_NAME, desc, f) else f()
-            else -> throw IllegalArgumentException("${waitParam::javaClass} is not applicable as wait parameter.")
-        }
-    }
-
-    override fun <T> waitFor(presetName: String, desc: String?, f: () -> T): T {
-        val preset = config.waitPresets[presetName.toUpperCase()] ?: throw WaitPresetNotFoundException(presetName)
+    override fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
+        val preset = presetName
+            ?.let { config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
+            ?: config.getDefaultPreset()
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }
 
@@ -158,13 +128,13 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-    override fun <T : Page> to(factory: (Browser) -> T, waitParam: Any?): T = factory(this).apply {
+    override fun <T : Page> to(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
         driver.get(resolveUrl(url()))
-        verifyAt(waitParam)
+        verifyAt(waitPreset)
     }
 
-    override fun <T : Page> at(factory: (Browser) -> T, waitParam: Any?): T = factory(this).apply {
-        verifyAt(waitParam)
+    override fun <T : Page> at(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
+        verifyAt(waitPreset)
     }
 
     override fun <T> withNewTab(action: () -> T): T {
@@ -199,6 +169,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
             is CharSequence -> value.length > 0
             is Boolean -> value
             is Collection<*> -> if (value.isEmpty()) false else value.all { resolveTruthiness(it) }
+            is WebElement -> value.location != null
             null -> false
             else -> true
         }

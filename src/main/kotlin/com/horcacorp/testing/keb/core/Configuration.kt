@@ -11,7 +11,7 @@ class Configuration {
     private val DEFAULT_WAIT_TIMEOUT = 15000L
     private val DEFAULT_WAIT_RETRY_INTERVAL = 250L
 
-    val DEFAULT_WAIT_PRESET_NAME = "DEFAULT"
+    private val DEFAULT_WAIT_PRESET_NAME = "DEFAULT"
 
     var driver: WebDriver? = null
     var elementsFetchType = ContentFetchType.ON_EVERY_ACCESS
@@ -27,5 +27,7 @@ class Configuration {
     ) {
         waitPresets[name.toUpperCase()] = WaitPreset(timeoutMillis, retryIntervalMillis)
     }
+
+    fun getDefaultPreset(): WaitPreset = waitPresets[DEFAULT_WAIT_PRESET_NAME]!!
 
 }

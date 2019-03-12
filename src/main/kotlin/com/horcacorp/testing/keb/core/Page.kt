@@ -6,11 +6,9 @@ abstract class Page(val browser: Browser) : ContentSupport by browser, Navigatio
     open fun url(): String = ""
     open fun at(): Any = true
 
-    fun verifyAt(waitParam: Any?) {
+    fun verifyAt(waitPreset: String?) {
         waitFor(
-            waitParam ?: browser.config.DEFAULT_WAIT_PRESET_NAME,
-            desc = "${javaClass.simpleName} initialization",
-            f = ::at
+            waitPreset, desc = "Verifying of ${javaClass.simpleName}", f = ::at
         )
     }
 

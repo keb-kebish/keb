@@ -8,16 +8,12 @@ enum class ContentFetchType {
 
 class WebElementDelegate(
     private val selector: Selector,
-    private val fetchType: ContentFetchType,
-    private val waitSupport: WaitSupport,
-    private val wait: Any
+    private val fetchType: ContentFetchType
 ) : WebElement {
     private var _value: WebElement? = null
     private val delegate: WebElement
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
-            _value = waitSupport.waitFor(wait, "Page content by $selector") {
-                selector.getWebElement()
-            }
+            _value = selector.getWebElement()
             _value!!
         } else {
             _value!!
@@ -48,16 +44,12 @@ class WebElementDelegate(
 
 class WebElementsListDelegate(
     private val selector: Selector,
-    private val fetchType: ContentFetchType,
-    private val waitSupport: WaitSupport,
-    private val wait: Any
+    private val fetchType: ContentFetchType
 ) : List<WebElement> {
     private var _value: List<WebElement>? = null
     private val delegate: List<WebElement>
         get() = if (_value == null || fetchType == ContentFetchType.ON_EVERY_ACCESS) {
-            _value = waitSupport.waitFor(wait, "Page content by $selector") {
-                selector.getWebElements()
-            }
+            _value = selector.getWebElements()
             _value!!
         } else {
             _value!!

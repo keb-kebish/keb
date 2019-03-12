@@ -12,7 +12,9 @@ abstract class KebTest : NavigationSupport {
 
     val browser = Browser(kebConfig {
         WebDriverManager.firefoxdriver().setup()
-        driver = FirefoxDriver()
+        val ffDriver = FirefoxDriver()
+        ffDriver.manage().window().maximize()
+        driver = ffDriver
     })
 
     @After
@@ -21,8 +23,8 @@ abstract class KebTest : NavigationSupport {
     }
 
     // delegate navigation to browser
-    override fun <T : Page> to(factory: (Browser) -> T, waitParam: Any?): T = browser.to(factory, waitParam)
-    override fun <T : Page> at(factory: (Browser) -> T, waitParam: Any?): T = browser.at(factory, waitParam)
+    override fun <T : Page> to(factory: (Browser) -> T, waitPreset: String?): T = browser.to(factory, waitPreset)
+    override fun <T : Page> at(factory: (Browser) -> T, waitPreset: String?): T = browser.at(factory, waitPreset)
     override fun <T> withNewTab(action: () -> T): T  = browser.withNewTab(action)
     override fun <T> withClosedTab(action: () -> T): T = browser.withClosedTab(action)
 
