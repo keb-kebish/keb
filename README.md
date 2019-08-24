@@ -12,7 +12,7 @@ Please note that you must define class with browser object in constructor and pa
 To select web element on your page use following methods.
 ```kotlin
 css(".my-selector") // returns single DOM element by CSS selector
-ccsList(".my-select") // returns list of all elements found by CSS selector
+cssList(".my-select") // returns list of all elements found by CSS selector
 // following selectors are also available
 html("h1")
 htmlList("h1")
