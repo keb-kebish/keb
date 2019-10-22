@@ -9,7 +9,7 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
 Please note that you must define class with browser object in constructor and pass this value into Page superclass.
 
 ### Page elements
-To select web element on your page use following methods.
+To select web element on your page use the following methods.
 ```kotlin
 css(".my-selector") // returns single DOM element by CSS selector
 cssList(".my-select") // returns list of all elements found by CSS selector
@@ -21,7 +21,7 @@ xpathList("/html/body/h1")
 ```
 
 ### Page verifier
-In order to verify, that you successfully landed on your page, you can use at() method.
+In order to verify, that you successfully landed on your page, you can use `at()` method.
 ```kotlin
 class KotlinHomePage(browser: Browser) : Page(browser) {
     override fun url() = "https://kotlinlang.org"
