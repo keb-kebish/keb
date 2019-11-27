@@ -5,14 +5,9 @@ import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
-interface Selector {
-    fun getWebElement(): WebElement
-    fun getWebElements(): List<WebElement>
-}
-
-class CssSelector(private val selector: String, private val driver: WebDriver) : Selector {
-    override fun getWebElement(): WebElement {
-        val context = driver.findElements(By.cssSelector(selector))
+abstract class Selector(val selector: String) {
+    fun getWebElement(): WebElement {
+        val context = findElements()
         return when {
             context.isEmpty() -> throw NoSuchElementException("Required page content by $selector is not present.")
             context.size > 1 -> throw TooManyElementsException(toString(), context.size)
@@ -20,120 +15,45 @@ class CssSelector(private val selector: String, private val driver: WebDriver) :
         }
     }
 
-    override fun getWebElements(): List<WebElement> {
-        val context = driver.findElements(By.cssSelector(selector))
+    fun getWebElements(): List<WebElement> {
+        val context = findElements()
         return when {
             context.isEmpty() -> throw NoSuchElementException("Required page content by $selector is not present.")
             else -> context
         }
     }
 
+    abstract fun findElements(): List<WebElement>
+}
+
+class CssSelector(selector: String, private val driver: WebDriver) : Selector(selector) {
+    override fun findElements(): List<WebElement> = driver.findElements(By.cssSelector(selector))
     override fun toString() = "CSS selector '$selector'"
 }
 
-class ScopedCssSelector(private val selector: String, private val scope: WebElement) : Selector {
-    override fun getWebElement(): WebElement {
-        val context = scope.findElements(By.cssSelector(selector))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $selector is not present.")
-            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
-            else -> context.first()
-        }
-    }
-
-    override fun getWebElements(): List<WebElement> {
-        val context = scope.findElements(By.cssSelector(selector))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $selector is not present.")
-            else -> context
-        }
-    }
-
+class ScopedCssSelector(selector: String, private val scope: WebElement) : Selector(selector) {
+    override fun findElements(): List<WebElement> = scope.findElements(By.cssSelector(selector))
     override fun toString() = "CSS selector '$selector' in context of '$scope"
 }
 
-class HtmlSelector(private val tag: String, private val driver: WebDriver) : Selector {
-    override fun getWebElement(): WebElement {
-        val context = driver.findElements(By.tagName(tag))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $tag is not present.")
-            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
-            else -> context.first()
-        }
-    }
-
-    override fun getWebElements(): List<WebElement> {
-        val context = driver.findElements(By.tagName(tag))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $tag is not present.")
-            else -> context
-        }
-    }
-
-    override fun toString() = "HTML tag '$tag'"
+class HtmlSelector(selector: String, private val driver: WebDriver) : Selector(selector) {
+    override fun findElements(): List<WebElement> = driver.findElements(By.cssSelector(selector))
+    override fun toString() = "HTML tag '$selector'"
 }
 
-class ScopedHtmlSelector(private val tag: String, private val scope: WebElement): Selector {
-    override fun getWebElement(): WebElement {
-        val context = scope.findElements(By.tagName(tag))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $tag is not present.")
-            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
-            else -> context.first()
-        }
-    }
-
-    override fun getWebElements(): List<WebElement> {
-        val context = scope.findElements(By.tagName(tag))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $tag is not present.")
-            else -> context
-        }
-    }
-
-    override fun toString() = "HTML tag '$tag' in context of '$scope'"
+class ScopedHtmlSelector(selector: String, private val scope: WebElement) : Selector(selector) {
+    override fun findElements(): List<WebElement> = scope.findElements(By.cssSelector(selector))
+    override fun toString() = "HTML tag '$selector' in context of '$scope'"
 }
 
-class XPathSelector(private val xpath: String, private val driver: WebDriver) : Selector {
-    override fun getWebElement(): WebElement {
-        val context = driver.findElements(By.xpath(xpath))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $xpath is not present.")
-            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
-            else -> context.first()
-        }
-    }
-
-    override fun getWebElements(): List<WebElement> {
-        val context = driver.findElements(By.xpath(xpath))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $xpath is not present.")
-            else -> context
-        }
-    }
-
-    override fun toString() = "XPath '$xpath'"
+class XPathSelector(selector: String, private val driver: WebDriver) : Selector(selector) {
+    override fun findElements(): List<WebElement> = driver.findElements(By.cssSelector(selector))
+    override fun toString() = "XPath '$selector'"
 }
 
-class ScopedXpathSelector(private val xpath: String, private val scope: WebElement): Selector {
-    override fun getWebElement(): WebElement {
-        val context = scope.findElements(By.xpath(xpath))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $xpath is not present.")
-            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
-            else -> context.first()
-        }
-    }
-
-    override fun getWebElements(): List<WebElement> {
-        val context = scope.findElements(By.xpath(xpath))
-        return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content by $xpath is not present.")
-            else -> context
-        }
-    }
-
-    override fun toString() = "XPath '$xpath' in context of '$scope'"
+class ScopedXpathSelector(selector: String, private val scope: WebElement) : Selector(selector) {
+    override fun findElements(): List<WebElement> = scope.findElements(By.cssSelector(selector))
+    override fun toString() = "XPath '$selector' in context of '$scope'"
 }
 
 class TooManyElementsException(selectedBy: String, elementsSize: Int) :
