@@ -5,7 +5,7 @@ import com.horcacorp.testing.keb.core.NavigationSupport
 import com.horcacorp.testing.keb.core.Page
 import com.horcacorp.testing.keb.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
-import org.junit.After
+import org.junit.jupiter.api.AfterEach
 import org.openqa.selenium.firefox.FirefoxDriver
 
 abstract class KebTest : NavigationSupport {
@@ -13,11 +13,10 @@ abstract class KebTest : NavigationSupport {
     val browser = Browser(kebConfig {
         WebDriverManager.firefoxdriver().setup()
         val ffDriver = FirefoxDriver()
-        ffDriver.manage().window().maximize()
         driver = ffDriver
     })
 
-    @After
+    @AfterEach
     fun closeDriver() {
         browser.quit()
     }

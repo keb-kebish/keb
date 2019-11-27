@@ -3,8 +3,8 @@ package com.horcacorp.testing.keb
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page
 import com.horcacorp.testing.keb.core.ScopedModule
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
 
 class KotlinSiteKebTest : KebTest() {
@@ -18,14 +18,14 @@ class KotlinSiteKebTest : KebTest() {
         val title = homePage.header
 
         // then
-        Assert.assertEquals("Kotlin", title.text)
-        Assert.assertTrue(homePage.licensedUnderApacheLicense())
+        Assertions.assertEquals("Kotlin", title.text)
+        Assertions.assertTrue(homePage.licensedUnderApacheLicense())
 
         // when
         val docsPage = homePage.openDocumentation()
 
         // then
-        Assert.assertEquals("Learn Kotlin", docsPage.title.text)
+        Assertions.assertEquals("Learn Kotlin", docsPage.title.text)
     }
 
 }
