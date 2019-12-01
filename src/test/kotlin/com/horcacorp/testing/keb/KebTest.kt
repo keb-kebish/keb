@@ -14,6 +14,7 @@ abstract class KebTest : NavigationSupport {
         WebDriverManager.firefoxdriver().setup()
         val ffDriver = FirefoxDriver()
         driver = ffDriver
+        baseUrl = "https://kotlinlang.org"
     })
 
     @AfterEach

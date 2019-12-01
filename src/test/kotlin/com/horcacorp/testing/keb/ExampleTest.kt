@@ -12,7 +12,7 @@ class KotlinSiteKebTest : KebTest() {
     @Test
     fun `testing kotlin lang page`() {
         // given
-        val homePage = to(::KotlinPage)
+        val homePage = to(::KotlinHomePage)
 
         // when
         val title = homePage.header
@@ -30,25 +30,25 @@ class KotlinSiteKebTest : KebTest() {
 
 }
 
-class KotlinPage(browser: Browser) : Page(browser) {
-    override fun url() = "https://kotlinlang.org"
+class KotlinHomePage(browser: Browser) : Page(browser) {
+    override fun url() = "/"
     override fun at() = header
 
     val header = css(".global-header-logo")
     val menu = scopedModule(::NavMenuModule, css(".nav-links"))
     val footer = scopedModule(::FooterModule, html("footer"))
 
-    fun openDocumentation(): DocsPage {
+    fun openDocumentation(): KotlinDocumentationPage {
         menu.menuItems.first { it.text == "LEARN" }.click()
-        return at(::DocsPage)
+        return at(::KotlinDocumentationPage)
     }
 
     fun licensedUnderApacheLicense() = footer.licenseNotice.text.contains("apache", ignoreCase = true)
 
 }
 
-class DocsPage(browser: Browser) : Page(browser) {
-    override fun url() = "https://kotlinlang.org/docs/reference"
+class KotlinDocumentationPage(browser: Browser) : Page(browser) {
+    override fun url() = "/docs/reference"
     override fun at() = title
 
     val title = html("h1")
