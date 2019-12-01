@@ -158,7 +158,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
     }
 
     private fun resolveUrl(urlSuffix: String): String {
-        val urlPrefix = config.urlPrefix
+        val urlPrefix = config.baseUrl
         val url = if (urlPrefix.isEmpty()) urlSuffix else "$urlPrefix/$urlSuffix"
         return URI(url).normalize().toString()
     }
