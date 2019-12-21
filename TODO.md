@@ -1,6 +1,6 @@
 - Share browser between tests. (plus do it configurable)
     - Probably Implementation of "KebTest" will be needed.
-    - Let there some posibility to write tests, which use multiple Browsers...
+    - Let there some possibility to write tests, which use multiple Browsers...
 
 
 - How to debug selecting of web element? - time when element is selected
@@ -26,14 +26,9 @@
   - It could be disabled in config
   
 - KebConfig can be defined global, or localy overriden by test  "probably not so important for the beginning"
-  
-
-
--HtmlSelector, CSS selector and Xpaht selector   have no difference all do  
-     -  By.cssSelector(selector)
      
      
--Why consider about wrapper around WebElement?
+- Why consider about wrapper around WebElement?
    - for example, because this:
       
       ```assertThat(pageWithModulesPage.surname.textInput.getAttribute("value")).isEqualTo("Doe")```

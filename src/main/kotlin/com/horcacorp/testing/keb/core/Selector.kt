@@ -37,22 +37,22 @@ class ScopedCssSelector(selector: String, private val scope: WebElement) : Selec
 }
 
 class HtmlSelector(selector: String, private val driver: WebDriver) : Selector(selector) {
-    override fun findElements(): List<WebElement> = driver.findElements(By.cssSelector(selector))
+    override fun findElements(): List<WebElement> = driver.findElements(By.tagName(selector))
     override fun toString() = "HTML tag '$selector'"
 }
 
 class ScopedHtmlSelector(selector: String, private val scope: WebElement) : Selector(selector) {
-    override fun findElements(): List<WebElement> = scope.findElements(By.cssSelector(selector))
+    override fun findElements(): List<WebElement> = scope.findElements(By.tagName(selector))
     override fun toString() = "HTML tag '$selector' in context of '$scope'"
 }
 
 class XPathSelector(selector: String, private val driver: WebDriver) : Selector(selector) {
-    override fun findElements(): List<WebElement> = driver.findElements(By.cssSelector(selector))
+    override fun findElements(): List<WebElement> = driver.findElements(By.xpath(selector))
     override fun toString() = "XPath '$selector'"
 }
 
 class ScopedXpathSelector(selector: String, private val scope: WebElement) : Selector(selector) {
-    override fun findElements(): List<WebElement> = scope.findElements(By.cssSelector(selector))
+    override fun findElements(): List<WebElement> = scope.findElements(By.xpath(selector))
     override fun toString() = "XPath '$selector' in context of '$scope'"
 }
 
