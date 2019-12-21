@@ -1,0 +1,36 @@
+<html>
+<head/>
+<body>
+
+<h1>Page with modules</h1>
+
+<h3>Module for Name</h3>
+
+<!-- First usage of component - "Clearable Input" -->
+<div id="name">
+    <label>
+        Name:
+        <input type="text" value="John"/>
+    </label>
+    <input onclick="document.getElementById('name').getElementsByTagName('input')[0].value=''" type="button"
+           value="Clear"/>
+</div>
+<!--component end-->
+
+
+<h3>Module for Surname</h3>
+
+<!-- Second usage of component - "Clearable Input" -->
+<div id="surname">
+    <label>
+        Surname:
+        <input type="text" value="Doe"/>
+    </label>
+    <input onclick="document.getElementById('surname').getElementsByTagName('input')[0].value=''" type="button"
+           value="Clear"/>
+</div>
+<!--component end-->
+
+
+</body>
+</html>
