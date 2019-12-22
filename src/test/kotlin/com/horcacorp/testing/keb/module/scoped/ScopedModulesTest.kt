@@ -19,6 +19,22 @@ class ScopedModulesTest : KebTest() {
         assertThat(pageWithModulesPage.surname.textInput.getAttribute("value")).isEmpty()
     }
 
+
+    @Test
+    fun `surname can be cleared with page closure`() {
+        // given
+        to(::PageWithModulesPage) {
+            assertThat(surname.textInput.getAttribute("value")).isEqualTo("Doe")
+
+            //when
+            surname.clearButton.click()
+
+            //then
+            assertThat(surname.textInput.getAttribute("value")).isEmpty()
+
+        }
+    }
+
 }
 
 

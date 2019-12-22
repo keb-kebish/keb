@@ -128,10 +128,12 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-    override fun <T : Page> to(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
-        driver.get(resolveUrl(url()))
-        verifyAt(waitPreset)
-    }
+    override fun <T : Page> to(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+        pageFactory(this).apply {
+            driver.get(resolveUrl(url()))
+            verifyAt(waitPreset)
+            body.invoke(this)
+        }
 
     override fun <T : Page> at(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
         verifyAt(waitPreset)
