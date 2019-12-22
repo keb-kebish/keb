@@ -27,7 +27,9 @@ abstract class KebTest : NavigationSupport {
     override fun <T : Page> to(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
         browser.to(pageFactory, waitPreset, body)
 
-    override fun <T : Page> at(factory: (Browser) -> T, waitPreset: String?): T = browser.at(factory, waitPreset)
+    override fun <T : Page> at(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+        browser.at(pageFactory, waitPreset, body)
+
     override fun <T> withNewTab(action: () -> T): T = browser.withNewTab(action)
     override fun <T> withClosedTab(action: () -> T): T = browser.withClosedTab(action)
 
