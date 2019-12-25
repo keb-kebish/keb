@@ -11,4 +11,12 @@ class ClearableInputModule(browser: Browser, scope: WebElement) : ScopedModule(b
     val clearButton = css("""input[type="button"]""")
 
 
+    var value: String
+        get() = textInput.getAttribute("value")
+        set(newValue) {
+            clearButton.click()
+            textInput.sendKeys(newValue)
+        }
+
+
 }

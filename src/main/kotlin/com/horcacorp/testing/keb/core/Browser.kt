@@ -128,13 +128,22 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         }
     }
 
-    override fun <T : Page> to(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
-        driver.get(resolveUrl(url()))
-        verifyAt(waitPreset)
+    override fun <T : Page> to(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+        to(pageFactory(this), waitPreset, body)
+
+    override fun <T : Page> at(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+        at(pageFactory(this), waitPreset, body)
+
+
+    private fun <T : Page> to(page: T, waitPreset: String?, body: T.() -> Unit): T {
+        driver.get(resolveUrl(page.url()))
+        return at(page, waitPreset, body)
     }
 
-    override fun <T : Page> at(factory: (Browser) -> T, waitPreset: String?): T = factory(this).apply {
-        verifyAt(waitPreset)
+    private fun <T : Page> at(page: T, waitPreset: String?, body: T.() -> Unit): T {
+        page.verifyAt(waitPreset)
+        body.invoke(page)
+        return page
     }
 
     override fun <T> withNewTab(action: () -> T): T {
