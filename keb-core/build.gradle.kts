@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-
+    testImplementation(project(":keb-junit5"))
 
     api(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
