@@ -38,7 +38,7 @@ class ScopedModulesTest : KebTest() {
     @Test
     fun `example of keb at function`() {
         // given
-        to(::PageWithModulesPage)
+        to(::PageWithModulesPage)   //TODO better example would be have to have html with two pages...
 
         at(::PageWithModulesPage) {
             assertThat(surname.value).isEqualTo("Doe")
