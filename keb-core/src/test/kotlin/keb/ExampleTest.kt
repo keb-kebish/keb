@@ -3,11 +3,20 @@ package keb
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page
 import com.horcacorp.testing.keb.core.ScopedModule
+import com.horcacorp.testing.keb.core.kebConfig
+import io.github.bonigarcia.wdm.WebDriverManager
+import keb.junit5.KebTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.firefox.FirefoxDriver
 
-class KotlinSiteKebTest : KebTest() {
+class KotlinSiteKebTest : KebTest(Browser(kebConfig {
+    WebDriverManager.firefoxdriver().setup()
+    val ffDriver = FirefoxDriver()
+    driver = ffDriver
+    baseUrl = "https://kotlinlang.org"
+})) {
 
     @Test
     fun `testing kotlin lang page`() {
