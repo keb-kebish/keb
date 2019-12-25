@@ -1,4 +1,4 @@
-package com.horcacorp.testing.keb.module.scoped
+package keb.module.scoped
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

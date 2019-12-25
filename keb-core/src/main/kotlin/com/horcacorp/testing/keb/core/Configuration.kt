@@ -17,7 +17,10 @@ class Configuration {
     var elementsFetchType = ContentFetchType.ON_EVERY_ACCESS
     var baseUrl = ""
     val waitPresets = mutableMapOf(
-        DEFAULT_WAIT_PRESET_NAME to WaitPreset(DEFAULT_WAIT_TIMEOUT, DEFAULT_WAIT_RETRY_INTERVAL)
+        DEFAULT_WAIT_PRESET_NAME to WaitPreset(
+            DEFAULT_WAIT_TIMEOUT,
+            DEFAULT_WAIT_RETRY_INTERVAL
+        )
     )
 
     fun addPreset(
@@ -25,7 +28,8 @@ class Configuration {
         timeoutMillis: Long = DEFAULT_WAIT_TIMEOUT,
         retryIntervalMillis: Long = DEFAULT_WAIT_RETRY_INTERVAL
     ) {
-        waitPresets[name.toUpperCase()] = WaitPreset(timeoutMillis, retryIntervalMillis)
+        waitPresets[name.toUpperCase()] =
+            WaitPreset(timeoutMillis, retryIntervalMillis)
     }
 
     fun getDefaultPreset(): WaitPreset = waitPresets[DEFAULT_WAIT_PRESET_NAME]!!

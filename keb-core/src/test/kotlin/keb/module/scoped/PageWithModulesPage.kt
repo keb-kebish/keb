@@ -1,4 +1,4 @@
-package com.horcacorp.testing.keb.module.scoped
+package keb.module.scoped
 
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page

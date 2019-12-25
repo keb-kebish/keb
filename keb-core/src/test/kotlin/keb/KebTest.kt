@@ -1,4 +1,4 @@
-package com.horcacorp.testing.keb
+package keb
 
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.NavigationSupport

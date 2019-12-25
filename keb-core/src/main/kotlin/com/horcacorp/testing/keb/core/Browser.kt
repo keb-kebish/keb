@@ -3,7 +3,10 @@ package com.horcacorp.testing.keb.core
 import org.openqa.selenium.WebElement
 import java.net.URI
 
-class Browser(val config: Configuration) : ContentSupport, NavigationSupport, WaitSupport, ModuleSupport {
+class Browser(val config: Configuration) : ContentSupport,
+    NavigationSupport,
+    WaitSupport,
+    ModuleSupport {
 
     companion object {
         fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
@@ -24,7 +27,8 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         fetch: ContentFetchType?
     ): WebElement =
         WebElementDelegate(
-            scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
+            scope?.let { ScopedCssSelector(selector, it) }
+                ?: CssSelector(selector, driver),
             fetch ?: config.elementsFetchType
         )
 
@@ -34,13 +38,18 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
-            scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver),
+            scope?.let { ScopedCssSelector(selector, it) }
+                ?: CssSelector(selector, driver),
             fetch ?: config.elementsFetchType
         )
 
     override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?): WebElement =
         WebElementDelegate(
-            scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
+            scope?.let { ScopedHtmlSelector(tag, it) }
+                ?: HtmlSelector(
+                    tag,
+                    driver
+                ),
             fetch ?: config.elementsFetchType
         )
 
@@ -50,7 +59,11 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
-            scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver),
+            scope?.let { ScopedHtmlSelector(tag, it) }
+                ?: HtmlSelector(
+                    tag,
+                    driver
+                ),
             fetch ?: config.elementsFetchType
         )
 
@@ -60,7 +73,8 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         fetch: ContentFetchType?
     ): WebElement =
         WebElementDelegate(
-            scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
+            scope?.let { ScopedXpathSelector(xpath, it) }
+                ?: XPathSelector(xpath, driver),
             fetch ?: config.elementsFetchType
         )
 
@@ -70,7 +84,8 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
         fetch: ContentFetchType?
     ): List<WebElement> =
         WebElementsListDelegate(
-            scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver),
+            scope?.let { ScopedXpathSelector(xpath, it) }
+                ?: XPathSelector(xpath, driver),
             fetch ?: config.elementsFetchType
         )
 
@@ -84,7 +99,10 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Wa
 
     override fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
         val preset = presetName
-            ?.let { config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
+            ?.let { config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(
+                it
+            )
+            }
             ?: config.getDefaultPreset()
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }

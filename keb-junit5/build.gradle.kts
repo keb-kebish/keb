@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "1.3.61"
 }
 
 group = "com.horca.testing"

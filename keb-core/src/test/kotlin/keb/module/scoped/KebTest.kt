@@ -1,4 +1,4 @@
-package com.horcacorp.testing.keb.module.scoped
+package keb.module.scoped
 
 import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page
@@ -6,6 +6,7 @@ import com.horcacorp.testing.keb.core.kebConfig
 import com.horcacorp.testing.keb.core.test.KebTestBase
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.AfterEach
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
 abstract class KebTest() :
@@ -13,7 +14,7 @@ abstract class KebTest() :
         Browser(kebConfig {
             WebDriverManager.firefoxdriver().setup()
             val driver = FirefoxDriver()
-            this.driver = driver
+            this.driver = driver as WebDriver?
             baseUrl =
                 javaClass.classLoader.getResource("com/horcacorp/testing/keb/module/scoped/page.html")!!.toString()
                     .replace("page.html", "")
