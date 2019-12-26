@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.firefox.FirefoxDriver
 
+
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     val driver = FirefoxDriver()
@@ -17,6 +18,10 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
             .replace("page.html", "")
 })) {
 
+//    companion object {
+//        @TempDir
+//        public var sharedTempDir: Path? = null
+//    }
 
     @Test
     fun `surname can be cleared`() {

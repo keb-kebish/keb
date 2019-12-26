@@ -44,4 +44,8 @@
        override fun at() = name  //TODO Validation for module doesn't work well (its not web element its not wrapper...)
    
        val name = scopedModule(::ClearableInputModule, css("#name"))  
-  ```
+  ``` 
+  
+  
+- Browser v testu by se neměl startovat do doby, dokud opravdu není použit
+  
