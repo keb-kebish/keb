@@ -4,13 +4,9 @@ import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
-import keb.test.util.ClasspathCopier
 import keb.test.util.HttpFolderServer
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 import org.openqa.selenium.firefox.FirefoxDriver
-import java.nio.file.Path
 
 
 class ScopedModulesTest : KebTest(Browser(kebConfig {
@@ -23,15 +19,11 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 })) {
 
     @Test
-    fun `classpath copier works`(@TempDir tmpDir: Path) {
-        ClasspathCopier.copyPackageIntoDirectory("keb.testing.multipages", tmpDir.toFile())
-        Assertions.assertThat(tmpDir.toFile().list().toSet()).isEqualTo(setOf("index.html", "page1.html", "page2.html"))
-
-        val server = HttpFolderServer(tmpDir).start()
+    fun `resource dir server works`() {
+        val server = HttpFolderServer("keb/testing/multipage")
         server.port
 
-        browser.driver.get("http://localhost:8080/page1.html")
-        readLine()
+        browser.driver.get("http://localhost:8080/")
     }
 
 

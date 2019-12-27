@@ -3,38 +3,30 @@ package keb.test.util
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
-import java.nio.file.Path
-
 
 
 /**
- * Starts Http Server, which serves content of folder.
+ * Starts Http Server, which serves content of resource folder (package).
  *
  * Just for for testing purpose.
+ *
+ * @param resourceFolderToServe e.g. resource folder "keb/testing/multipage"
  */
-class HttpFolderServer(val folderToServe: Path) {
+class HttpFolderServer(val resourceFolderToServe: String) {
 
-//    init {
-//        start()
-//    }
+    lateinit var vertx: Vertx
 
 
+    init {
+        start()
+    }
 
 
-    fun start(): HttpFolderServer {
+    private fun start(): HttpFolderServer {
         val vertx = Vertx.vertx();
-
         val router = Router.router(vertx);
-//        router.route().handler(StaticHandler.create(folderToServe.toAbsolutePath().normalize().toString()));
-//        router.route().handler(StaticHandler.create("keb.testing.multipages"));
-        router.route().handler(StaticHandler.create("keb/testing/multipages"));
-//        router.route().handler(StaticHandler.create("client"));
-//        router.route("/hello*").handler(StaticHandler.create("keb.testing.multipages"));
-
-        vertx.createHttpServer().requestHandler(router::accept).listen(8080);
-//        TODO()
-
-        println("localhost:8080/page1.html")
+        router.route().handler(StaticHandler.create(resourceFolderToServe));
+        vertx.createHttpServer().requestHandler(router::accept).listen(8080);   //TODO free port
         return this
     }
 
@@ -45,6 +37,7 @@ class HttpFolderServer(val folderToServe: Path) {
 
 
     fun stop(): HttpFolderServer {
+        vertx.close()
         TODO()
         return this
     }
