@@ -48,4 +48,9 @@
   
   
 - Browser v testu by se neměl startovat do doby, dokud opravdu není použit
-  
+
+- Browser should have possibility to directly get and set url. 
+  This should not been required:
+   ```browser.driver.get("localhost:8080")```
+  something like `browser.url` and `browser.setUrl()` or someting...
+   
