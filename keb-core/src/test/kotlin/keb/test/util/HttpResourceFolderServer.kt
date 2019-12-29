@@ -17,6 +17,9 @@ class HttpResourceFolderServer(val resourceFolderToServe: String) {
 
     lateinit var vertx: Vertx
     var port by Delegates.notNull<Int>()
+    val baseUrl: String
+        get() = "http://localhost:$port/"
+
 
     init {
         start()
@@ -24,7 +27,7 @@ class HttpResourceFolderServer(val resourceFolderToServe: String) {
 
 
     private fun start(): HttpResourceFolderServer {
-        val vertx = Vertx.vertx()
+        vertx = Vertx.vertx()
         val router = Router.router(vertx)
         router.route().handler(StaticHandler.create(resourceFolderToServe))
 
@@ -37,7 +40,14 @@ class HttpResourceFolderServer(val resourceFolderToServe: String) {
 
     fun stop(): HttpResourceFolderServer {
         vertx.close()
-        TODO()
         return this
+    }
+
+    fun with(closure: (HttpResourceFolderServer) -> Unit) {
+        try {
+            closure(this)
+        } finally {
+            stop()
+        }
     }
 }

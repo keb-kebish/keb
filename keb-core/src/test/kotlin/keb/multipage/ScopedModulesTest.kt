@@ -10,6 +10,8 @@ import keb.test.util.HttpResourceFolderServer
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
+import kotlin.LazyThreadSafetyMode.NONE
+import kotlin.reflect.KProperty
 
 
 class ScopedModulesTest : KebTest(Browser(kebConfig {
@@ -18,20 +20,26 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 })) {
 
     @Test
-    fun `resource dir server works`() {
-        val server = HttpResourceFolderServer("keb/testing/multipage")
-        browser.config.baseUrl = "http://localhost:${server.port}/"
+    fun `navigation menu works`() {
+        // given
+        HttpResourceFolderServer("keb/testing/multipage").with { server ->
+            browser.config.baseUrl = server.baseUrl
+            to(::LandingPage) {
 
-        to(::LandingPage) {
-            menu.page2Link.click()
+                // when
+                menu.page2Link.click()
+            }
+
+            // then
+            at(::Page2Page) {
+
+                // when
+                menu.page1Link.click()
+            }
+
+            // then
+            at(::Page1Page)
         }
-
-        at(::Page2Page) {
-            menu.page1Link.click()
-        }
-
-        at(::Page1Page)
-
     }
 
 

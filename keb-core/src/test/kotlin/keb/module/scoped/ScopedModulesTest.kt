@@ -18,11 +18,6 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
             .replace("page.html", "")
 })) {
 
-//    companion object {
-//        @TempDir
-//        public var sharedTempDir: Path? = null
-//    }
-
     @Test
     fun `surname can be cleared`() {
         // given
@@ -55,7 +50,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     @Test
     fun `example of keb at function`() {
         // given
-        to(::PageWithModulesPage)   //TODO better example would be have to have html with two pages...
+        to(::PageWithModulesPage)
 
         at(::PageWithModulesPage) {
             assertThat(surname.value).isEqualTo("Doe")
