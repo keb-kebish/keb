@@ -4,7 +4,7 @@ import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
-import keb.test.util.HttpFolderServer
+import keb.test.util.HttpResourceFolderServer
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.firefox.FirefoxDriver
 
@@ -20,10 +20,10 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
     @Test
     fun `resource dir server works`() {
-        val server = HttpFolderServer("keb/testing/multipage")
-        server.port
+        val server = HttpResourceFolderServer("keb/testing/multipage")
+        println("PORT:" + server.port)
 
-        browser.driver.get("http://localhost:8080/")
+        browser.driver.get("http://localhost:${server.port}/")
     }
 
 

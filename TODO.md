@@ -54,3 +54,7 @@
    ```browser.driver.get("localhost:8080")```
   something like `browser.url` and `browser.setUrl()` or someting...
    
+   
+- Keb should provide support for obtaining WebDriver (Firefox, chrome)
+  - There is library (something like "web driver manager") which provide this
+  - So that user doesn't have to investigate how to obtain driver
