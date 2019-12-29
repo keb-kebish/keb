@@ -1,48 +1,69 @@
 package keb.multipage
 
 import com.horcacorp.testing.keb.core.Browser
+import com.horcacorp.testing.keb.core.Page
+import com.horcacorp.testing.keb.core.ScopedModule
 import com.horcacorp.testing.keb.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
 import keb.test.util.HttpResourceFolderServer
 import org.junit.jupiter.api.Test
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
-    val driver = FirefoxDriver()
-    this.driver = driver
-    baseUrl =
-        javaClass.classLoader.getResource("com/horcacorp/testing/keb/module/scoped/page.html")!!.toString()
-            .replace("page.html", "")
+    this.driver = FirefoxDriver()
 })) {
 
     @Test
     fun `resource dir server works`() {
         val server = HttpResourceFolderServer("keb/testing/multipage")
-        println("PORT:" + server.port)
+        browser.config.baseUrl = "http://localhost:${server.port}/"
 
-        browser.driver.get("http://localhost:${server.port}/")
+        to(::LandingPage) {
+            menu.page2Link.click()
+        }
+
+        at(::Page2Page) {
+            menu.page1Link.click()
+        }
+
+        at(::Page1Page)
+
     }
 
 
-//    @Test
-//    fun `example of keb at function`(@TempDir tmpDir :Path) {
-//        // given
-//        to(::PageWithModulesPage)   //TODO better example would be have to have html with two pages...
-//
-//        at(::PageWithModulesPage) {
-//            assertThat(surname.value).isEqualTo("Doe")
-//
-//            //when
-//            surname.value = "My new Surname"
-//
-//            //then
-//            assertThat(surname.value).isEqualTo("My new Surname")
-//
-//        }
-//    }
+    class LandingPage(browser: Browser) : Page(browser) {
+        override fun url() = "/"
+        override fun at() = header.text == "Landing page"
+
+        val header = css("h1")
+        val menu = scopedModule(::NavigationMenuModule, css(".navigation_menu"))
+    }
+
+    class Page1Page(browser: Browser) : Page(browser) {
+        override fun url() = "/"
+        override fun at() = header.text == "Page 1"
+
+        val header = css("h1")
+        val menu = scopedModule(::NavigationMenuModule, css(".navigation_menu"))
+    }
+
+    class Page2Page(browser: Browser) : Page(browser) {
+        override fun url() = "/"
+        override fun at() = header.text == "Page 2"
+
+        val header = css("h1")
+        val menu = scopedModule(::NavigationMenuModule, css(".navigation_menu"))
+    }
+
+    class NavigationMenuModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
+        val landingLink = css(".nav_landing")
+        val page1Link = css(".nav_page1")
+        val page2Link = css(".nav_page2")
+    }
 
 }
 

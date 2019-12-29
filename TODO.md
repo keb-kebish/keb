@@ -58,3 +58,9 @@
 - Keb should provide support for obtaining WebDriver (Firefox, chrome)
   - There is library (something like "web driver manager") which provide this
   - So that user doesn't have to investigate how to obtain driver
+  
+- By default we don't want to close browser after each test
+
+- We want to capture images on fail test (maybe even on every test)
+
+- In at() verifier use for example assertJ - so that we can have nice error message, when it fails

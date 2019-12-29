@@ -11,10 +11,10 @@ abstract class KebTestBase(val browser: Browser)  : NavigationSupport {
 
     /** Test runner must call this method after each test */
     fun afterEachTest() {
-        closeDriver() //TODO By default - we don't want to close browser after each test
-    }
+        closeDriver()
+        }
 
-    private fun closeDriver() {
+        private fun closeDriver() {
         browser.quit()
     }
 
