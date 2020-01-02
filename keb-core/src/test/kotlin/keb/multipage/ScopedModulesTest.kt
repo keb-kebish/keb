@@ -4,6 +4,7 @@ import com.horcacorp.testing.keb.core.*
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
 import keb.test.util.HttpResourceFolderServer
+import keb.test.util.WithHttpResourceFolderServer
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
@@ -12,29 +13,28 @@ import org.openqa.selenium.firefox.FirefoxDriver
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = FirefoxDriver()
-})) {
+})), WithHttpResourceFolderServer {
+
+    override var server = HttpResourceFolderServer("keb/testing/multipage")
 
     @Test
     fun `navigation menu works`() {
         // given
-        HttpResourceFolderServer("keb/testing/multipage").with { server ->
-            browser.config.baseUrl = server.baseUrl
-            to(::LandingPage) {
+        to(::LandingPage) {
 
-                // when
-                menu.page2Link.click()
-            }
-
-            // then
-            at(::Page2Page) {
-
-                // when
-                menu.page1Link.click()
-            }
-
-            // then
-            at(::Page1Page)
+            // when
+            menu.page2Link.click()
         }
+
+        // then
+        at(::Page2Page) {
+
+            // when
+            menu.page1Link.click()
+        }
+
+        // then
+        at(::Page1Page)
     }
 
 

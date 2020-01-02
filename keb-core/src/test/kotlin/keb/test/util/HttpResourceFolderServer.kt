@@ -21,12 +21,7 @@ class HttpResourceFolderServer(val resourceFolderToServe: String) {
         get() = "http://localhost:$port/"
 
 
-    init {
-        start()
-    }
-
-
-    private fun start(): HttpResourceFolderServer {
+    fun start(): HttpResourceFolderServer {
         vertx = Vertx.vertx()
         val router = Router.router(vertx)
         router.route().handler(StaticHandler.create(resourceFolderToServe))
