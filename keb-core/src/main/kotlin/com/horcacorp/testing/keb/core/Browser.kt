@@ -23,87 +23,44 @@ class Browser(val config: Configuration) : ContentSupport,
 
     override fun css(
         selector: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): WebElement =
-        WebElementDelegate(
-            scope?.let { ScopedCssSelector(selector, it) }
-                ?: CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType
-        )
+        scope: WebElement?
+    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver)).getWebElement()
 
     override fun cssList(
         selector: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> =
-        WebElementsListDelegate(
-            scope?.let { ScopedCssSelector(selector, it) }
-                ?: CssSelector(selector, driver),
-            fetch ?: config.elementsFetchType
-        )
+        scope: WebElement?
+    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver)).getWebElements()
 
-    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?): WebElement =
-        WebElementDelegate(
-            scope?.let { ScopedHtmlSelector(tag, it) }
-                ?: HtmlSelector(
-                    tag,
-                    driver
-                ),
-            fetch ?: config.elementsFetchType
-        )
+    override fun html(
+        tag: String,
+        scope: WebElement?
+    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver)).getWebElement()
 
     override fun htmlList(
         tag: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> =
-        WebElementsListDelegate(
-            scope?.let { ScopedHtmlSelector(tag, it) }
-                ?: HtmlSelector(
-                    tag,
-                    driver
-                ),
-            fetch ?: config.elementsFetchType
-        )
+        scope: WebElement?
+    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver)).getWebElements()
 
     override fun xpath(
         xpath: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): WebElement =
-        WebElementDelegate(
-            scope?.let { ScopedXpathSelector(xpath, it) }
-                ?: XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType
-        )
+        scope: WebElement?
+    ): WebElement = (scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver)).getWebElement()
 
     override fun xpathList(
         xpath: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> =
-        WebElementsListDelegate(
-            scope?.let { ScopedXpathSelector(xpath, it) }
-                ?: XPathSelector(xpath, driver),
-            fetch ?: config.elementsFetchType
-        )
+        scope: WebElement?
+    ) = (scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver)).getWebElements()
 
     override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
 
     override fun <T : ScopedModule> scopedModule(
         factory: (Browser, WebElement) -> T,
         scope: WebElement
-    ): T =
-        factory(this, scope)
+    ): T = factory(this, scope)
 
     override fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
         val preset = presetName
-            ?.let {
-                config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(
-                    it
-                )
-            }
+            ?.let { config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
             ?: config.getDefaultPreset()
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }

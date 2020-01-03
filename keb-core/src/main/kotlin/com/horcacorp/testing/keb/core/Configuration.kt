@@ -14,7 +14,6 @@ class Configuration {
     private val DEFAULT_WAIT_PRESET_NAME = "DEFAULT"
 
     var driver: WebDriver? = null
-    var elementsFetchType = ContentFetchType.ON_EVERY_ACCESS
     var baseUrl = ""
     val waitPresets = mutableMapOf(
         DEFAULT_WAIT_PRESET_NAME to WaitPreset(

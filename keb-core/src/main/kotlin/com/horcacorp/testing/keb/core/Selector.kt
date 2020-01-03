@@ -26,7 +26,7 @@ abstract class Selector(val selector: String) {
         }
     }
 
-    abstract fun findElements(): List<WebElement>
+    protected abstract fun findElements(): List<WebElement>
 }
 
 class CssSelector(selector: String, private val driver: WebDriver) : Selector(selector) {

@@ -7,59 +7,32 @@ abstract class ScopedModule(val browser: Browser, private val scope: WebElement)
 
     override fun css(
         selector: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): WebElement = WebElementDelegate(
-        scope?.let { ScopedCssSelector(selector, it) }
-            ?: ScopedCssSelector(selector, this.scope),
-        fetch ?: browser.config.elementsFetchType
-    )
+        scope: WebElement?
+    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope)).getWebElement()
 
     override fun cssList(
         selector: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> = WebElementsListDelegate(
-        scope?.let { ScopedCssSelector(selector, it) }
-            ?: ScopedCssSelector(selector, this.scope),
-        fetch ?: browser.config.elementsFetchType
-    )
+        scope: WebElement?
+    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: ScopedCssSelector(selector, this.scope)).getWebElements()
 
-    override fun html(tag: String, scope: WebElement?, fetch: ContentFetchType?): WebElement =
-        WebElementDelegate(
-            scope?.let { ScopedHtmlSelector(tag, it) }
-                ?: ScopedHtmlSelector(tag, this.scope),
-            fetch ?: browser.config.elementsFetchType
-        )
+    override fun html(
+        tag: String,
+        scope: WebElement?
+    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope)).getWebElement()
 
     override fun htmlList(
         tag: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> = WebElementsListDelegate(
-        scope?.let { ScopedHtmlSelector(tag, it) }
-            ?: ScopedHtmlSelector(tag, this.scope),
-        fetch ?: browser.config.elementsFetchType
-    )
+        scope: WebElement?
+    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: ScopedHtmlSelector(tag, this.scope)).getWebElements()
 
     override fun xpath(
         xpath: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): WebElement = WebElementDelegate(
-        scope?.let { ScopedXpathSelector(xpath, it) }
-            ?: ScopedXpathSelector(xpath, this.scope),
-        fetch ?: browser.config.elementsFetchType
-    )
+        scope: WebElement?
+    ) = (scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope)).getWebElement()
 
     override fun xpathList(
         xpath: String,
-        scope: WebElement?,
-        fetch: ContentFetchType?
-    ): List<WebElement> = WebElementsListDelegate(
-        scope?.let { ScopedXpathSelector(xpath, it) }
-            ?: ScopedXpathSelector(xpath, this.scope),
-        fetch ?: browser.config.elementsFetchType
-    )
+        scope: WebElement?
+    ) = (scope?.let { ScopedXpathSelector(xpath, it) } ?: ScopedXpathSelector(xpath, this.scope)).getWebElements()
 
 }

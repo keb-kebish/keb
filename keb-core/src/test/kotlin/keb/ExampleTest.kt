@@ -1,9 +1,6 @@
 package keb
 
-import com.horcacorp.testing.keb.core.Browser
-import com.horcacorp.testing.keb.core.Page
-import com.horcacorp.testing.keb.core.ScopedModule
-import com.horcacorp.testing.keb.core.kebConfig
+import com.horcacorp.testing.keb.core.*
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
 import org.junit.jupiter.api.Assertions
@@ -43,9 +40,9 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
     override fun url() = "/"
     override fun at() = header
 
-    val header = css(".global-header-logo")
-    val menu = scopedModule(::NavMenuModule, css(".nav-links"))
-    val footer = scopedModule(::FooterModule, html("footer"))
+    val header by content { css(".global-header-logo") }
+    val menu by content { scopedModule(::NavMenuModule, css(".nav-links")) }
+    val footer by content { scopedModule(::FooterModule, html("footer")) }
 
     fun openDocumentation(): KotlinDocumentationPage {
         menu.menuItems.first { it.text == "LEARN" }.click()
@@ -60,15 +57,15 @@ class KotlinDocumentationPage(browser: Browser) : Page(browser) {
     override fun url() = "/docs/reference"
     override fun at() = title
 
-    val title = html("h1")
+    val title by content { html("h1") }
 
 }
 
 class NavMenuModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
-    val menuItems = htmlList("a")
+    val menuItems by content { htmlList("a") }
 }
 
 class FooterModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
-    val licenseNotice = css(".terms-copyright")
-    val sponsor = css(".terms-sponsor")
+    val licenseNotice by content { css(".terms-copyright") }
+    val sponsor by content { css(".terms-sponsor") }
 }
