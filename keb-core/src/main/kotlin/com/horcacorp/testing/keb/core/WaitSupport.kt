@@ -6,14 +6,14 @@ interface WaitSupport {
 
     val browser: Browser
 
-    fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
+    fun <T> waitFor(presetName: String?, desc: String?, f: () -> T?): T {
         val preset = presetName
             ?.let { browser.config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
             ?: browser.config.getDefaultPreset()
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }
 
-    fun <T> waitFor(timeoutMillis: Long, retryIntervalMillis: Long, desc: String?, f: () -> T): T {
+    fun <T> waitFor(timeoutMillis: Long, retryIntervalMillis: Long, desc: String?, f: () -> T?): T {
         val timeoutAt = System.currentTimeMillis() + timeoutMillis
         var passed = false
         var value: T? = null
