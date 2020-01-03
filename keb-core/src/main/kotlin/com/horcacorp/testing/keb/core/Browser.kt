@@ -84,22 +84,6 @@ class Browser(val config: Configuration) : NavigationSupport, WaitSupport, Modul
         return page
     }
 
-    override fun <T> withNewTab(action: () -> T): T {
-        val currentTabIndex = driver.windowHandles.indexOf(driver.windowHandle)
-        val r = action()
-        val nextTabHandle = driver.windowHandles.elementAt(currentTabIndex + 1)
-        driver.switchTo().window(nextTabHandle)
-        return r
-    }
-
-    override fun <T> withClosedTab(action: () -> T): T {
-        val currentTabIndex = driver.windowHandles.indexOf(driver.windowHandle)
-        val r = action()
-        val previous = driver.windowHandles.elementAt(currentTabIndex - 1)
-        driver.switchTo().window(previous)
-        return r
-    }
-
     fun quit() {
         driver.quit()
     }
