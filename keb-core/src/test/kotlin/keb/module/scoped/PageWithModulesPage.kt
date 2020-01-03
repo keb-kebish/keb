@@ -1,11 +1,10 @@
 package keb.module.scoped
 
-import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.Page
 import com.horcacorp.testing.keb.core.content
 import com.horcacorp.testing.keb.core.css
 
-class PageWithModulesPage(browser: Browser) : Page(browser) {
+class PageWithModulesPage : Page() {
     override fun url() = "page.html"
     override fun at() = css("#name")
 

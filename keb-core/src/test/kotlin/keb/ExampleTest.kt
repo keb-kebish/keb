@@ -36,7 +36,7 @@ class KotlinSiteKebTest : KebTest(Browser(kebConfig {
 
 }
 
-class KotlinHomePage(browser: Browser) : Page(browser) {
+class KotlinHomePage : Page() {
     override fun url() = "/"
     override fun at() = header
 
@@ -53,7 +53,7 @@ class KotlinHomePage(browser: Browser) : Page(browser) {
 
 }
 
-class KotlinDocumentationPage(browser: Browser) : Page(browser) {
+class KotlinDocumentationPage : Page() {
     override fun url() = "/docs/reference"
     override fun at() = title
 

@@ -55,7 +55,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
 }
 
-class HomePage(browser: Browser) : Page(browser) {
+class HomePage : Page() {
     override fun url() = "/"
     override fun at() = header.text == "Welcome"
 
@@ -63,7 +63,7 @@ class HomePage(browser: Browser) : Page(browser) {
     val header by content { css("h1") }
 }
 
-class AboutPage(browser: Browser) : Page(browser) {
+class AboutPage : Page() {
     override fun url() = "about.html"
     override fun at() = header.text == "About us"
 
@@ -71,7 +71,7 @@ class AboutPage(browser: Browser) : Page(browser) {
     val header by content { css("h1") }
 }
 
-class ContactsPage(browser: Browser) : Page(browser) {
+class ContactsPage : Page() {
     override fun url() = "contacts.html"
     override fun at() = header.text == "Contacts"
 

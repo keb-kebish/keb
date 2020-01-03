@@ -18,14 +18,16 @@ abstract class KebTestBase(val browser: Browser) : NavigationSupport {
         browser.quit()
     }
 
-    // delegate navigation to browser
-    override fun <T : Page> to(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+
+    override fun <T : Page> to(pageFactory: () -> T, waitPreset: String?, body: T.() -> Unit) =
         browser.to(pageFactory, waitPreset, body)
 
-    override fun <T : Page> at(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
+    override fun <T : Page> to(page: T, waitPreset: String?, body: (T) -> Unit) =
+        browser.to(page, waitPreset, body)
+
+    override fun <T : Page> at(pageFactory: () -> T, waitPreset: String?, body: T.() -> Unit) =
         browser.at(pageFactory, waitPreset, body)
 
-    override fun <T> withNewTab(action: () -> T): T = browser.withNewTab(action)
-    override fun <T> withClosedTab(action: () -> T): T = browser.withClosedTab(action)
-
+    override fun <T : Page> at(page: T, waitPreset: String?, body: (T) -> Unit) =
+        browser.at(page, waitPreset, body)
 }

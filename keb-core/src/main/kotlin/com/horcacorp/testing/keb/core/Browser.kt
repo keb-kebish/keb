@@ -66,19 +66,20 @@ class Browser(val config: Configuration) : NavigationSupport, WaitSupport, Modul
         }
     }
 
-    override fun <T : Page> to(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
-        to(pageFactory(this), waitPreset, body)
-
-    override fun <T : Page> at(pageFactory: (Browser) -> T, waitPreset: String?, body: T.() -> Unit): T =
-        at(pageFactory(this), waitPreset, body)
+    override fun <T : Page> to(pageFactory: () -> T, waitPreset: String?, body: T.() -> Unit): T =
+        to(pageFactory(), waitPreset, body)
 
 
-    private fun <T : Page> to(page: T, waitPreset: String?, body: T.() -> Unit): T {
+    override fun <T : Page> to(page: T, waitPreset: String?, body: T.() -> Unit): T {
         driver.get(resolveUrl(page.url()))
         return at(page, waitPreset, body)
     }
 
-    private fun <T : Page> at(page: T, waitPreset: String?, body: T.() -> Unit): T {
+    override fun <T : Page> at(pageFactory: () -> T, waitPreset: String?, body: T.() -> Unit): T =
+        at(pageFactory(), waitPreset, body)
+
+    override fun <T : Page> at(page: T, waitPreset: String?, body: T.() -> Unit): T {
+        page.browser = this
         page.verifyAt(waitPreset)
         body.invoke(page)
         return page
