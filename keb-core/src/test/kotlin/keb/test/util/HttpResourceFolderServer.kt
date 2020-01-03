@@ -17,6 +17,8 @@ import kotlin.properties.Delegates
  * Just for for testing purpose.
  *
  * @param resourceFolderToServe e.g. resource folder "keb/testing/multipage"
+ * @param serveOnRoot which static file to serve when accessing server root - i.e. "http://localhost:8080/".
+ *   This file must be present within the resource folder. Defaults to "index.html".
  */
 class HttpResourceFolderServer(val resourceFolderToServe: String, private val serveOnRoot: String = "index.html") {
 
