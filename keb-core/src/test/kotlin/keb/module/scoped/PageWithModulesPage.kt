@@ -10,6 +10,8 @@ class PageWithModulesPage(browser: Browser) : Page(browser) {
 
 
     val name by content { scopedModule(::ClearableInputModule, css("#name")) }
+    val name by content { scopedModule(ClearableInputModule( css("#name"))) }
+    val name by content { ClearableInputModule( css("#name")).module() }
     val surname by content { scopedModule(::ClearableInputModule, css("#surname")) }
 
 }

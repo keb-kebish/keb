@@ -2,6 +2,7 @@ package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.WebElement
 import java.net.URI
+import kotlin.reflect.KClass
 
 class Browser(val config: Configuration) : ContentSupport,
     NavigationSupport,
@@ -89,7 +90,8 @@ class Browser(val config: Configuration) : ContentSupport,
             fetch ?: config.elementsFetchType
         )
 
-    override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
+    fun <T : Module> module(factory: () -> T): T =
+    override fun <T : Module> module(module: T): T = module.apply { _browser = this@Browser }
 
     override fun <T : ScopedModule> scopedModule(
         factory: (Browser, WebElement) -> T,

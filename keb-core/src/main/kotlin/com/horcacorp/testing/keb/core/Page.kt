@@ -12,4 +12,6 @@ abstract class Page(val browser: Browser) : ContentSupport by browser, Navigatio
         )
     }
 
+    fun Module.module() = browser.module(this)
+
 }

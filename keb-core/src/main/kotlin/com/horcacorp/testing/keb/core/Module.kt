@@ -1,4 +1,19 @@
 package com.horcacorp.testing.keb.core
 
-abstract class Module(val browser: Browser) : ContentSupport by browser, NavigationSupport by browser,
-    WaitSupport by browser, ModuleSupport by browser
+abstract class Module : NavigationSupport {
+
+    lateinit var _browser: Browser
+
+    override fun getBrowser(): Browser {
+        return _browser
+    }
+
+}
+
+class MyModule : Module() {
+
+    init {
+        to()
+    }
+
+}

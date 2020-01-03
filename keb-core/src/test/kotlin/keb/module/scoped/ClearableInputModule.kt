@@ -8,8 +8,10 @@ import org.openqa.selenium.WebElement
 class ClearableInputModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
 
     val label by content { html("label") }
-    val textInput by content { css("""input[type="text"]""") }
-    val text by content { textInput.getAttribute("value") }
+    val textInput by content { module(::InputModule, css("""input[type="text"]"""))
+    val textInput by content { css("""input[type="text"]""").module(InputModule::) }
+    val textInput by content { InputModule(css("seelctor"), browser) }
+    val text by content { textInput.value textInput.getAttribute("value") }
     val clearButton by content { css("""input[type="button"]""") }
 
 
