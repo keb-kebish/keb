@@ -3,10 +3,7 @@ package com.horcacorp.testing.keb.core
 import org.openqa.selenium.WebElement
 import java.net.URI
 
-class Browser(val config: Configuration) : ContentSupport,
-    NavigationSupport,
-    WaitSupport,
-    ModuleSupport {
+class Browser(val config: Configuration) : NavigationSupport, WaitSupport, ModuleSupport {
 
     companion object {
         fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
@@ -20,36 +17,6 @@ class Browser(val config: Configuration) : ContentSupport,
     }
 
     val driver = config.driver ?: throw IllegalStateException("Browser is not initialized.")
-
-    override fun css(
-        selector: String,
-        scope: WebElement?
-    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver)).getWebElement()
-
-    override fun cssList(
-        selector: String,
-        scope: WebElement?
-    ) = (scope?.let { ScopedCssSelector(selector, it) } ?: CssSelector(selector, driver)).getWebElements()
-
-    override fun html(
-        tag: String,
-        scope: WebElement?
-    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver)).getWebElement()
-
-    override fun htmlList(
-        tag: String,
-        scope: WebElement?
-    ) = (scope?.let { ScopedHtmlSelector(tag, it) } ?: HtmlSelector(tag, driver)).getWebElements()
-
-    override fun xpath(
-        xpath: String,
-        scope: WebElement?
-    ): WebElement = (scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver)).getWebElement()
-
-    override fun xpathList(
-        xpath: String,
-        scope: WebElement?
-    ) = (scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver)).getWebElements()
 
     override fun <T : Module> module(factory: (Browser, WebElement?) -> T, scope: WebElement?): T = factory(this, scope)
 
