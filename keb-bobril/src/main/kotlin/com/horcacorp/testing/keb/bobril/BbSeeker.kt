@@ -4,7 +4,7 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
-object BbSeeker {
+internal object BbSeeker {
 
     @Suppress("UNCHECKED_CAST")
     fun findElements(selector: String, driver: WebDriver, scope: WebElement? = null): List<WebElement> {
