@@ -19,56 +19,50 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
     @Test
     fun `navigation menu works`() {
-        // given
-        to(::LandingPage) {
-
-            // when
-            menu.page2Link.click()
+        to(::HomePage) {
+            menu.contactsLink.click()
         }
 
-        // then
-        at(::Page2Page) {
-
-            // when
-            menu.page1Link.click()
+        at(::ContactsPage) {
+            menu.aboutLink.click()
         }
 
-        // then
-        at(::Page1Page)
-    }
-
-
-    class LandingPage(browser: Browser) : Page(browser) {
-        override fun url() = "/"
-        override fun at() = header.text == "Landing page"
-
-        val header by content { css("h1") }
-        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
-    }
-
-    class Page1Page(browser: Browser) : Page(browser) {
-        override fun url() = "/"
-        override fun at() = header.text == "Page 1"
-
-        val header by content { css("h1") }
-        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
-    }
-
-    class Page2Page(browser: Browser) : Page(browser) {
-        override fun url() = "/"
-        override fun at() = header.text == "Page 2"
-
-        val header by content { css("h1") }
-        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
-    }
-
-    class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
-        val landingLink by content { css(".nav_landing") }
-        val page1Link by content { css(".nav_page1") }
-        val page2Link by content { css(".nav_page2") }
+        at(::AboutPage)
     }
 
 }
 
+class HomePage(browser: Browser) : Page(browser) {
+    override fun url() = "/"
+    override fun at() = header.text == "Welcome"
 
+    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val header by content { css("h1") }
+}
 
+class AboutPage(browser: Browser) : Page(browser) {
+    override fun url() = "about.html"
+    override fun at() = header.text == "About us"
+
+    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val header by content { css("h1") }
+}
+
+class ContactsPage(browser: Browser) : Page(browser) {
+    override fun url() = "contacts.html"
+    override fun at() = header.text == "Contacts"
+
+    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val header by content { css("h1") }
+}
+
+class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
+    val homeLink by content { css(".nav_welcome") }
+    val aboutLink by content { css(".nav_about") }
+    val contactsLink by content { css(".nav_contacts") }
+
+    fun toHomePage(): HomePage {
+        homeLink.click()
+        return at(::HomePage)
+    }
+}

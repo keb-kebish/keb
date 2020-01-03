@@ -64,3 +64,19 @@
 - We want to capture images on fail test (maybe even on every test)
 
 - In at() verifier use for example assertJ - so that we can have nice error message, when it fails
+
+
+- We realized, that  `WebElement.getAttribute("value")` is not nice. And that we can solve it by normal prepared modules: 
+  `val input by content { module(InputModule(css("#selector"))) }`
+  
+  
+- Vodnr: TODO solve how to go from one page to other
+   ```
+     at(::Page1) {
+       menu.goToPage2()  //this will return page 2
+   }
+    at(::Page2) {   //This is  ble
+  }
+  ```
+  
+  
