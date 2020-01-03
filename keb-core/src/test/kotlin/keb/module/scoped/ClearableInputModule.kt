@@ -1,11 +1,11 @@
 package keb.module.scoped
 
 import com.horcacorp.testing.keb.core.Browser
-import com.horcacorp.testing.keb.core.ScopedModule
+import com.horcacorp.testing.keb.core.Module
 import com.horcacorp.testing.keb.core.content
 import org.openqa.selenium.WebElement
 
-class ClearableInputModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
+class ClearableInputModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
 
     val label by content { html("label") }
     val textInput by content { css("""input[type="text"]""") }

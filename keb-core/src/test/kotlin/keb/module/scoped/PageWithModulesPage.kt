@@ -9,7 +9,7 @@ class PageWithModulesPage(browser: Browser) : Page(browser) {
     override fun at() = css("#name")
 
 
-    val name by content { scopedModule(::ClearableInputModule, css("#name")) }
-    val surname by content { scopedModule(::ClearableInputModule, css("#surname")) }
+    val name by content { ClearableInputModule(browser, css("#name")) }
+    val surname by content { ClearableInputModule(browser, css("#surname")) }
 
 }

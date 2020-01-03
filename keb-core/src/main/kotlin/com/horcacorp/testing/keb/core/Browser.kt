@@ -51,12 +51,7 @@ class Browser(val config: Configuration) : ContentSupport,
         scope: WebElement?
     ) = (scope?.let { ScopedXpathSelector(xpath, it) } ?: XPathSelector(xpath, driver)).getWebElements()
 
-    override fun <T : Module> module(factory: (Browser) -> T): T = factory(this)
-
-    override fun <T : ScopedModule> scopedModule(
-        factory: (Browser, WebElement) -> T,
-        scope: WebElement
-    ): T = factory(this, scope)
+    override fun <T : Module> module(factory: (Browser, WebElement?) -> T, scope: WebElement?): T = factory(this, scope)
 
     override fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
         val preset = presetName

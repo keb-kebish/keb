@@ -43,7 +43,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         override fun at() = header.text == "Landing page"
 
         val header by content { css("h1") }
-        val menu by content { scopedModule(::NavigationMenuModule, css(".navigation_menu")) }
+        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
     }
 
     class Page1Page(browser: Browser) : Page(browser) {
@@ -51,7 +51,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         override fun at() = header.text == "Page 1"
 
         val header by content { css("h1") }
-        val menu by content { scopedModule(::NavigationMenuModule, css(".navigation_menu")) }
+        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
     }
 
     class Page2Page(browser: Browser) : Page(browser) {
@@ -59,10 +59,10 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         override fun at() = header.text == "Page 2"
 
         val header by content { css("h1") }
-        val menu by content { scopedModule(::NavigationMenuModule, css(".navigation_menu")) }
+        val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
     }
 
-    class NavigationMenuModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
+    class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
         val landingLink by content { css(".nav_landing") }
         val page1Link by content { css(".nav_page1") }
         val page2Link by content { css(".nav_page2") }
