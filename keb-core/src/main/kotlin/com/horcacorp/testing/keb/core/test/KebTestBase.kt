@@ -7,14 +7,14 @@ import com.horcacorp.testing.keb.core.Page
 /**
  * Implementation of keb test base
  */
-abstract class KebTestBase(val browser: Browser)  : NavigationSupport {
+abstract class KebTestBase(val browser: Browser) : NavigationSupport {
 
     /** Test runner must call this method after each test */
     fun afterEachTest() {
         closeDriver()
-        }
+    }
 
-        private fun closeDriver() {
+    private fun closeDriver() {
         browser.quit()
     }
 

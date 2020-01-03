@@ -99,9 +99,10 @@ class Browser(val config: Configuration) : ContentSupport,
 
     override fun <T> waitFor(presetName: String?, desc: String?, f: () -> T): T {
         val preset = presetName
-            ?.let { config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(
-                it
-            )
+            ?.let {
+                config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(
+                    it
+                )
             }
             ?: config.getDefaultPreset()
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)

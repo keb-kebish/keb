@@ -22,7 +22,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
 
     testImplementation(group = "org.springframework", name = "spring-core", version = "5.2.2.RELEASE")
-    testImplementation( group= "io.vertx", name= "vertx-web", version= "3.8.4" )
+    testImplementation(group = "io.vertx", name = "vertx-web", version = "3.8.4")
 
 }
 
