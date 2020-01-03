@@ -1,8 +1,13 @@
 package keb.test.util
 
-import io.vertx.core.Vertx
-import io.vertx.ext.web.Router
-import io.vertx.ext.web.handler.StaticHandler
+import io.ktor.http.content.resource
+import io.ktor.http.content.resources
+import io.ktor.http.content.static
+import io.ktor.routing.routing
+import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 
@@ -13,29 +18,27 @@ import kotlin.properties.Delegates
  *
  * @param resourceFolderToServe e.g. resource folder "keb/testing/multipage"
  */
-class HttpResourceFolderServer(val resourceFolderToServe: String) {
+class HttpResourceFolderServer(val resourceFolderToServe: String, private val serveOnRoot: String = "index.html") {
 
-    lateinit var vertx: Vertx
+    lateinit var server: ApplicationEngine
     var port by Delegates.notNull<Int>()
-    val baseUrl: String
-        get() = "http://localhost:$port/"
+    val baseUrl get() = "http://localhost:$port/"
 
 
-    fun start(): HttpResourceFolderServer {
-        vertx = Vertx.vertx()
-        val router = Router.router(vertx)
-        router.route().handler(StaticHandler.create(resourceFolderToServe))
-
+    fun start() = apply {
         port = SocketUtil().findFreePort()
-        vertx.createHttpServer().requestHandler(router::accept).listen(port)
-
-        return this
+        server = embeddedServer(Netty, port = port) {
+            routing {
+                static {
+                    resource("/", "$resourceFolderToServe/$serveOnRoot")
+                    resources(resourceFolderToServe)
+                }
+            }
+        }.start()
     }
 
-
-    fun stop(): HttpResourceFolderServer {
-        vertx.close()
-        return this
+    fun stop() = apply {
+        server.stop(1, 1, TimeUnit.SECONDS)
     }
 
     fun with(closure: (HttpResourceFolderServer) -> Unit) {
