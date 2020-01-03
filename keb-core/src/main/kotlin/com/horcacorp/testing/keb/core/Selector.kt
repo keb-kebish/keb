@@ -10,10 +10,7 @@ abstract class Selector(val selector: String) {
         val context = findElements()
         return when {
             context.isEmpty() -> throw NoSuchElementException("Required page content is not present. Selector='$selector'.")
-            context.size > 1 -> throw TooManyElementsException(
-                toString(),
-                context.size
-            )
+            context.size > 1 -> throw TooManyElementsException(toString(), context.size)
             else -> context.first()
         }
     }
