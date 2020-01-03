@@ -1,9 +1,11 @@
 package com.horcacorp.testing.keb.core
 
-import org.openqa.selenium.WebElement
-
 interface ModuleSupport {
 
-    fun <T : Module> module(factory: (Browser, WebElement?) -> T, scope: WebElement? = null): T
+    val browser: Browser
+
+    fun <T : Module> module(factory: () -> T) = module(factory())
+
+    fun <T : Module> module(module: T) = module.apply { browser = this@ModuleSupport.browser }
 
 }

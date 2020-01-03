@@ -11,7 +11,7 @@ interface WithHttpResourceFolderServer {
     @BeforeEach
     fun start() {
         server.start()
-        browser.config.baseUrl = server.baseUrl
+        browser.baseUrl = server.baseUrl
     }
 
     @AfterEach

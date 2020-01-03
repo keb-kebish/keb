@@ -41,8 +41,8 @@ class KotlinHomePage : Page() {
     override fun at() = header
 
     val header by content { css(".global-header-logo") }
-    val menu by content { NavMenuModule(browser, css(".nav-links")) }
-    val footer by content { FooterModule(browser, html("footer")) }
+    val menu by content { module(NavMenuModule(css(".nav-links"))) }
+    val footer by content { module(FooterModule(html("footer"))) }
 
     fun openDocumentation(): KotlinDocumentationPage {
         menu.menuItems.first { it.text == "LEARN" }.click()
@@ -61,11 +61,11 @@ class KotlinDocumentationPage : Page() {
 
 }
 
-class NavMenuModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
+class NavMenuModule(scope: WebElement) : Module(scope) {
     val menuItems by content { htmlList("a") }
 }
 
-class FooterModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
+class FooterModule(scope: WebElement) : Module(scope) {
     val licenseNotice by content { css(".terms-copyright") }
     val sponsor by content { css(".terms-sponsor") }
 }

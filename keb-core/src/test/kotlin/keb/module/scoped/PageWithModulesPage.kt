@@ -9,7 +9,7 @@ class PageWithModulesPage : Page() {
     override fun at() = css("#name")
 
 
-    val name by content { ClearableInputModule(browser, css("#name")) }
-    val surname by content { ClearableInputModule(browser, css("#surname")) }
+    val name by content { module(ClearableInputModule(css("#name"))) }
+    val surname by content { module(ClearableInputModule(css("#surname"))) }
 
 }
