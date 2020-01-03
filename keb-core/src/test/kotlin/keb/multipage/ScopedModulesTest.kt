@@ -59,7 +59,7 @@ class HomePage : Page() {
     override fun url() = "/"
     override fun at() = header.text == "Welcome"
 
-    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val menu by content { module(NavigationMenuModule(css(".navigation_menu"))) }
     val header by content { css("h1") }
 }
 
@@ -67,7 +67,7 @@ class AboutPage : Page() {
     override fun url() = "about.html"
     override fun at() = header.text == "About us"
 
-    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val menu by content { module(NavigationMenuModule(css(".navigation_menu"))) }
     val header by content { css("h1") }
 }
 
@@ -75,11 +75,11 @@ class ContactsPage : Page() {
     override fun url() = "contacts.html"
     override fun at() = header.text == "Contacts"
 
-    val menu by content { NavigationMenuModule(browser, css(".navigation_menu")) }
+    val menu by content { module(NavigationMenuModule(css(".navigation_menu"))) }
     val header by content { css("h1") }
 }
 
-class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser, scope) {
+class NavigationMenuModule(scope: WebElement) : Module(scope) {
     val homeLink by content { css(".nav_welcome") }
     val aboutLink by content { css(".nav_about") }
     val contactsLink by content { css(".nav_contacts") }
@@ -90,12 +90,12 @@ class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser
     }
 
     fun toAbout(): AboutPage {
-        homeLink.click()
+        aboutLink.click()
         return at(::AboutPage)
     }
 
     fun toContacts(): ContactsPage {
-        homeLink.click()
+        contactsLink.click()
         return at(::ContactsPage)
     }
 }
