@@ -30,6 +30,29 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         at(::AboutPage)
     }
 
+    @Test
+    fun `navigation menu works style2`() {
+        val homePage = to(::HomePage)
+        homePage.menu.contactsLink.click()
+
+        val contactsPage = at(::ContactsPage)
+        contactsPage.menu.aboutLink.click()
+
+        at(::AboutPage)
+
+        // Simple and strait forward,
+        // but page can be used even when browser is on different page when you are already
+    }
+
+    @Test
+    fun `navigation menu works style3`() {
+        to(::HomePage).run {
+            menu.toContacts()
+        }.run {
+            menu.toAbout()
+        }
+    }
+
 }
 
 class HomePage(browser: Browser) : Page(browser) {
@@ -61,8 +84,18 @@ class NavigationMenuModule(browser: Browser, scope: WebElement) : Module(browser
     val aboutLink by content { css(".nav_about") }
     val contactsLink by content { css(".nav_contacts") }
 
-    fun toHomePage(): HomePage {
+    fun toHome(): HomePage {
         homeLink.click()
         return at(::HomePage)
+    }
+
+    fun toAbout(): AboutPage {
+        homeLink.click()
+        return at(::AboutPage)
+    }
+
+    fun toContacts(): ContactsPage {
+        homeLink.click()
+        return at(::ContactsPage)
     }
 }
