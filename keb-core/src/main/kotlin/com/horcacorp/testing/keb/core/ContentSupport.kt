@@ -38,17 +38,11 @@ fun Module.xpath(selector: String, scope: WebElement? = null) =
 fun Module.xpathList(selector: String, scope: WebElement? = null) =
     (scope?.let { xpathSelector(browser, selector, it) } ?: xpathSelector(browser, selector, this.scope)).getWebElements()
 
-private fun cssSelector(browser: Browser, selector: String, scope: WebElement?) = when {
-    scope != null -> ScopedCssSelector(selector, scope)
-    else -> CssSelector(selector, browser.driver)
-}
+private fun cssSelector(browser: Browser, selector: String, scope: WebElement?) =
+    CssSelector(selector, scope ?: browser.driver)
 
-private fun htmlSelector(browser: Browser, tag: String, scope: WebElement?) = when {
-    scope != null -> ScopedHtmlSelector(tag, scope)
-    else -> HtmlSelector(tag, browser.driver)
-}
+private fun htmlSelector(browser: Browser, tag: String, scope: WebElement?) =
+    HtmlSelector(tag, scope ?: browser.driver)
 
-private fun xpathSelector(browser: Browser, xpath: String, scope: WebElement?) = when {
-    scope != null -> ScopedXpathSelector(xpath, scope)
-    else -> XPathSelector(xpath, browser.driver)
-}
+private fun xpathSelector(browser: Browser, xpath: String, scope: WebElement?) =
+    XPathSelector(xpath, scope ?: browser.driver)
