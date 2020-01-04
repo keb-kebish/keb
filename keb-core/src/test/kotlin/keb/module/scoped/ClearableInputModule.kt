@@ -1,6 +1,9 @@
 package keb.module.scoped
 
-import com.horcacorp.testing.keb.core.*
+import com.horcacorp.testing.keb.core.Module
+import com.horcacorp.testing.keb.core.content
+import com.horcacorp.testing.keb.core.css
+import com.horcacorp.testing.keb.core.html
 import org.openqa.selenium.WebElement
 
 class ClearableInputModule(scope: WebElement) : Module(scope) {

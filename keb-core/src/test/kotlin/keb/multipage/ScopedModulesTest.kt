@@ -53,6 +53,37 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         }
     }
 
+
+    @Test
+    fun `navigation menu works style4`() {
+        tos(::HomePage) {
+            menu.toContacts()
+        }.run {
+            menu.toAbout()
+        }
+    }
+
+    /** do not return page, but retrun - result of closure */
+    fun <T : Page, R : Any> tos(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
+        body.invoke(to(pageFactory, waitPreset, {}))
+
+
+
+    fun <T : Page, R : Any> T.via(body: T.() -> R): R {
+        return body(this)
+    }      // Maybe that via can be anything - not just "page" -   but....  hmmm   its  "run"
+
+
+    @Test
+    fun `navigation menu works style5`() {
+        tos(::HomePage) {
+            menu.toContacts()
+        }.via {
+            menu.toAbout()
+        }
+    }
+
+
 }
 
 class HomePage : Page() {
