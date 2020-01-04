@@ -17,8 +17,14 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
     override var server = HttpResourceFolderServer("keb/testing/multipage")
 
+    // Page objects are simple, do not return other page
+    // When you are writing test. You decide and write on which page you are
+    //
+    //  + pages are more simple
+    //  + you can see what is part of closure
+    //  - during writing tests - you must know all pages and decide on which page you are
     @Test
-    fun `navigation menu works`() {
+    fun `navigation menu works style1`() {
         to(::HomePage) {
             menu.contactsLink.click()
         }
@@ -30,6 +36,23 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         at(::AboutPage)
     }
 
+//    @Test
+//    fun `navigation menu works style1`() {
+//        to(::HomePage) { homePage ->
+//            homePage.menu.contactsLink.click()
+//        }
+//
+//        at(::ContactsPage) { contactsPage ->
+//            contactsPage.menu.aboutLink.click()
+//        }
+//
+//        at(::AboutPage)
+//    }
+
+
+    // + Simple and strait forward old school,
+    // - Page can be used even when browser is on different page when you are already
+    //     - page can be reused - and no verification if you are really on page is executed
     @Test
     fun `navigation menu works style2`() {
         val homePage = to(::HomePage)
@@ -39,11 +62,9 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         contactsPage.menu.aboutLink.click()
 
         at(::AboutPage)
-
-        // Simple and strait forward,
-        // but page can be used even when browser is on different page when you are already
     }
 
+    // + pure kotlin default functions - no magic
     @Test
     fun `navigation menu works style3`() {
         to(::HomePage).run {
@@ -68,12 +89,12 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         body.invoke(to(pageFactory, waitPreset, {}))
 
 
-
     fun <T : Page, R : Any> T.via(body: T.() -> R): R {
         return body(this)
     }      // Maybe that via can be anything - not just "page" -   but....  hmmm   its  "run"
 
 
+    // + pure keb functions for working with Page
     @Test
     fun `navigation menu works style5`() {
         tos(::HomePage) {
