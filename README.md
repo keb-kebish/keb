@@ -2,11 +2,10 @@
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
 ```kotlin
-class KotlinHomePage(browser: Browser) : Page(browser) {
+class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
 }
 ```
-Please note that you must define class with browser object in constructor and pass this value into Page superclass.
 
 ### Page elements
 To select web element on your page use the following methods.
@@ -20,30 +19,39 @@ xpath("/html/body/h1")
 xpathList("/html/body/h1")
 ```
 
+In order to lazily access page content use the `content` delegate.
+```kotlin
+class KotlinHomePage : Page() {
+    override fun url() = "https://kotlinlang.org"
+    
+    val header by content { css(".global-header-logo") }
+    val headerText by content { header.text }
+}
+```
+
 ### Page verifier
 In order to verify, that you successfully landed on your page, you can use `at()` method.
 ```kotlin
-class KotlinHomePage(browser: Browser) : Page(browser) {
+class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
     override fun at() = header
     
-    val header = css(".global-header-logo")
+    val header by content { css(".global-header-logo") }
 }
 ```
 
 ### Modules
-If you want to reuse page content present on multiple pages, you can use modules. There are two types of modules in keb:
-* Module - same functionality as page, but can be reused on multiple places
-* ScopedModule - same as Module, but content is searched only in scope passed as constructor argument.
+If you want to reuse page content present on multiple pages, you can use modules. Module has an optional constructor
+parameter `scope`, which can be used as a search root for all the module's content. To initialize module with use the `module` method.
 ```kotlin
-class NavMenuModule(browser: Browser, scope: WebElement) : ScopedModule(browser, scope) {
-    val menuItems = htmlList("a")
+class NavMenuModule(scope: WebElement) : Module(scope) {
+    val menuItems by content { htmlList("a") }
 }
 
-class KotlinHomePage(browser: Browser) : Page(browser) {
+class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
     
-    val menu = scopedModule(::NavMenuModule, css(".nav-links"))
+    val menu by content { module(NavMenuModule(css(".nav-links"))) }
 }
 ```
 
@@ -68,8 +76,4 @@ Browser.drive(config) {
     // ...
 }
 ```
-For full usage example and how to use keb with JUnit please refer to [/src/test/kotlin/com/horcacorp/testing/keb](/src/test/kotlin/com/horcacorp/testing/keb).
-
-## TODOs
-* load configuration from external file
-* Maven repo
+For full usage example please refer to [/keb-core/src/test/kotlin/keb](/keb-core/src/test/kotlin/keb).
