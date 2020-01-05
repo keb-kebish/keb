@@ -77,7 +77,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
     @Test
     fun `navigation menu works style4`() {
-        tos(::HomePage) {
+        toVia(::HomePage) {
             menu.toContacts()
         }.run {
             menu.toAbout()
@@ -85,8 +85,12 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     }
 
     /** do not return page, but retrun - result of closure */
-    fun <T : Page, R : Any> tos(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
+    fun <T : Page, R : Any> toVia(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
         body.invoke(to(pageFactory, waitPreset, {}))
+
+    /** do not return page, but retrun - result of closure */
+    fun <T : Page, R : Any> atVia(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
+        body.invoke(at(pageFactory, waitPreset, {}))
 
 
     fun <T : Page, R : Any> T.via(body: T.() -> R): R {
@@ -97,12 +101,46 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     // + pure keb functions for working with Page
     @Test
     fun `navigation menu works style5`() {
-        tos(::HomePage) {
+        toVia(::HomePage) {
             menu.toContacts()
         }.via {
             menu.toAbout()
         }
     }
+
+    // + pure keb functions for working with Page
+    @Test
+    fun `navigation menu works style6`() {
+        to(::HomePage).via {
+            menu.toContacts()
+        }.via {
+            menu.toAbout()
+        }
+    }
+
+
+    //TODO mechanismus, který hlídá, že jsi na správné stránce.
+    // neco jak, že by si browser hlídal na jaké jsi stránce (třeba při validátoru by si to zapamatoval)
+    // A pak by hlídal, že se volá jen z instancí té strpávné stránky (problém je, že tam nevím, kde se na to chytit...
+    // To bych musel se chytit někde někde před metodou, která je naimplementovaná na stránce a to je problém.
+    //     to bych musel obalit celý page object nějakou svojí proxy...    Jako spring to už je potíž.
+    //                                      Nesměl bych vytvářet stránky sám, ale jen přes keb ::MyPage
+    // + pure keb functions for working with Page
+//    Proč:  předcházet tomuhle
+//    @Test
+//    fun `navigation menu works style6`() {
+//        to(::HomePage) {
+//            menu.toContacts()
+//        }.via {
+//            menu.toAbout()  //Tady volám metodu z HomePage, ale veskutčnosti jsem na ContactsPage
+//        }
+//    }
+
+
+
+
+
+
 
 
 }
