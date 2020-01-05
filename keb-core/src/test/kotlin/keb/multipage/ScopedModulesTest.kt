@@ -3,8 +3,9 @@ package keb.multipage
 import com.horcacorp.testing.keb.core.*
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
-import keb.test.util.HttpResourceFolderServer
-import keb.test.util.WithHttpResourceFolderServer
+import keb.test.util.HttpResourceFolderServerExtension
+import keb.test.util.extendable.Extendable
+import keb.test.util.extendable.ExtendableImpl
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
@@ -13,9 +14,11 @@ import org.openqa.selenium.firefox.FirefoxDriver
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = FirefoxDriver()
-})), WithHttpResourceFolderServer {
+})), Extendable by ExtendableImpl() {
 
-    override var server = HttpResourceFolderServer("keb/testing/multipage")
+    var serverExtension = register(HttpResourceFolderServerExtension("keb/testing/multipage", browser))
+
+
 
     // Page objects are simple, do not return other page
     // When you are writing test. You decide and write on which page you are
@@ -135,12 +138,6 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 //            menu.toAbout()  //Tady volám metodu z HomePage, ale veskutčnosti jsem na ContactsPage
 //        }
 //    }
-
-
-
-
-
-
 
 
 }
