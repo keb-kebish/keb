@@ -4,6 +4,9 @@ import com.horcacorp.testing.keb.core.Browser
 import com.horcacorp.testing.keb.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
 import keb.junit5.KebTest
+import keb.test.util.HttpResourceFolderServerExtension
+import keb.test.util.extendable.Extendable
+import keb.test.util.extendable.ExtendableImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.firefox.FirefoxDriver
@@ -11,12 +14,10 @@ import org.openqa.selenium.firefox.FirefoxDriver
 
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
-    val driver = FirefoxDriver()
-    this.driver = driver
-    baseUrl =
-        javaClass.classLoader.getResource("com/horcacorp/testing/keb/module/scoped/page.html")!!.toString()
-            .replace("page.html", "")
-})) {
+    this.driver = FirefoxDriver()
+})), Extendable by ExtendableImpl() {
+
+    var server = register(HttpResourceFolderServerExtension("com/horcacorp/testing/keb/module/scoped", browser))
 
     @Test
     fun `surname can be cleared`() {
