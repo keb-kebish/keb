@@ -32,7 +32,7 @@ class HttpResourceFolderServer(val resourceFolderToServe: String, private val se
         server = embeddedServer(Netty, port = port) {
             routing {
                 static {
-                    resource("/", "$resourceFolderToServe/$serveOnRoot")
+                    resource("/", serveOnRoot, resourceFolderToServe)
                     resources(resourceFolderToServe)
                 }
             }
