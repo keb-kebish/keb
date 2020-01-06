@@ -2,7 +2,8 @@ package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.*
 
-abstract class Selector(val selector: String) {
+abstract class Selector<T> {
+    abstract val selector: T
     fun getWebElement(): WebElement {
         val context = findElements()
         return when {
@@ -23,19 +24,24 @@ abstract class Selector(val selector: String) {
     protected abstract fun findElements(): List<WebElement>
 }
 
-class CssSelector(selector: String, private val searchContext: SearchContext) : Selector(selector) {
+class CssSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.cssSelector(selector))
     override fun toString() = "CSS selector '$selector'"
 }
 
-class HtmlSelector(selector: String, private val searchContext: SearchContext) : Selector(selector) {
+class HtmlSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.tagName(selector))
     override fun toString() = "HTML tag '$selector'"
 }
 
-class XPathSelector(selector: String, private val searchContext: SearchContext) : Selector(selector) {
+class XPathSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.xpath(selector))
     override fun toString() = "XPath '$selector'"
+}
+
+class BySelector(override val selector: By, private val searchContext: SearchContext) : Selector<By>() {
+    override fun findElements(): List<WebElement> = searchContext.findElements(selector)
+    override fun toString() = "By '$selector'"
 }
 
 class TooManyElementsException(selectedBy: String, elementsSize: Int) :

@@ -1,5 +1,6 @@
 package com.horcacorp.testing.keb.core
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 
 fun Page.css(selector: String, scope: WebElement? = null) =
@@ -38,6 +39,18 @@ fun Module.xpath(selector: String, scope: WebElement? = null) =
 fun Module.xpathList(selector: String, scope: WebElement? = null) =
     (scope?.let { xpathSelector(browser, selector, it) } ?: xpathSelector(browser, selector, this.scope)).getWebElements()
 
+fun Page.by(selector: By, scope: WebElement? = null) =
+    bySelector(browser, selector, scope).getWebElement()
+
+fun Page.byList(selector: By, scope: WebElement? = null) =
+    bySelector(browser, selector, scope).getWebElements()
+
+fun Module.by(selector: By, scope: WebElement? = null) =
+    (scope?.let { bySelector(browser, selector, it) } ?: bySelector(browser, selector, this.scope)).getWebElement()
+
+fun Module.byList(selector: By, scope: WebElement? = null) =
+    (scope?.let { bySelector(browser, selector, it) } ?: bySelector(browser, selector, this.scope)).getWebElements()
+
 private fun cssSelector(browser: Browser, selector: String, scope: WebElement?) =
     CssSelector(selector, scope ?: browser.driver)
 
@@ -46,3 +59,6 @@ private fun htmlSelector(browser: Browser, tag: String, scope: WebElement?) =
 
 private fun xpathSelector(browser: Browser, xpath: String, scope: WebElement?) =
     XPathSelector(xpath, scope ?: browser.driver)
+
+private fun bySelector(browser: Browser, by: By, scope: WebElement?) =
+    BySelector(by, scope ?: browser.driver)
