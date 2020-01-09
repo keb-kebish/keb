@@ -1,8 +1,5 @@
 # TODOs
 ## Core functionality
-- validator "at" - by default I would make it mandatory (default implementation would throw exception)
-  - It could be disabled in config
-  
 - Prepare support for basic elements via out-of-the-box modules
    - for example, because this:
       
