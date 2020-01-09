@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 
-class ScopedModulesTest : KebTest(Browser(kebConfig {
+class MultiPageTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = FirefoxDriver()
 })), Extendable by ExtendableImpl() {
@@ -30,7 +30,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     fun `navigation menu works style1`() {
         to(::HomePage) {
             menu.contactsLink.click()
-        }
+        } 
 
         at(::ContactsPage) {
             menu.aboutLink.click()
@@ -80,20 +80,12 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
 
     @Test
     fun `navigation menu works style4`() {
-        toVia(::HomePage) {
+        to(::HomePage) {
             menu.toContacts()
         }.run {
             menu.toAbout()
         }
     }
-
-    /** do not return page, but retrun - result of closure */
-    fun <T : Page, R : Any> toVia(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
-        body.invoke(to(pageFactory, waitPreset, {}))
-
-    /** do not return page, but retrun - result of closure */
-    fun <T : Page, R : Any> atVia(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
-        body.invoke(at(pageFactory, waitPreset, {}))
 
 
     fun <T : Page, R : Any> T.via(body: T.() -> R): R {
@@ -104,7 +96,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     // + pure keb functions for working with Page
     @Test
     fun `navigation menu works style5`() {
-        toVia(::HomePage) {
+        to(::HomePage) {
             menu.toContacts()
         }.via {
             menu.toAbout()
@@ -114,7 +106,7 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
     // + pure keb functions for working with Page
     @Test
     fun `navigation menu works style6`() {
-        to(::HomePage).via {
+        to(::HomePage) {
             menu.toContacts()
         }.via {
             menu.toAbout()

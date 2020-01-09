@@ -6,23 +6,41 @@ interface NavigationSupport {
 
     val browser: Browser
 
-    fun <T : Page> to(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> Unit = {}) =
+
+    fun <T : Page> to(pageFactory: () -> T, waitPreset: String? = null): T {
+        val page = pageFactory()
+        return to(page, waitPreset, { page })
+    }
+
+    fun <T : Page, R : Any> to(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
         to(pageFactory(), waitPreset, body)
 
 
-    fun <T : Page> to(page: T, waitPreset: String? = null, body: T.() -> Unit = {}): T {
+    fun <T : Page> to(page: T, waitPreset: String? = null): T =
+        to(page, waitPreset, { page })
+
+    fun <T : Page, R : Any> to(page: T, waitPreset: String? = null, body: T.() -> R): R {
         browser.driver.get(resolveUrl(page.url()))
         return at(page, waitPreset, body)
     }
 
-    fun <T : Page> at(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> Unit = {}) =
+    fun <T : Page> at(pageFactory: () -> T, waitPreset: String? = null): T {
+        val page = pageFactory()
+        return at(page, waitPreset, { page })
+    }
+
+    fun <T : Page, R : Any> at(pageFactory: () -> T, waitPreset: String? = null, body: T.() -> R): R =
         at(pageFactory(), waitPreset, body)
 
-    fun <T : Page> at(page: T, waitPreset: String? = null, body: T.() -> Unit = {}): T {
+
+    fun <T : Page> at(page: T, waitPreset: String? = null): T =
+        at(page, waitPreset) { page }
+
+
+    fun <T : Page, R : Any> at(page: T, waitPreset: String? = null, body: T.() -> R): R {
         page.browser = browser
         page.verifyAt(waitPreset)
-        body.invoke(page)
-        return page
+        return body.invoke(page)
     }
 
     private fun resolveUrl(urlSuffix: String): String {
