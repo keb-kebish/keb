@@ -16,6 +16,7 @@ class Configuration {
 
     var driver: WebDriver? = null
     var baseUrl = ""
+    var atVerifierRequired = false
 
     private var waitPresets: Map<String, WaitPreset> = WaitingDslBuilder().build()
     fun waiting(dsl: WaitingDslBuilder.() -> Unit) {
