@@ -24,6 +24,13 @@ interface NavigationSupport {
         return at(page, waitPreset, body)
     }
 
+    private fun resolveUrl(urlSuffix: String): String {
+        val urlPrefix = browser.baseUrl
+        val url = if (urlPrefix.isEmpty()) urlSuffix else "$urlPrefix/$urlSuffix"
+        return URI(url).normalize().toString()
+    }
+
+
     fun <T : Page> at(pageFactory: () -> T, waitPreset: String? = null): T {
         val page = pageFactory()
         return at(page, waitPreset, { page })
@@ -43,10 +50,10 @@ interface NavigationSupport {
         return body.invoke(page)
     }
 
-    private fun resolveUrl(urlSuffix: String): String {
-        val urlPrefix = browser.baseUrl
-        val url = if (urlPrefix.isEmpty()) urlSuffix else "$urlPrefix/$urlSuffix"
-        return URI(url).normalize().toString()
+
+    fun <T : Page, R : Any> T.via(body: T.() -> R): R {
+        return body(this)
     }
+
 
 }

@@ -87,12 +87,6 @@ class MultiPageTest : KebTest(Browser(kebConfig {
         }
     }
 
-
-    fun <T : Page, R : Any> T.via(body: T.() -> R): R {
-        return body(this)
-    }      // Maybe that via can be anything - not just "page" -   but....  hmmm   its  "run"
-
-
     // + pure keb functions for working with Page
     @Test
     fun `navigation menu works style5`() {
@@ -103,15 +97,6 @@ class MultiPageTest : KebTest(Browser(kebConfig {
         }
     }
 
-    // + pure keb functions for working with Page
-    @Test
-    fun `navigation menu works style6`() {
-        to(::HomePage) {
-            menu.toContacts()
-        }.via {
-            menu.toAbout()
-        }
-    }
 
 
     //TODO mechanismus, který hlídá, že jsi na správné stránce.
