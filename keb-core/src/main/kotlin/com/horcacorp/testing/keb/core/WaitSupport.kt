@@ -6,14 +6,25 @@ interface WaitSupport {
 
     val browser: Browser
 
-    fun <T> waitFor(presetName: String? = null, desc: String? = null, f: () -> T?): T {
+    val defaultWaitPreset get() = browser.config.getDefaultPreset()
+
+    fun <T> waitFor(
+        presetName: String? = null,
+        desc: String? = null,
+        f: () -> T?
+    ): T {
         val preset = presetName
             ?.let { browser.config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
-            ?: browser.config.getDefaultPreset()
+            ?: defaultWaitPreset
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }
 
-    fun <T> waitFor(timeoutMillis: Long, retryIntervalMillis: Long, desc: String? = null, f: () -> T?): T {
+    fun <T> waitFor(
+        timeoutMillis: Long = defaultWaitPreset.timeoutMillis,
+        retryIntervalMillis: Long = defaultWaitPreset.retryIntervalMillis,
+        desc: String? = null,
+        f: () -> T?
+    ): T {
         val timeoutAt = System.currentTimeMillis() + timeoutMillis
         var passed = false
         var value: T? = null
@@ -43,11 +54,11 @@ interface WaitSupport {
         return if (passed) {
             value!!
         } else {
-            val err = if (desc != null) {
-                "Waiting for '$desc' has timed out after $timeoutMillis milliseconds."
-            } else {
-                "Waiting has timed out after $timeoutMillis milliseconds."
-            }
+            val err = WaitTimeoutMessageBuilder(timeoutMillis)
+                .withDetail(desc)
+                .withLastEvaluatedValue(value)
+                .withLastThrown(thrown)
+                .build()
             throw WaitTimeoutException(err, thrown)
         }
     }
@@ -64,6 +75,29 @@ interface WaitSupport {
             else -> true
         }
     }
+
+}
+
+class WaitTimeoutMessageBuilder(private val timeoutedAfterMillis: Long) {
+
+    private var detail: String = ""
+    private var lastEvaluatedValue: String = ""
+    private var lastThrowableMessage = ""
+
+    fun withDetail(detail: String?) = apply {
+        detail?.let { this.detail = " for '$it'" }
+    }
+
+    fun withLastEvaluatedValue(lastEvaluatedValue: Any?) = apply {
+        this.lastEvaluatedValue = " Last evaluated value: '$lastEvaluatedValue'."
+    }
+
+    fun withLastThrown(lastThrown: Throwable?) = apply {
+        lastThrown?.let { " Last exception cause: '${it.message}'." }
+    }
+
+    fun build() =
+        "Waiting$detail has timed out after ${timeoutedAfterMillis / 1000} seconds.$lastEvaluatedValue$lastThrowableMessage"
 
 }
 
