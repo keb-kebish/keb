@@ -9,20 +9,22 @@ interface WaitSupport {
     val defaultWaitPreset get() = browser.config.getDefaultPreset()
 
     fun <T> waitFor(
-        presetName: String? = null,
+        preset: String? = null,
         desc: String? = null,
         f: () -> T?
     ): T {
-        val preset = presetName?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset
-        return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
+        val customOrDefaultPreset = preset?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset
+        return waitFor(customOrDefaultPreset.timeout, customOrDefaultPreset.retryInterval, desc, f)
     }
 
     fun <T> waitFor(
-        timeoutMillis: Long = defaultWaitPreset.timeoutMillis,
-        retryIntervalMillis: Long = defaultWaitPreset.retryIntervalMillis,
+        timeout: Number = defaultWaitPreset.timeout,
+        retryInterval: Number = defaultWaitPreset.retryInterval,
         desc: String? = null,
         f: () -> T?
     ): T {
+        val timeoutMillis = timeout.toMillis()
+        val retryIntervalMillis = retryInterval.toMillis()
         val timeoutAt = System.currentTimeMillis() + timeoutMillis
         var passed = false
         var value: T? = null
@@ -52,7 +54,7 @@ interface WaitSupport {
         return if (passed) {
             value!!
         } else {
-            val err = WaitTimeoutMessageBuilder(timeoutMillis)
+            val err = WaitTimeoutMessageBuilder(timeout)
                 .withDetail(desc)
                 .withLastEvaluatedValue(value)
                 .withLastThrown(thrown)
@@ -60,6 +62,8 @@ interface WaitSupport {
             throw WaitTimeoutException(err, thrown)
         }
     }
+
+    private fun Number.toMillis() = toDouble().times(1000).toLong()
 
     private fun resolveTruthiness(value: Any?): Boolean {
         return when (value) {
@@ -76,7 +80,7 @@ interface WaitSupport {
 
 }
 
-class WaitTimeoutMessageBuilder(private val timeoutedAfterMillis: Long) {
+class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
 
     private var detail: String = ""
     private var lastEvaluatedValue: String = ""
@@ -95,22 +99,11 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfterMillis: Long) {
     }
 
     fun build() =
-        "Waiting$detail has timed out after ${timeoutedAfterMillis / 1000} seconds.$lastEvaluatedValue$lastThrowableMessage"
+        "Waiting$detail has timed out after $timeoutedAfter seconds.$lastEvaluatedValue$lastThrowableMessage"
 
 }
 
-data class WaitPreset(val timeoutMillis: Long, val retryIntervalMillis: Long) {
-
-    companion object {
-        fun fromSeconds(timeoutSeconds: Number, retryIntervalSeconds: Number): WaitPreset {
-            val timeoutMillis = timeoutSeconds.toMillis()
-            val retryIntervalMillis = retryIntervalSeconds.toMillis()
-            return WaitPreset(timeoutMillis, retryIntervalMillis)
-        }
-
-        private fun Number.toMillis() = this.toDouble().times(1000).toLong()
-    }
-}
+data class WaitPreset(val timeout: Number, val retryInterval: Number)
 
 class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)
 class WaitPresetNotFoundException(presetName: String) : RuntimeException("Preset with name '$presetName' not found.")

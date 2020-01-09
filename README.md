@@ -17,6 +17,8 @@ html("h1")
 htmlList("h1")
 xpath("/html/body/h1")
 xpathList("/html/body/h1")
+by(MyCustomBy()) // can be used with custom implementation of org.openqa.selenium.By
+byList(MyCustomBy())
 ```
 
 In order to lazily access page content use the `content` delegate.
@@ -56,13 +58,35 @@ class KotlinHomePage : Page() {
 ```
 
 ## Waiting
-Waiting for some page element to be present, you can use waitFor method.
+Waiting for some page element to be present, you can use `waitFor` method.
 ```kotlin
 css(".form-input").click()
 val result = waitFor {
     css(".result")
 }
 ``` 
+Timeout duration and retry interval can be defined either by custom wait preset or directly through `waitFor` method.
+```kotlin
+waitFor(preset = "quick") { css(".result") }
+waitFor(timeout = 10, retryInterval = 0.5) { css(".result") }
+```
+Custom wait presets can be defined using Kotlin DSL in the `Configuration`. Default values when no custom configuration 
+is defined are 15 seconds for timeout and 1 second for retry interval.
+```kotlin
+kebConfig {
+    waiting {
+        timeout = 15
+        retryInterval = 1
+        preset("quick") {
+            timeout = 2
+            retryInterval = 0.1
+        }
+        preset("slow") {
+            timeout = 60        
+        }
+    }
+}
+```
 
 ## Usage
 ```kotlin

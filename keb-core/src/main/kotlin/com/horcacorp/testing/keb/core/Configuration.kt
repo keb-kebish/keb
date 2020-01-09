@@ -38,12 +38,12 @@ class Configuration {
         }
 
         fun build(): Map<String, WaitPreset> = CaseInsensitiveMap(
-            presets.plus(DEFAULT_PRESET_NAME to WaitPreset.fromSeconds(timeout, retryInterval))
+            presets.plus(DEFAULT_PRESET_NAME to WaitPreset(timeout, retryInterval))
         )
     }
 
     class WaitPresetDslBuilder(var timeout: Number, var retryInterval: Number) {
-        fun build() = WaitPreset.fromSeconds(timeout, retryInterval)
+        fun build() = WaitPreset(timeout, retryInterval)
     }
 
     private class CaseInsensitiveMap<T>(
