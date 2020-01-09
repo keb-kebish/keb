@@ -32,7 +32,7 @@ class KotlinHomePage : Page() {
 ```
 
 ### Page verifier
-In order to verify, that you successfully landed on your page, you can use `at()` method.
+In order to verify, that you successfully landed on your page, you can use `at` method.
 ```kotlin
 class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
@@ -41,6 +41,8 @@ class KotlinHomePage : Page() {
     val header by content { css(".global-header-logo") }
 }
 ```
+Whether every page has to define `at` verifier can be controlled by configuration property `atVerifierRequired`. If no
+verifier is defined and neither is required, no page verification is performed.
 
 ### Modules
 If you want to reuse page content present on multiple pages, you can use modules. Module has an optional constructor
