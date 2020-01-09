@@ -13,9 +13,7 @@ interface WaitSupport {
         desc: String? = null,
         f: () -> T?
     ): T {
-        val preset = presetName
-            ?.let { browser.config.waitPresets[it.toUpperCase()] ?: throw WaitPresetNotFoundException(it) }
-            ?: defaultWaitPreset
+        val preset = presetName?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset
         return waitFor(preset.timeoutMillis, preset.retryIntervalMillis, desc, f)
     }
 
@@ -101,7 +99,18 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfterMillis: Long) {
 
 }
 
-data class WaitPreset(val timeoutMillis: Long, val retryIntervalMillis: Long)
+data class WaitPreset(val timeoutMillis: Long, val retryIntervalMillis: Long) {
+
+    companion object {
+        fun fromSeconds(timeoutSeconds: Number, retryIntervalSeconds: Number): WaitPreset {
+            val timeoutMillis = timeoutSeconds.toMillis()
+            val retryIntervalMillis = retryIntervalSeconds.toMillis()
+            return WaitPreset(timeoutMillis, retryIntervalMillis)
+        }
+
+        private fun Number.toMillis() = this.toDouble().times(1000).toLong()
+    }
+}
 
 class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)
 class WaitPresetNotFoundException(presetName: String) : RuntimeException("Preset with name '$presetName' not found.")
