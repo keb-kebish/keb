@@ -79,11 +79,11 @@ kebConfig {
     waiting {
         timeout = 15
         retryInterval = 1
-        preset("quick") {
+        "quick" {
             timeout = 2
             retryInterval = 0.1
         }
-        preset("slow") {
+        "slow" {
             timeout = 60        
         }
     }

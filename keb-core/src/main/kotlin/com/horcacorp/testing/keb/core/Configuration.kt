@@ -33,8 +33,8 @@ class Configuration {
         var timeout = DEFAULT_TIMEOUT
         var retryInterval = DEFAULT_RETRY_INTERVAL
 
-        fun preset(alias: String, dsl: WaitPresetDslBuilder.() -> Unit) {
-            presets[alias] = WaitPresetDslBuilder(timeout, retryInterval).apply(dsl).build()
+        operator fun String.invoke(dsl: WaitPresetDslBuilder.() -> Unit) {
+            presets[this] = WaitPresetDslBuilder(timeout, retryInterval).apply(dsl).build()
         }
 
         fun build(): Map<String, WaitPreset> = CaseInsensitiveMap(
