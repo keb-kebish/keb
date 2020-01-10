@@ -95,7 +95,7 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
     }
 
     fun withLastThrown(lastThrown: Throwable?) = apply {
-        lastThrown?.let { " Last exception cause: '${it.message}'." }
+        lastThrown?.let { this.lastThrowableMessage = " Last exception cause: '${it.message}'." }
     }
 
     fun build() =

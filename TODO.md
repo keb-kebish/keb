@@ -9,7 +9,7 @@
    - We realized, that  `WebElement.getAttribute("value")` is not nice. And that we can solve it by normal prepared modules: 
      `val input by content { module(InputModule(css("#selector"))) }`
   
-- Lazily start the browser inside tests 
+- IMPORTATNT TO MULTIPLE TESTS Lazily start the browser inside tests 
   - not when the test starts, but on first browser access
 
 - Browser should have possibility to directly get and set url. 
@@ -30,26 +30,32 @@
 
 - In at() verifier use for example assertJ - so that we can have nice error message, when it fails
 
+- Consider possibility, where everything is waiting by default
+    - even  WebElement.click() - is tried multiple times until it succeeed (with maxTimeout ofcourse)   
+       - e.g.  element is covered by loader, thats why click fails, when loader disapper it will succeed
+       - to achive this, some kind of WebElement proxy will be needed (or use custom KebElement)
+
 ## Keb configuration
+- in config   driver have to be closure 
+     - to start browser in lazy way
+     - to be able start browser before each test
+
 - KebConfig can be defined global, or locally overridden by test  "probably not so important for the beginning"
 
 - Load KebConfig from external file.
   - Preferably Kotlin Script format
 
 ## Tests semantic
-- In which style should be tests written?  I like style with closures
-  - it enables you write it in the same way as now, but add possibliity to have
-  - each page enclosed inside closure
-  - it prevent using "stale" Pages  it helps a lot.
-    
-- Vodnr: TODO solve how to go from one page to other
-   ```
-     at(::Page1) {
-       menu.goToPage2()  //this will return page 2
-   }
-    at(::Page2) {   //This is  ble
-  }
-  ```
+
   
 ## Other
 - publish Maven artifact
+
+- verify, that setup project and write first working tests is as simple and prepared as possible
+     - samples and on boarding have to be super easy
+     
+     
+## Ideas
+
+- Consider usage of "concept of CurrentPage"
+   - e.g. browser will remember on which page is this can be set by "at" method
