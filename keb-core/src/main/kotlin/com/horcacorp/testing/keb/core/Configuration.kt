@@ -3,6 +3,7 @@
 package com.horcacorp.testing.keb.core
 
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 
 fun kebConfig(conf: Configuration.() -> Unit) = Configuration().apply { conf() }
 
@@ -14,7 +15,7 @@ class Configuration {
         val DEFAULT_RETRY_INTERVAL: Number = 1
     }
 
-    var driver: WebDriver? = null
+    var driver: () -> WebDriver = { FirefoxDriver() }
     var baseUrl = ""
     var atVerifierRequired = false
 

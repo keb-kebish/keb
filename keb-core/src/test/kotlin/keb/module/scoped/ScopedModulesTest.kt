@@ -14,7 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 
 class ScopedModulesTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
-    this.driver = FirefoxDriver()
+    this.driver = { FirefoxDriver() }
 })), Extendable by ExtendableImpl() {
 
     var server = register(HttpResourceFolderServerExtension("com/horcacorp/testing/keb/module/scoped", browser))
@@ -31,7 +31,6 @@ class ScopedModulesTest : KebTest(Browser(kebConfig {
         //then
         assertThat(pageWithModulesPage.surname.value).isEmpty()
     }
-
 
     @Test
     fun `surname can be cleared with page closure`() {

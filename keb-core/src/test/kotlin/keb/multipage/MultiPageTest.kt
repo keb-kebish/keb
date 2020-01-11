@@ -13,7 +13,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 
 class MultiPageTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
-    this.driver = FirefoxDriver()
+    this.driver = { FirefoxDriver() }
 })), Extendable by ExtendableImpl() {
 
     var serverExtension = register(HttpResourceFolderServerExtension("keb/testing/multipage", browser))
@@ -30,7 +30,7 @@ class MultiPageTest : KebTest(Browser(kebConfig {
     fun `navigation menu works style1`() {
         to(::HomePage) {
             menu.contactsLink.click()
-        } 
+        }
 
         at(::ContactsPage) {
             menu.aboutLink.click()
@@ -96,7 +96,6 @@ class MultiPageTest : KebTest(Browser(kebConfig {
             menu.toAbout()
         }
     }
-
 
 
     //TODO mechanismus, který hlídá, že jsi na správné stránce.

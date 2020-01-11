@@ -1,5 +1,7 @@
 package com.horcacorp.testing.keb.core
 
+import org.openqa.selenium.WebDriver
+
 class Browser(val config: Configuration) : NavigationSupport, ModuleSupport, WaitSupport {
 
     companion object {
@@ -13,13 +15,24 @@ class Browser(val config: Configuration) : NavigationSupport, ModuleSupport, Wai
         }
     }
 
-    val driver = config.driver ?: throw IllegalStateException("Browser driver not configured.")
+    private var driverHolder: WebDriver? = null
+
+    val driver: WebDriver
+        get() {
+            if (driverHolder == null) {
+                driverHolder = config.driver()
+            }
+            return driverHolder as WebDriver
+        }
+
     var baseUrl = config.baseUrl
 
     override val browser get() = this
 
     fun quit() {
-        driver.quit()
+        val closingDriver = driverHolder
+        driverHolder = null
+        closingDriver?.quit()
     }
 
 }

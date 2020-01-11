@@ -10,8 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 
 class KotlinSiteKebTest : KebTest(Browser(kebConfig {
     WebDriverManager.firefoxdriver().setup()
-    val ffDriver = FirefoxDriver()
-    driver = ffDriver
+    driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
 })) {
 
