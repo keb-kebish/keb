@@ -1,6 +1,6 @@
 package com.horcacorp.testing.keb.core
 
-import org.openqa.selenium.WebDriver
+import com.horcacorp.testing.keb.core.util.ResettableLazy
 
 class Browser(val config: Configuration) : NavigationSupport, ModuleSupport, WaitSupport {
 
@@ -15,24 +15,17 @@ class Browser(val config: Configuration) : NavigationSupport, ModuleSupport, Wai
         }
     }
 
-    private var driverHolder: WebDriver? = null
-
-    val driver: WebDriver
-        get() {
-            if (driverHolder == null) {
-                driverHolder = config.driver()
-            }
-            return driverHolder as WebDriver
-        }
+    private val driverDelegate = ResettableLazy(
+        onReset = { driver -> driver.quit() },
+        initializer = { config.driver() })
+    val driver by driverDelegate
 
     var baseUrl = config.baseUrl
 
     override val browser get() = this
 
     fun quit() {
-        val closingDriver = driverHolder
-        driverHolder = null
-        closingDriver?.quit()
+        driverDelegate.reset()
     }
 
 }
