@@ -55,7 +55,10 @@ interface NavigationSupport {
         return body(this)
     }
 
-    fun <T : Page, R : Any> T.via(bodyClass: KClass<T>, body: T.() -> R): R {
+    /**
+     * @param classValidator Used just to explicitly declare type of body context. Useful for fluent api usage.
+     */
+    fun <T : Page, R : Any> T.via(classValidator: KClass<T>, body: T.() -> R): R {
         return body(this)
     }
 
@@ -67,7 +70,7 @@ interface NavigationSupport {
         return body(this, this)
     }
 
-    fun <T : Page, R : Any> T.via4(bodyClass: KClass<T>, body: T.() -> R): R {
+    fun <T : Page, R : Any> T.via4(classValidator: KClass<T>, body: T.() -> R): R {
         return body(this)
     }
 
