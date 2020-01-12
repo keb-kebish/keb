@@ -19,7 +19,6 @@ class MultiPageTest : KebTest(Browser(kebConfig {
     var serverExtension = register(HttpResourceFolderServerExtension("keb/testing/multipage", browser))
 
 
-
     // Page objects are simple, do not return other page
     // When you are writing test. You decide and write on which page you are
     //
@@ -115,6 +114,44 @@ class MultiPageTest : KebTest(Browser(kebConfig {
 //        }
 //    }
 
+
+    @Test
+    fun `navigation menu works style7`() {
+        to(::HomePage) {
+            menu.toContacts()
+        }.via {
+            menu.toContacts()
+        }.via(ContactsPage::class) {
+            menu.toContacts()
+        }.via2 { contactsPage ->
+            contactsPage.menu.toContacts()
+        }.via3 {
+            menu.toContacts()
+        }.via3 {
+            it.menu.toContacts()
+        }.via3 { contactsPage ->
+            menu.toContacts()
+        }.via3 { contactsPage ->
+            contactsPage.menu.toContacts()
+        }.via4(ContactsPage::class) {
+            menu.toContacts()
+        }
+
+
+        //via3   is interesting, but it has so many possible variations, that there is too much freedom  :(
+
+        //via4 is interesting - You cannot put there incorrect type and everytime you can see type of this
+        //  maybe via4 could be new overriding method of via
+        //  Then Both this could be possilbe:  and I would prefer second one
+        //  .via {
+        //      menu.toContacts()
+        //  }
+        //  .via(ContactsPage::class) {
+        //      menu.toContacts()
+        //  }
+
+        at(::ContactsPage)
+    }
 
 }
 

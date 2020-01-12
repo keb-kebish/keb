@@ -57,7 +57,21 @@ class KotlinHomePage : Page() {
     
     val menu by content { module(NavMenuModule(css(".nav-links"))) }
 }
-```
+```       
+
+### Navigation
+`at(::MyPage)` - create instance of page and wait until validator at() is suttisfied
+
+`to(::MyPage)` - write url of page into browser and call method at()
+
+`at(::MyPage) { methodOnMyPage() }` methods can have closure. Inside closure `this` is created page
+
+`at(::MyPage) { clickMainLink() }` - return result of closure
+
+`MyPage().via { myPageMethod() } ` 
+
+`Page.via(MyPage::class) { myPageMethod() }` the same as method above, but explicitly validate, that method is called on correct page
+
 
 ## Waiting
 Waiting for some page element to be present, you can use `waitFor` method.

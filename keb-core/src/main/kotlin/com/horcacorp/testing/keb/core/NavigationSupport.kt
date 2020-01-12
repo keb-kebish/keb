@@ -1,6 +1,7 @@
 package com.horcacorp.testing.keb.core
 
 import java.net.URI
+import kotlin.reflect.KClass
 
 interface NavigationSupport {
 
@@ -50,10 +51,24 @@ interface NavigationSupport {
         return body.invoke(page)
     }
 
-
     fun <T : Page, R : Any> T.via(body: T.() -> R): R {
         return body(this)
     }
 
+    fun <T : Page, R : Any> T.via(bodyClass: KClass<T>, body: T.() -> R): R {
+        return body(this)
+    }
+
+    fun <T : Page, R : Any> T.via2(body: (T) -> R): R {
+        return body(this)
+    }
+
+    fun <T : Page, R : Any> T.via3(body: T.(T) -> R): R {
+        return body(this, this)
+    }
+
+    fun <T : Page, R : Any> T.via4(bodyClass: KClass<T>, body: T.() -> R): R {
+        return body(this)
+    }
 
 }
