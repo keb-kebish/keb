@@ -96,6 +96,16 @@ class MultiPageTest : KebTest(Browser(kebConfig {
         }
     }
 
+    // + pure keb functions for working with Page
+    @Test
+    fun `navigation menu works style5_2`() {
+        to(::HomePage) {
+            menu.toContacts()
+        }.via(ContactsPage::class) {
+            menu.toAbout()
+        }
+    }
+
 
     //TODO mechanismus, který hlídá, že jsi na správné stránce.
     // neco jak, že by si browser hlídal na jaké jsi stránce (třeba při validátoru by si to zapamatoval)
