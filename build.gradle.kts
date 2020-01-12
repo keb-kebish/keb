@@ -1,6 +1,10 @@
 group = "com.horca.testing"
-version = "0.1 Alpha"
+version = "0.1-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+
+subprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }

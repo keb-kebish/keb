@@ -2,11 +2,22 @@ plugins {
     kotlin("jvm") version "1.3.61"
 }
 
-group = "com.horca.testing"
-version = "0.1 Alpha"
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
 
-repositories {
-    mavenCentral()
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+val test by tasks.getting(Test::class) {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -23,17 +34,4 @@ dependencies {
     testImplementation(group = "com.nhaarman", name = "mockito-kotlin", version = "1.6.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
-}
-
-tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-}
-
-val test by tasks.getting(Test::class) {
-    useJUnitPlatform()
 }

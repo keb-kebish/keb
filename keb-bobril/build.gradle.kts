@@ -2,11 +2,10 @@ plugins {
     kotlin("jvm") version "1.3.61"
 }
 
-group = "com.horca.testing"
-version = "0.1 Alpha"
 
-repositories {
-    mavenCentral()
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 dependencies {
