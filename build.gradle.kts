@@ -1,4 +1,4 @@
-group = "com.horca.testing"
+group = "org.kebish"
 version = "0.1-SNAPSHOT"
 
 
