@@ -60,13 +60,13 @@ class KotlinHomePage : Page() {
 ```       
 
 ### Navigation
-`at(::MyPage)` - create instance of page and wait until validator at() is suttisfied
+`at(::MyPage)` create instance of page and wait until validator `at()` is satisfied
 
-`to(::MyPage)` - write url of page into browser and call method at()
+`to(::MyPage)` write url of page into browser and call method `at()`
 
 `at(::MyPage) { methodOnMyPage() }` methods can have closure. Inside closure `this` is created page
 
-`at(::MyPage) { clickMainLink() }` - return result of closure
+`at(::MyPage) { clickMainLink() }` return result of closure
 
 `MyPage().via { myPageMethod() } ` 
 
@@ -84,7 +84,7 @@ val result = waitFor {
 Timeout duration and retry interval can be defined either by custom wait preset or directly through `waitFor` method.
 ```kotlin
 waitFor(preset = "quick") { css(".result") }
-waitFor(timeout = 10, retryInterval = 0.5) { css(".result") }
+waitFor(timeout = 2, retryInterval = 0.1) { css(".result") }
 ```
 Custom wait presets can be defined using Kotlin DSL in the `Configuration`. Default values when no custom configuration 
 is defined are 15 seconds for timeout and 1 second for retry interval.
