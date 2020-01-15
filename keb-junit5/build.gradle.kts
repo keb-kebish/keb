@@ -1,5 +1,12 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 plugins {
     kotlin("jvm") version "1.3.61"
+}
+
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 java {
@@ -7,13 +14,6 @@ java {
     withJavadocJar()
 }
 
-dependencies {
-    implementation(project(":keb-core"))
-
-    implementation(kotlin("stdlib-jdk8"))
-
-    implementation("org.junit.jupiter:junit-jupiter:5.5.2")
-}
 
 tasks {
     compileKotlin {
@@ -24,9 +24,20 @@ tasks {
     }
 }
 
-tasks.test {
+// jUnit setup --------- start
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.5.2")
+}
+val test by tasks.getting(Test::class) {
     useJUnitPlatform()
     testLogging {
-        events("passed", "skipped", "failed")
+        exceptionFormat = FULL
+        events = setOf(PASSED, STARTED, FAILED, SKIPPED)
     }
+}
+// jUnit setup --------- end
+
+dependencies {
+    implementation(project(":keb-core"))
+
 }

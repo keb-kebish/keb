@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 plugins {
     kotlin("jvm") version "1.3.61"
 //    `java-library`
@@ -12,6 +15,12 @@ tasks {
     }
 }
 
+dependencies {
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(kotlin("stdlib-jdk8"))
+
+}
+
 java {
     withSourcesJar()
     withJavadocJar()
@@ -19,29 +28,31 @@ java {
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = FULL
+        events = setOf(PASSED, STARTED, FAILED, SKIPPED)
+    }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("keb-core") {
-            from(components["java"])
-        }
-    }
-
-// This works:
-//    repositories {
-//        maven {
-//            name = "myRepo"
-//            url = uri("file://${buildDir}/repo")
+//publishing {
+//    publications {
+//        create<MavenPublication>("keb-core") {
+//            from(components["java"])
 //        }
 //    }
-}
+//
+//// This works:
+////    repositories {
+////        maven {
+////            name = "myRepo"
+////            url = uri("file://${buildDir}/repo")
+////        }
+////    }
+//}
 
 dependencies {
     api(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
 
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation(kotlin("stdlib-jdk8"))
 
     testImplementation(project(":keb-junit5"))
     testImplementation(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.7.1")
