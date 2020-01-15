@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.3.61"
+//    `java-library`
 }
 
 tasks {
@@ -18,6 +19,22 @@ java {
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("keb-core") {
+            from(components["java"])
+        }
+    }
+
+// This works:
+//    repositories {
+//        maven {
+//            name = "myRepo"
+//            url = uri("file://${buildDir}/repo")
+//        }
+//    }
 }
 
 dependencies {

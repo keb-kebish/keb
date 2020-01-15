@@ -1,10 +1,14 @@
-group = "org.kebish"
-version = "0.1-SNAPSHOT"
 
+allprojects {
+    group = "org.kebish"
+    version = "0.1-SNAPSHOT"
 
-subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
     }
+
+    apply(plugin = "maven-publish")
+
+
 }

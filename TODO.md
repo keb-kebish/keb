@@ -28,11 +28,12 @@
 
 - We want to capture images on fail test (maybe even on every test)
 
-- Consider possibility, where everything is waiting by default
-    - even  WebElement.click() - is tried multiple times until it succeeed (with maxTimeout ofcourse)   
-       - e.g.  element is covered by loader, thats why click fails, when loader disapper it will succeed
-       - to achive this, some kind of WebElement proxy will be needed (or use custom KebElement)
+- In at() verifier use for example assertJ - so that we can have nice error message, when it fails
 
+- at() - waiting
+   - in at (and to) should be possible to override waiting timeout
+   - at(::LongLoadingPage, wait: 30, retryInterval: 200)  
+   
 ## Keb configuration
 - in config   driver have to be closure 
      - to start browser in lazy way
@@ -57,3 +58,9 @@
 
 - Consider usage of "concept of CurrentPage"
    - e.g. browser will remember on which page is this can be set by "at" method
+   
+   
+- Consider possibility, where everything is waiting by default
+    - even  WebElement.click() - is tried multiple times until it succeeed (with maxTimeout ofcourse)   
+       - e.g.  element is covered by loader, thats why click fails, when loader disapper it will succeed
+       - to achive this, some kind of WebElement proxy will be needed (or use custom KebElement)
