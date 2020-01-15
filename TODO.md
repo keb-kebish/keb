@@ -28,8 +28,6 @@
 
 - We want to capture images on fail test (maybe even on every test)
 
-- In at() verifier use for example assertJ - so that we can have nice error message, when it fails
-
 - Consider possibility, where everything is waiting by default
     - even  WebElement.click() - is tried multiple times until it succeeed (with maxTimeout ofcourse)   
        - e.g.  element is covered by loader, thats why click fails, when loader disapper it will succeed
