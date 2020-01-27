@@ -32,7 +32,12 @@
 
 - at() - waiting
    - in at (and to) should be possible to override waiting timeout
-   - at(::LongLoadingPage, wait: 30, retryInterval: 200)  
+   - at(::LongLoadingPage, wait: 30, retryInterval: 200)
+   
+- lateinit browser not initialized
+  - Kdyz delas stranku a primo se do ni selecti obsah,
+  - Tak vyleti     lateinit browser   has not been initialized
+    - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku  
    
 ## Keb configuration
 - in config   driver have to be closure 
