@@ -58,6 +58,9 @@
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
      
+- closing browser register onJVMExit() - less browsers will hang in processes
+   - probably will be needed need reference to browser as "weak reference" - to release memory  
+     
      
 ## Ideas
 
