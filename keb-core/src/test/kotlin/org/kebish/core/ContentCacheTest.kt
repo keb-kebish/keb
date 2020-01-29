@@ -32,4 +32,21 @@ class ContentCacheTest {
         // then -
         Assertions.assertThat(callCounter).isEqualTo(1)
     }
+
+    @Test
+    fun `cached content returning null is called only once`() {
+        // given
+        var callCounter = 0
+        val variable by content(cache = true, required = false) { callCounter++ ; mayReturnNull() }
+
+        // when - get value of variable three times
+        @Suppress("UNUSED_VARIABLE")
+        val helper = variable + variable + variable
+
+        // then -
+        Assertions.assertThat(callCounter).isEqualTo(1)
+        println("AAAA '$helper'")
+    }
+
+    private fun mayReturnNull(): String? = null
 }
