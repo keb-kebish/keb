@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.NoSuchElementException
 
-class ContentTest {
+class ContentBasicTest {
 
     @Test
     fun `simple case works`() {
