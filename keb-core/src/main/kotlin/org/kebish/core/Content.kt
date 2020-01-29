@@ -17,7 +17,6 @@ class Content<T : Any>(val cache: Boolean, val required: Boolean, val initialize
         } else {
             return checkedInitializer()
         }
-//            return "$thisRef, thank you for delegating '${prop.name}' to me!"
     }
 
     private fun checkedInitializer(): T {

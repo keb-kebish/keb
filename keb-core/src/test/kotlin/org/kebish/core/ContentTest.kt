@@ -33,32 +33,5 @@ class ContentTest {
         assertThat(callCounter).isEqualTo(1)
     }
 
-    @Test
-    fun `initializer is called on each access to variable`() {
-        // given
-        var callCounter = 0
-        val variable by content { callCounter++ }
-
-        // when - get value of variable three times
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable + variable + variable
-
-        // then -
-        assertThat(callCounter).isEqualTo(3)
-    }
-
-    @Test
-    fun `for cached content is initializer called only once`() {
-        // given
-        var callCounter = 0
-        val variable by content(cache = true) { callCounter++ }
-
-        // when - get value of variable three times
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable + variable + variable
-
-        // then -
-        assertThat(callCounter).isEqualTo(1)
-    }
 
 }
