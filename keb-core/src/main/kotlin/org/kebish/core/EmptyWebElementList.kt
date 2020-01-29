@@ -2,7 +2,7 @@ package org.kebish.core
 
 import org.openqa.selenium.WebElement
 
-class EmptyWebElementList(val selector: String) : List<WebElement> {
+class EmptyWebElementList(override val missingContentSelector: String) : List<WebElement>, EmptyContent {
 
     override val size: Int get() = 0
     override fun isEmpty(): Boolean = true

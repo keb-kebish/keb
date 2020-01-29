@@ -24,8 +24,7 @@ class Content<T : Any>(val cache: Boolean = false, val required: Boolean = false
         val content = initializer()
         return if (required) {
             when(content) {
-                is EmptyWebElement -> throw NoSuchElementException("Required page content is not present. Selector='${content.selector}'.")
-                is EmptyWebElementList -> throw NoSuchElementException("Required page content is not present. Selector='${content.selector}'.")
+                is EmptyContent -> throw NoSuchElementException("Required page content is not present. Selector='${content.missingContentSelector}'.")
                 else -> content
             }
         } else {
@@ -36,3 +35,7 @@ class Content<T : Any>(val cache: Boolean = false, val required: Boolean = false
 
 fun <T : Any> content(cache: Boolean = false, required: Boolean = false, initializer: () -> T)
         = Content(cache, required, initializer)
+
+interface EmptyContent {
+    val missingContentSelector: String
+}
