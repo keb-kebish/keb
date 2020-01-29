@@ -4,7 +4,7 @@ import org.openqa.selenium.NoSuchElementException
 import kotlin.reflect.KProperty
 
 /** T this is not nullable. I cannot see case, where we want return null */
-class Content<T : Any>(val cache: Boolean = false, val required: Boolean = false, val initializer: () -> T) {
+class Content<T : Any>(val cache: Boolean, val required: Boolean, val initializer: () -> T) {
 
     private lateinit var cachedValue: T
 
@@ -33,7 +33,7 @@ class Content<T : Any>(val cache: Boolean = false, val required: Boolean = false
     }
 }
 
-fun <T : Any> content(cache: Boolean = false, required: Boolean = false, initializer: () -> T)
+fun <T : Any> content(cache: Boolean = false, required: Boolean = true, initializer: () -> T)
         = Content(cache, required, initializer)
 
 interface EmptyContent {
