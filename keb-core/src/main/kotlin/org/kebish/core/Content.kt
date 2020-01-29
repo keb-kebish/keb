@@ -11,11 +11,11 @@ class Content<T : Any>(val cache: Boolean = false, val required: Boolean = false
     operator fun getValue(thisRef: Any?, prop: KProperty<*>): T {
         if (cache) {
             if (!::cachedValue.isInitialized) {
-                cachedValue = initializer()
+                cachedValue = checkedInitializer()
             }
             return cachedValue
         } else {
-            return initializer()
+            return checkedInitializer()
         }
 //            return "$thisRef, thank you for delegating '${prop.name}' to me!"
     }
