@@ -7,7 +7,7 @@ abstract class Selector<T> {
     fun getWebElement(): WebElement {
         val context = findElements()
         return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content is not present. Selector='$selector'.")
+            context.isEmpty() -> EmptyWebElement(selector.toString())
             context.size > 1 -> throw TooManyElementsException(toString(), context.size)
             else -> context.first()
         }
@@ -16,7 +16,7 @@ abstract class Selector<T> {
     fun getWebElements(): List<WebElement> {
         val context = findElements()
         return when {
-            context.isEmpty() -> throw NoSuchElementException("Required page content is not present. Selector='$selector'.")
+            context.isEmpty() -> EmptyWebElementList(selector.toString())
             else -> context
         }
     }

@@ -73,7 +73,7 @@ interface WaitSupport {
             is Collection<*> -> if (value.isEmpty()) false else value.all { resolveTruthiness(it) }
             is WebElement -> value.location != null
             is Module -> value.scope?.let { resolveTruthiness(it) } ?: true
-            null -> false
+            is EmptyContent, null -> false
             else -> true
         }
     }
