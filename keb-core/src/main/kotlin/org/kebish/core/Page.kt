@@ -1,6 +1,6 @@
 package org.kebish.core
 
-abstract class Page : NavigationSupport, ModuleSupport, WaitSupport {
+abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
 
     override lateinit var browser: Browser
 
