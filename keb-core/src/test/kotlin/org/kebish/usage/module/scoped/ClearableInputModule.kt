@@ -1,7 +1,6 @@
 package org.kebish.usage.module.scoped
 
 import org.kebish.core.Module
-import org.kebish.core.content
 import org.kebish.core.css
 import org.kebish.core.html
 import org.openqa.selenium.WebElement

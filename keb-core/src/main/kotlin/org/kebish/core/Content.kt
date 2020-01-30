@@ -3,7 +3,7 @@ package org.kebish.core
 import org.openqa.selenium.NoSuchElementException
 import kotlin.reflect.KProperty
 
-class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) {
+class Content<T>(private val contentInitializer: ContentInitializer<T>) {
     operator fun getValue(thisRef: Any?, prop: KProperty<*>): T {
         return contentInitializer.initialize()
     }
@@ -32,20 +32,38 @@ class CachingContentInitializer<T>(
     }
 }
 
+
 class WaitingContentInitializer<T>(
-    private val wait: Any,
+    private val wait: Boolean,
     override val browser: Browser,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T>, WaitSupport {
-    override fun initialize(): T {
-        return when (wait) {
-            is Boolean -> if (wait) waitFor { decorated.initialize() } else decorated.initialize()
-            is String -> waitFor(preset = wait) { decorated.initialize() }
-            is Number -> waitFor(timeout = wait) { decorated.initialize() }
-            is WaitPreset -> waitFor(timeout = wait.timeout, retryInterval = wait.retryInterval) { decorated.initialize() }
-            else -> decorated.initialize()
-        }
-    }
+    override fun initialize() = if (wait) waitFor(f = decorated::initialize) else decorated.initialize()
+}
+
+class WaitingByTimeoutContentInitializer<T>(
+    private val timeout: Number,
+    override val browser: Browser,
+    private val decorated: ContentInitializer<T>
+) : ContentInitializer<T>, WaitSupport {
+    override fun initialize() = waitFor(timeout = timeout, f = decorated::initialize)
+}
+
+class WaitingByTimeoutAndRetryIntervalContentInitializer<T>(
+    private val timeout: Number,
+    private val retryInterval: Number,
+    override val browser: Browser,
+    private val decorated: ContentInitializer<T>
+) : ContentInitializer<T>, WaitSupport {
+    override fun initialize() = waitFor(timeout = timeout, retryInterval = retryInterval, f = decorated::initialize)
+}
+
+class WaitingByPresetNameContentInitializer<T>(
+    private val waitPresetName: String,
+    override val browser: Browser,
+    private val decorated: ContentInitializer<T>
+) : ContentInitializer<T>, WaitSupport {
+    override fun initialize() = waitFor(preset = waitPresetName, f = decorated::initialize)
 }
 
 class RequiredCheckingContentInitializer<T>(
@@ -71,44 +89,6 @@ class ContentProvidingInitializer<T>(private val initializer: () -> T) : Content
         return initializer()
     }
 }
-
-fun <T : Any?> Page.content(
-    required: Boolean = true,
-    cache: Boolean = false,
-    wait: Any = false,
-    initializer: () -> T
-) = Content(
-    CachingContentInitializer(
-        cache,
-        WaitingContentInitializer(
-            wait,
-            browser,
-            RequiredCheckingContentInitializer(
-                required,
-                ContentProvidingInitializer(initializer)
-            )
-        )
-    )
-)
-
-fun <T : Any?> Module.content(
-    required: Boolean = true,
-    cache: Boolean = false,
-    wait: Any = false,
-    initializer: () -> T
-) = Content(
-    CachingContentInitializer(
-        cache,
-        WaitingContentInitializer(
-            wait,
-            browser,
-            RequiredCheckingContentInitializer(
-                required,
-                ContentProvidingInitializer(initializer)
-            )
-        )
-    )
-)
 
 interface EmptyContent {
     val missingContentSelector: String

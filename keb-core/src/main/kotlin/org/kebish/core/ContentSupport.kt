@@ -6,6 +6,96 @@ import org.openqa.selenium.WebElement
 interface ContentSupport {
     val browser: Browser
     fun getDefaultScope(): WebElement? = null
+
+    fun <T> content(
+        required: Boolean = true,
+        cache: Boolean = false,
+        wait: Boolean = false,
+        initializer: () -> T
+    ) = Content(
+        CachingContentInitializer(
+            cache,
+            waitingInitializerFactory(
+                wait,
+                RequiredCheckingContentInitializer(
+                    required,
+                    ContentProvidingInitializer(initializer)
+                )
+
+            )
+        )
+    )
+
+    fun <T> content(
+        required: Boolean = true,
+        cache: Boolean = false,
+        wait: Number,
+        initializer: () -> T
+    ) = Content(
+        CachingContentInitializer(
+            cache,
+            waitingInitializerFactory(
+                wait,
+                RequiredCheckingContentInitializer(
+                    required,
+                    ContentProvidingInitializer(initializer)
+                )
+
+            )
+        )
+    )
+
+    fun <T> content(
+        required: Boolean = true,
+        cache: Boolean = false,
+        wait: Pair<Number, Number>,
+        initializer: () -> T
+    ) = Content(
+        CachingContentInitializer(
+            cache,
+            waitingInitializerFactory(
+                wait,
+                RequiredCheckingContentInitializer(
+                    required,
+                    ContentProvidingInitializer(initializer)
+                )
+
+            )
+        )
+    )
+
+    fun <T> content(
+        required: Boolean = true,
+        cache: Boolean = false,
+        wait: String,
+        initializer: () -> T
+    ) = Content(
+        CachingContentInitializer(
+            cache,
+            waitingInitializerFactory(
+                wait,
+                RequiredCheckingContentInitializer(
+                    required,
+                    ContentProvidingInitializer(initializer)
+                )
+            )
+        )
+    )
+
+    private fun <T> waitingInitializerFactory(wait: Any, decorated: ContentInitializer<T>): ContentInitializer<T> {
+        return when (wait) {
+            is Boolean -> WaitingContentInitializer(wait, browser, decorated)
+            is Number -> WaitingByTimeoutContentInitializer(wait, browser, decorated)
+            is Pair<*, *> -> WaitingByTimeoutAndRetryIntervalContentInitializer(
+                wait.first as Number,
+                wait.second as Number,
+                browser,
+                decorated
+            )
+            is String -> WaitingByPresetNameContentInitializer(wait, browser, decorated)
+            else -> throw IllegalArgumentException("Unexpected 'wait' parameter type '${wait.javaClass.name}'.")
+        }
+    }
 }
 
 fun ContentSupport.css(selector: String, scope: WebElement? = getDefaultScope()) =
