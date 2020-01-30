@@ -1,77 +1,53 @@
+@file:Suppress("UNCHECKED_CAST", "ClassName")
+
 package org.kebish.core
 
 import org.openqa.selenium.NoSuchElementException
 import kotlin.reflect.KProperty
 
-class Content<T>(private val contentInitializer: ContentInitializer<T>) {
+class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) {
     operator fun getValue(thisRef: Any?, prop: KProperty<*>): T {
-        return contentInitializer.initialize()
+        require(thisRef is ContentSupport) { "Content delegate can only be used on objects implementing ContentSupport." }
+        return contentInitializer.initialize(thisRef.browser)
     }
 }
 
-interface ContentInitializer<T> {
-    fun initialize(): T
+interface ContentInitializer<T : Any?> {
+    fun initialize(browser: Browser): T
 }
 
-class CachingContentInitializer<T>(
+class CachingContentInitializer<T : Any?>(
     private val cache: Boolean,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
     private object UNINITIALIZED_VALUE
     private var cachedValue: Any? = UNINITIALIZED_VALUE
-    override fun initialize(): T {
-        if (cache) {
+    override fun initialize(browser: Browser): T {
+        return if (cache) {
             if (cachedValue === UNINITIALIZED_VALUE) {
-                cachedValue = decorated.initialize()
+                cachedValue = decorated.initialize(browser)
             }
-            @Suppress("UNCHECKED_CAST")
-            return cachedValue as T
+            cachedValue as T
         } else {
-            return decorated.initialize()
+            decorated.initialize(browser)
         }
     }
 }
 
 
-class WaitingContentInitializer<T>(
-    private val wait: Boolean,
-    override val browser: Browser,
+class WaitingContentInitializer<T : Any?>(
+    private val wait: WaitConfig,
     private val decorated: ContentInitializer<T>
-) : ContentInitializer<T>, WaitSupport {
-    override fun initialize() = if (wait) waitFor(f = decorated::initialize) else decorated.initialize()
+) : ContentInitializer<T> {
+    override fun initialize(browser: Browser) = browser.waitFor(config = wait) { decorated.initialize(browser) } as T
 }
 
-class WaitingByTimeoutContentInitializer<T>(
-    private val timeout: Number,
-    override val browser: Browser,
-    private val decorated: ContentInitializer<T>
-) : ContentInitializer<T>, WaitSupport {
-    override fun initialize() = waitFor(timeout = timeout, f = decorated::initialize)
-}
-
-class WaitingByTimeoutAndRetryIntervalContentInitializer<T>(
-    private val timeout: Number,
-    private val retryInterval: Number,
-    override val browser: Browser,
-    private val decorated: ContentInitializer<T>
-) : ContentInitializer<T>, WaitSupport {
-    override fun initialize() = waitFor(timeout = timeout, retryInterval = retryInterval, f = decorated::initialize)
-}
-
-class WaitingByPresetNameContentInitializer<T>(
-    private val waitPresetName: String,
-    override val browser: Browser,
-    private val decorated: ContentInitializer<T>
-) : ContentInitializer<T>, WaitSupport {
-    override fun initialize() = waitFor(preset = waitPresetName, f = decorated::initialize)
-}
-
-class RequiredCheckingContentInitializer<T>(
+class RequiredCheckingContentInitializer<T : Any?>(
     private val required: Boolean,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
-    override fun initialize(): T {
-        val content = decorated.initialize()
+    override fun initialize(browser: Browser): T {
+        val content = decorated.initialize(browser)
         return if (required) {
             when (content) {
                 is EmptyContent -> throw NoSuchElementException("Required page content is not present. Selector='${content.missingContentSelector}'.")
@@ -85,7 +61,7 @@ class RequiredCheckingContentInitializer<T>(
 }
 
 class ContentProvidingInitializer<T>(private val initializer: () -> T) : ContentInitializer<T> {
-    override fun initialize(): T {
+    override fun initialize(browser: Browser): T {
         return initializer()
     }
 }

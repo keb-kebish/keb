@@ -9,6 +9,19 @@ interface WaitSupport {
     val defaultWaitPreset get() = browser.config.getDefaultPreset()
 
     fun <T> waitFor(
+        config: WaitConfig,
+        desc: String? = null,
+        f: () -> T?
+    ): T? {
+        return if (config.shouldWait) {
+            val (timeout, retryInterval) = config.getTimeoutAndRetryInterval(browser)
+            waitFor(timeout, retryInterval, desc, f)
+        } else {
+            f()
+        }
+    }
+
+    fun <T> waitFor(
         preset: String? = null,
         desc: String? = null,
         f: () -> T?
@@ -104,6 +117,35 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
 }
 
 data class WaitPreset(val timeout: Number, val retryInterval: Number)
+
+abstract class WaitConfig {
+    abstract val shouldWait: Boolean
+    abstract fun getTimeoutAndRetryInterval(browser: Browser): Pair<Number, Number>
+
+    companion object {
+        fun from(timeout: Number) = TimeoutWaitConfig(timeout)
+        fun from(config: Pair<Number, Number>) = TimeoutAndRetryIntervalWaitConfig(config.first, config.second)
+        fun from(preset: String) = StringWaitConfig(preset)
+        fun from(wait: Boolean) = BooleanWaitConfig(wait)
+    }
+}
+
+class TimeoutWaitConfig(private val timeout: Number) : WaitConfig() {
+    override val shouldWait get() = true
+    override fun getTimeoutAndRetryInterval(browser: Browser) = timeout to browser.defaultWaitPreset.retryInterval
+}
+class TimeoutAndRetryIntervalWaitConfig(private val timeout: Number, private val retryInterval: Number) : WaitConfig() {
+    override val shouldWait get() = true
+    override fun getTimeoutAndRetryInterval(browser: Browser) = timeout to retryInterval
+}
+class StringWaitConfig(private val preset: String) : WaitConfig() {
+    override val shouldWait get() = true
+    override fun getTimeoutAndRetryInterval(browser: Browser) = browser.config.getWaitPreset(preset).let { it.timeout to it.retryInterval }
+}
+class BooleanWaitConfig(private val wait: Boolean) : WaitConfig() {
+    override val shouldWait get() = wait
+    override fun getTimeoutAndRetryInterval(browser: Browser) = browser.defaultWaitPreset.let { it.timeout to it.retryInterval }
+}
 
 class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)
 class WaitPresetNotFoundException(presetName: String) : RuntimeException("Preset with name '$presetName' not found.")
