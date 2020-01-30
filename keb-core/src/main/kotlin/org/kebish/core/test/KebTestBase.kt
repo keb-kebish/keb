@@ -1,12 +1,11 @@
 package org.kebish.core.test
 
-import org.kebish.core.Browser
-import org.kebish.core.NavigationSupport
+import org.kebish.core.*
 
 /**
  * Implementation of keb test base
  */
-abstract class KebTestBase(override val browser: Browser) : NavigationSupport {
+abstract class KebTestBase(override val browser: Browser) : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
 
     /** Test runner must call this method after each test */
     fun afterEachTest() {
