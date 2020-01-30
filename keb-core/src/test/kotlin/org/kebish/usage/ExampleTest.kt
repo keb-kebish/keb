@@ -44,7 +44,7 @@ class KotlinHomePage : Page() {
     val footer by content { module(FooterModule(html("footer"))) }
 
     fun openDocumentation(): KotlinDocumentationPage {
-        menu.menuItems.first { it.text == "LEARN" }.click()
+        menu.menuItems.first { it.text.contains("learn", ignoreCase = true) }.click()
         return at(::KotlinDocumentationPage)
     }
 
