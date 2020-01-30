@@ -14,21 +14,23 @@ interface WaitSupport {
         f: () -> T?
     ): T? {
         return if (config.shouldWait) {
-            val (timeout, retryInterval) = config.getTimeoutAndRetryInterval(browser)
-            waitFor(timeout, retryInterval, desc, f)
+            waitFor(config.getPreset(browser), desc, f)
         } else {
             f()
         }
     }
 
     fun <T> waitFor(
-        preset: String? = null,
+        preset: String?,
         desc: String? = null,
         f: () -> T?
-    ): T {
-        val customOrDefaultPreset = preset?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset
-        return waitFor(customOrDefaultPreset.timeout, customOrDefaultPreset.retryInterval, desc, f)
-    }
+    ) = waitFor(preset?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset, desc, f)
+
+    fun <T> waitFor(
+        preset: WaitPreset,
+        desc: String? = null,
+        f: () -> T?
+    ) = waitFor(preset.timeout, preset.retryInterval, desc, f)
 
     fun <T> waitFor(
         timeout: Number = defaultWaitPreset.timeout,
@@ -119,32 +121,42 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
 data class WaitPreset(val timeout: Number, val retryInterval: Number)
 
 abstract class WaitConfig {
-    abstract val shouldWait: Boolean
-    abstract fun getTimeoutAndRetryInterval(browser: Browser): Pair<Number, Number>
+    open val shouldWait = true
+    abstract fun getPreset(browser: Browser): WaitPreset
 
     companion object {
-        fun from(timeout: Number) = TimeoutWaitConfig(timeout)
-        fun from(config: Pair<Number, Number>) = TimeoutAndRetryIntervalWaitConfig(config.first, config.second)
-        fun from(preset: String) = StringWaitConfig(preset)
-        fun from(wait: Boolean) = BooleanWaitConfig(wait)
+        fun from(config: Any?) = when (config) {
+            is Number -> TimeoutWaitConfig(config)
+            is WaitPreset -> PresetWaitConfig(config)
+            is String -> StringWaitConfig(config)
+            is Boolean -> if (config) DefaultPresetWaitConfig() else NoOpWaitConfig()
+            null -> NoOpWaitConfig()
+            else -> throw IllegalArgumentException("Unexpected wait configuration parameter '$config'.")
+        }
     }
 }
 
 class TimeoutWaitConfig(private val timeout: Number) : WaitConfig() {
-    override val shouldWait get() = true
-    override fun getTimeoutAndRetryInterval(browser: Browser) = timeout to browser.defaultWaitPreset.retryInterval
+    override fun getPreset(browser: Browser) = browser.defaultWaitPreset.copy(timeout = timeout)
 }
-class TimeoutAndRetryIntervalWaitConfig(private val timeout: Number, private val retryInterval: Number) : WaitConfig() {
-    override val shouldWait get() = true
-    override fun getTimeoutAndRetryInterval(browser: Browser) = timeout to retryInterval
+
+class PresetWaitConfig(private val preset: WaitPreset) : WaitConfig() {
+    override fun getPreset(browser: Browser) = preset
 }
+
 class StringWaitConfig(private val preset: String) : WaitConfig() {
-    override val shouldWait get() = true
-    override fun getTimeoutAndRetryInterval(browser: Browser) = browser.config.getWaitPreset(preset).let { it.timeout to it.retryInterval }
+    override fun getPreset(browser: Browser) = browser.config.getWaitPreset(preset)
 }
-class BooleanWaitConfig(private val wait: Boolean) : WaitConfig() {
-    override val shouldWait get() = wait
-    override fun getTimeoutAndRetryInterval(browser: Browser) = browser.defaultWaitPreset.let { it.timeout to it.retryInterval }
+
+class DefaultPresetWaitConfig : WaitConfig() {
+    override fun getPreset(browser: Browser) = browser.defaultWaitPreset
+}
+
+class NoOpWaitConfig : WaitConfig() {
+    override val shouldWait = false
+    override fun getPreset(browser: Browser): WaitPreset {
+        throw IllegalStateException("Unexpected error, did not expect waitFor to be invoked.")
+    }
 }
 
 class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)

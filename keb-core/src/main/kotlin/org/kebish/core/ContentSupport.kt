@@ -68,7 +68,7 @@ interface ContentSupport {
     fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
-        wait: Pair<Number, Number>,
+        wait: WaitPreset,
         initializer: () -> T
     ) = Content(
         CachingContentInitializer(
