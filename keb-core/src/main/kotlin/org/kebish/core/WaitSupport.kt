@@ -9,18 +9,6 @@ interface WaitSupport {
     val defaultWaitPreset get() = browser.config.getDefaultPreset()
 
     fun <T> waitFor(
-        config: WaitConfig,
-        desc: String? = null,
-        f: () -> T?
-    ): T? {
-        return if (config.shouldWait) {
-            waitFor(config.getPreset(browser), desc, f)
-        } else {
-            f()
-        }
-    }
-
-    fun <T> waitFor(
         preset: String?,
         desc: String? = null,
         f: () -> T?
@@ -120,42 +108,13 @@ class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
 
 data class WaitPreset(val timeout: Number, val retryInterval: Number)
 
-abstract class WaitConfig {
-    open val shouldWait = true
-    abstract fun getPreset(browser: Browser): WaitPreset
-
-    companion object {
-        fun from(config: Any?) = when (config) {
-            is Number -> TimeoutWaitConfig(config)
-            is WaitPreset -> PresetWaitConfig(config)
-            is String -> StringWaitConfig(config)
-            is Boolean -> if (config) DefaultPresetWaitConfig() else NoOpWaitConfig()
-            null -> NoOpWaitConfig()
-            else -> throw IllegalArgumentException("Unexpected wait configuration parameter '$config'.")
-        }
-    }
-}
-
-class TimeoutWaitConfig(private val timeout: Number) : WaitConfig() {
-    override fun getPreset(browser: Browser) = browser.defaultWaitPreset.copy(timeout = timeout)
-}
-
-class PresetWaitConfig(private val preset: WaitPreset) : WaitConfig() {
-    override fun getPreset(browser: Browser) = preset
-}
-
-class StringWaitConfig(private val preset: String) : WaitConfig() {
-    override fun getPreset(browser: Browser) = browser.config.getWaitPreset(preset)
-}
-
-class DefaultPresetWaitConfig : WaitConfig() {
-    override fun getPreset(browser: Browser) = browser.defaultWaitPreset
-}
-
-class NoOpWaitConfig : WaitConfig() {
-    override val shouldWait = false
-    override fun getPreset(browser: Browser): WaitPreset {
-        throw IllegalStateException("Unexpected error, did not expect waitFor to be invoked.")
+class WaitPresetFactory {
+    fun from(value: Any, configuration: Configuration) = when (value) {
+        is Number -> configuration.getDefaultPreset().copy(timeout = value)
+        is String -> configuration.getWaitPreset(value)
+        is WaitPreset -> value
+        is Boolean -> if (value) configuration.getDefaultPreset() else null
+        else -> throw IllegalStateException("Unable to create wait preset from '${value.javaClass.simpleName}'.")
     }
 }
 

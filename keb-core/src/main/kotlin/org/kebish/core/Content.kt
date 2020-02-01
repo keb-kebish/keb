@@ -36,10 +36,14 @@ class CachingContentInitializer<T : Any?>(
 
 
 class WaitingContentInitializer<T : Any?>(
-    private val wait: WaitConfig,
+    private val waitConfig: Any,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
-    override fun initialize(browser: Browser) = browser.waitFor(config = wait) { decorated.initialize(browser) } as T
+    override fun initialize(browser: Browser): T {
+        return WaitPresetFactory().from(waitConfig, browser.config)
+            ?.let { browser.waitFor(it) { decorated.initialize(browser) } }
+            ?: decorated.initialize(browser)
+    }
 }
 
 class RequiredCheckingContentInitializer<T : Any?>(

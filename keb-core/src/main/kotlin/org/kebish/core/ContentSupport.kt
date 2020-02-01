@@ -48,7 +48,7 @@ interface ContentSupport {
         CachingContentInitializer(
             cache,
             WaitingContentInitializer(
-                WaitConfig.from(wait),
+                wait,
                 RequiredCheckingContentInitializer(
                     required,
                     ContentProvidingInitializer(initializer)
