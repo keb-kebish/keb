@@ -1,17 +1,18 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.kebish.Versions
 import java.util.*
 
 fun findProperty(s: String) = project.findProperty(s) as String?
 
 plugins {
-    kotlin("jvm") version "1.3.61" //TODO  Versions class
+    kotlin("jvm") version Versions.kotlin
 
     // Publish plugins - start
     `java-library`
     `maven-publish`
-    id("com.jfrog.bintray") version "1.8.4" //TODO  Versions class
+    id("com.jfrog.bintray") version Versions.bintray
     // Publish plugins - end
 }
 
@@ -23,7 +24,7 @@ bintray {
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = "kebish"
         name = "keb-core"
-//        userOrg = "Kebish"
+        // userOrg = "Kebish"
         setLicenses("WTFPL")
         vcsUrl = "https://gitlab.com/horca23/keb.git"
         websiteUrl = "https://gitlab.com/horca23/keb"

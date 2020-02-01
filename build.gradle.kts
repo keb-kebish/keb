@@ -5,8 +5,7 @@ allprojects {
     description = "Library for browser tests implementing Page Object pattern and using Selenium"
 
     repositories {
-        mavenLocal()
-        mavenCentral()
+        jcenter()
     }
 
 }

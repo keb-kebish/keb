@@ -1,8 +1,9 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.kebish.Versions
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version Versions.kotlin
 }
 
 java {
