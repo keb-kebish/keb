@@ -1,9 +1,76 @@
+import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
+fun findProperty(s: String) = project.findProperty(s) as String?
+
 plugins {
     kotlin("jvm") version "1.3.61"
-//    `java-library`
+//        id("org.gradle.kotlin.kotlin-dsl") version "1.3.3"
+    `java-library`
+    `maven-publish`
+    id("com.jfrog.bintray") version "1.8.4"
+}
+
+bintray {
+    user = "vondrous"
+    key = findProperty("bintrayApiKey")
+//    user = System.getenv('BINTRAY_USER')
+//    key = System.getenv('BINTRAY_KEY')
+    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
+        repo = "kebish"
+        name = "keb-core"
+//        userOrg = "bintray_user"
+        setLicenses("Apache-2.0")
+        vcsUrl = "https://gitlab.com/horca23/keb.git"
+
+        version(delegateClosureOf<BintrayExtension.VersionConfig> {
+            name = "0.2"
+        })
+        setPublications("keb-core")
+    })
+
+}
+
+val sourcesJar by tasks.registering(Jar::class) {
+    classifier = "sources"
+    from(sourceSets.main.get().allSource)
+}
+
+publishing {
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url = uri("$buildDir/repo")
+        }
+    }
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+            artifact(sourcesJar.get())
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("keb-core") {
+            from(components["java"])
+        }
+    }
+
+// This works:
+    repositories {
+        maven {
+            name = "myRepo"
+            url = uri("file://${buildDir}/repo")
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
 }
 
 tasks {
@@ -23,7 +90,7 @@ dependencies {
 
 java {
     withSourcesJar()
-    withJavadocJar()
+    //withJavadocJar()
 }
 
 val test by tasks.getting(Test::class) {
@@ -63,3 +130,47 @@ dependencies {
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
 }
+
+
+val testTask by tasks.registering {
+    doLast {
+        println("TEST TASKKKKKKKKKK")
+    }
+}
+
+
+//configure<BintrayExtension> {
+//    user = bintrayUsername
+//    key = bintrayKey
+//}
+
+//buildscript {
+//    bintray {
+//
+//    }
+//}
+
+//bintray {
+//    user = "vondrous"
+//    key = findProperty("bintrayApiKey")
+//}
+//bintray {
+//    user = 'bintray_user'
+//    key = 'bintray_api_key'
+//    ...
+//}
+
+
+//buildscript {
+//    repositories {
+//        jcenter()
+//    }
+//    dependencies {
+//        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0")
+//    }
+//}
+//apply(plugin = "com.jfrog.bintray")
+//
+//bintray {
+//
+//}
