@@ -8,7 +8,7 @@ plugins {
 
 java {
     withSourcesJar()
-    withJavadocJar()
+    //withJavadocJar()
 }
 
 dependencies {

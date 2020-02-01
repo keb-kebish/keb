@@ -1,6 +1,7 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.kebish.Bintray
 import org.kebish.Versions
 import java.util.*
 
@@ -18,23 +19,23 @@ plugins {
 
 // Publish - start
 bintray {
-    user = "vondrous"
+    user = Bintray.user
     key = findProperty("bintrayApiKey")
 
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
-        repo = "kebish"
+        repo = Bintray.repo
         name = "keb-core"
         // userOrg = "Kebish"
-        setLicenses("WTFPL")
-        vcsUrl = "https://gitlab.com/horca23/keb.git"
-        websiteUrl = "https://gitlab.com/horca23/keb"
-        description = "Library for browser tests implementing Page Object pattern and using Selenium"
+        setLicenses(*Bintray.licenses)
+        vcsUrl = Bintray.vcsUrl
+        websiteUrl = Bintray.websiteUrl
+        description = Bintray.description
         desc = description
-        setLabels("kotlin", "selenium", "pageobject")
+        setLabels(*Bintray.labels)
 
         version(delegateClosureOf<BintrayExtension.VersionConfig> {
             name = project.version.toString()
-            desc = "Kebish - Kotlin Page Object pattern implementation"
+            desc = Bintray.version.desc
             released = Date().toString()
             vcsTag = project.version.toString()
         })
@@ -96,10 +97,4 @@ dependencies {
     testImplementation(group = "com.nhaarman", name = "mockito-kotlin", version = "1.6.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
-}
-
-val testTask by tasks.registering {
-    doLast {
-        println("TEST TASKKKKKKKKKK '${project.version.toString()}'")
-    }
 }
