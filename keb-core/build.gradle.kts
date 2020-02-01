@@ -6,7 +6,6 @@ fun findProperty(s: String) = project.findProperty(s) as String?
 
 plugins {
     kotlin("jvm") version "1.3.61"
-//        id("org.gradle.kotlin.kotlin-dsl") version "1.3.3"
     `java-library`
     `maven-publish`
     id("com.jfrog.bintray") version "1.8.4"
@@ -15,8 +14,7 @@ plugins {
 bintray {
     user = "vondrous"
     key = findProperty("bintrayApiKey")
-//    user = System.getenv('BINTRAY_USER')
-//    key = System.getenv('BINTRAY_KEY')
+
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = "kebish"
         name = "keb-core"
@@ -32,25 +30,25 @@ bintray {
 
 }
 
-val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
-    from(sourceSets.main.get().allSource)
-}
-
-publishing {
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url = uri("$buildDir/repo")
-        }
-    }
-    publications {
-        register("mavenJava", MavenPublication::class) {
-            from(components["java"])
-            artifact(sourcesJar.get())
-        }
-    }
-}
+//val sourcesJar by tasks.registering(Jar::class) {
+//    classifier = "sources"
+//    from(sourceSets.main.get().allSource)
+//}
+//
+//publishing {
+//    repositories {
+//        maven {
+//            // change to point to your repo, e.g. http://my.org/repo
+//            url = uri("$buildDir/repo")
+//        }
+//    }
+//    publications {
+//        register("mavenJava", MavenPublication::class) {
+//            from(components["java"])
+//            artifact(sourcesJar.get())
+//        }
+//    }
+//}
 
 publishing {
     publications {
@@ -90,7 +88,7 @@ dependencies {
 
 java {
     withSourcesJar()
-    //withJavadocJar()
+    //withJavadocJar() - no correct javadoc is generated needs to be setup for Kotlin
 }
 
 val test by tasks.getting(Test::class) {
@@ -101,25 +99,8 @@ val test by tasks.getting(Test::class) {
     }
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("keb-core") {
-//            from(components["java"])
-//        }
-//    }
-//
-//// This works:
-////    repositories {
-////        maven {
-////            name = "myRepo"
-////            url = uri("file://${buildDir}/repo")
-////        }
-////    }
-//}
-
 dependencies {
     api(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
-
 
     testImplementation(project(":keb-junit5"))
     testImplementation(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.7.1")
@@ -131,46 +112,3 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
 }
 
-
-val testTask by tasks.registering {
-    doLast {
-        println("TEST TASKKKKKKKKKK")
-    }
-}
-
-
-//configure<BintrayExtension> {
-//    user = bintrayUsername
-//    key = bintrayKey
-//}
-
-//buildscript {
-//    bintray {
-//
-//    }
-//}
-
-//bintray {
-//    user = "vondrous"
-//    key = findProperty("bintrayApiKey")
-//}
-//bintray {
-//    user = 'bintray_user'
-//    key = 'bintray_api_key'
-//    ...
-//}
-
-
-//buildscript {
-//    repositories {
-//        jcenter()
-//    }
-//    dependencies {
-//        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0")
-//    }
-//}
-//apply(plugin = "com.jfrog.bintray")
-//
-//bintray {
-//
-//}
