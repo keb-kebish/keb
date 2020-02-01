@@ -2,7 +2,7 @@ package org.kebish.core
 
 import org.kebish.core.util.ResettableLazy
 
-class Browser(val config: Configuration) : NavigationSupport, ModuleSupport, WaitSupport {
+class Browser(val config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
     companion object {
         fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
