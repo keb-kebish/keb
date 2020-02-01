@@ -12,65 +12,39 @@ interface ContentSupport {
         cache: Boolean = false,
         wait: Boolean = false,
         initializer: () -> T
-    ) = Content(
-        CachingContentInitializer(
-            cache,
-            WaitingContentInitializer(
-                WaitConfig.from(wait),
-                RequiredCheckingContentInitializer(
-                    required,
-                    ContentProvidingInitializer(initializer)
-                )
-
-            )
-        )
-    )
+    ) = contentInternal(required, cache, wait, initializer)
 
     fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: String,
         initializer: () -> T
-    ) = Content(
-        CachingContentInitializer(
-            cache,
-            WaitingContentInitializer(
-                WaitConfig.from(wait),
-                RequiredCheckingContentInitializer(
-                    required,
-                    ContentProvidingInitializer(initializer)
-                )
-
-            )
-        )
-    )
+    ) = contentInternal(required, cache, wait, initializer)
 
     fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: Number,
         initializer: () -> T
-    ) = Content(
-        CachingContentInitializer(
-            cache,
-            WaitingContentInitializer(
-                WaitConfig.from(wait),
-                RequiredCheckingContentInitializer(
-                    required,
-                    ContentProvidingInitializer(initializer)
-                )
+    ) = contentInternal(required, cache, wait, initializer)
 
-            )
-        )
-    )
 
+    fun <T : Any?> content(
+        required: Boolean = true,
+        cache: Boolean = false,
+        waitTimeout: Number,
+        waitRetryInterval: Number,
+        initializer: () -> T
+    ) = content(required, cache, WaitPreset(waitTimeout,waitRetryInterval), initializer)
 
     fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: WaitPreset,
         initializer: () -> T
-    ) = Content(
+    ) = contentInternal(required, cache, wait, initializer)
+
+    private fun <T> contentInternal(required: Boolean, cache: Boolean, wait: Any, initializer: () -> T) = Content(
         CachingContentInitializer(
             cache,
             WaitingContentInitializer(
