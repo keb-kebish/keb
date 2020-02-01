@@ -44,8 +44,8 @@ class ContentCacheTest {
     inner class NullCachedContentTest : ContentBaseTest() {
 
         // given
-        var callCounter = 0
-        val variable by content(cache = true, required = false) { callCounter++ ; mayReturnNull() }
+        private var callCounter = 0
+        private val variable by content(cache = true, required = false) { callCounter++ ; mayReturnNull() }
 
         @Test
         fun `cached content returning null is called only once`() {
