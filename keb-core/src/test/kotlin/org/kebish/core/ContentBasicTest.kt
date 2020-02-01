@@ -1,36 +1,42 @@
 package org.kebish.core
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class ContentBasicTest {
 
-    @Test
-    fun `simple case works`() {
-        // when
-        val variable by content { "AAA" }
+    @Nested
+    inner class SimpleContentTest : ContentBaseTest() {
 
-        // then
-        assertThat(variable).isEqualTo("AAA")
+        // when
+        private val variable by content { "AAA" }
+
+        @Test
+        fun `simple case works`() {
+            // then
+            assertThat(variable).isEqualTo("AAA")
+        }
     }
 
-    @Test
-    fun `initializer is called in right time`() {
+    @Nested
+    inner class ContentInitializationTest : ContentBaseTest() {
+
         // given
-        var callCounter = 0
+        private var callCounter = 0
 
         // when
-        val variable by content { callCounter++ }
+        private val variable by content { callCounter++ }
 
-        //then - not yeat called
-        assertThat(callCounter).isEqualTo(0)
-
-        // when - call variable
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable
-
-        //then - closure is called
-        assertThat(callCounter).isEqualTo(1)
+        @Test
+        fun `initializer is called in right time`() {
+            // then - not yet called
+            assertThat(callCounter).isEqualTo(0)
+            // when - call variable
+            variable
+            // then - content is initialized
+            assertThat(callCounter).isEqualTo(1)
+        }
     }
 
 }

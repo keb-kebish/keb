@@ -1,52 +1,61 @@
 package org.kebish.core
 
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class ContentCacheTest {
 
-    @Test
-    fun `initializer is called on each access to variable`() {
+    @Nested
+    inner class NotCachedContentTest : ContentBaseTest() {
+
         // given
-        var callCounter = 0
-        val variable by content { callCounter++ }
+        private var callCounter = 0
+        private val variable by content { callCounter++ }
 
-        // when - get value of variable three times
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable + variable + variable
+        @Test
+        fun `initializer is called on each access to variable`() {
+            // when - get value of variable three times
+            variable + variable + variable
 
-        // then -
-        Assertions.assertThat(callCounter).isEqualTo(3)
+            // then
+            Assertions.assertThat(callCounter).isEqualTo(3)
+        }
     }
 
-    @Test
-    fun `for cached content is initializer called only once`() {
+    @Nested
+    inner class CachedContentTest : ContentBaseTest() {
+
         // given
-        var callCounter = 0
-        val variable by content(cache = true) { callCounter++ }
+        private var callCounter = 0
+        private val variable by content(cache = true) { callCounter++ }
 
-        // when - get value of variable three times
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable + variable + variable
+        @Test
+        fun `for cached content is initializer called only once`() {
+            // when - get value of variable three times
+            variable + variable + variable
 
-        // then -
-        Assertions.assertThat(callCounter).isEqualTo(1)
+            // then
+            Assertions.assertThat(callCounter).isEqualTo(1)
+        }
     }
 
-    @Test
-    fun `cached content returning null is called only once`() {
+    @Nested
+    inner class NullCachedContentTest : ContentBaseTest() {
+
         // given
         var callCounter = 0
         val variable by content(cache = true, required = false) { callCounter++ ; mayReturnNull() }
 
-        // when - get value of variable three times
-        @Suppress("UNUSED_VARIABLE")
-        val helper = variable + variable + variable
+        @Test
+        fun `cached content returning null is called only once`() {
+            // when - get value of variable three times
+            variable + variable + variable
 
-        // then -
-        Assertions.assertThat(callCounter).isEqualTo(1)
-        println("AAAA '$helper'")
+            // then
+            Assertions.assertThat(callCounter).isEqualTo(1)
+        }
+
+        private fun mayReturnNull(): String? = null
     }
-
-    private fun mayReturnNull(): String? = null
 }
