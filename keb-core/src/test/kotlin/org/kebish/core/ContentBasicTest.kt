@@ -38,5 +38,4 @@ class ContentBasicTest {
             assertThat(callCounter).isEqualTo(1)
         }
     }
-
 }

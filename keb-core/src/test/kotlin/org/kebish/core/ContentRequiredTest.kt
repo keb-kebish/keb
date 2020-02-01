@@ -30,7 +30,6 @@ class ContentRequiredTest {
         // given
         private val variable by content { mayReturnNull() }
 
-
         @Test
         fun `for required content is thrown an exception when null content provided`() {
             // when - get value of variable three times
@@ -76,6 +75,4 @@ class ContentRequiredTest {
     }
 
     private fun mayReturnNull(): String? = null
-
-
 }
