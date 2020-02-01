@@ -6,11 +6,15 @@ fun findProperty(s: String) = project.findProperty(s) as String?
 
 plugins {
     kotlin("jvm") version "1.3.61"
+
+    // Publish plugins - start
     `java-library`
     `maven-publish`
     id("com.jfrog.bintray") version "1.8.4"
+    // Publish plugins - end
 }
 
+// Publish - start
 bintray {
     user = "vondrous"
     key = findProperty("bintrayApiKey")
@@ -19,52 +23,25 @@ bintray {
         repo = "kebish"
         name = "keb-core"
 //        userOrg = "bintray_user"
-        setLicenses("Apache-2.0")
+        setLicenses("WTFPL")
         vcsUrl = "https://gitlab.com/horca23/keb.git"
 
-        version(delegateClosureOf<BintrayExtension.VersionConfig> {
-            name = "0.2"
-        })
-        setPublications("keb-core")
+//        version(delegateClosureOf<BintrayExtension.VersionConfig> {
+//            name = "0.2"
+//        })
+        setPublications("keb-publish-artifact")
     })
 
 }
 
-//val sourcesJar by tasks.registering(Jar::class) {
-//    classifier = "sources"
-//    from(sourceSets.main.get().allSource)
-//}
-//
-//publishing {
-//    repositories {
-//        maven {
-//            // change to point to your repo, e.g. http://my.org/repo
-//            url = uri("$buildDir/repo")
-//        }
-//    }
-//    publications {
-//        register("mavenJava", MavenPublication::class) {
-//            from(components["java"])
-//            artifact(sourcesJar.get())
-//        }
-//    }
-//}
-
 publishing {
     publications {
-        create<MavenPublication>("keb-core") {
+        create<MavenPublication>("keb-publish-artifact") {
             from(components["java"])
         }
     }
-
-// This works:
-    repositories {
-        maven {
-            name = "myRepo"
-            url = uri("file://${buildDir}/repo")
-        }
-    }
 }
+// Publish - end
 
 repositories {
     mavenCentral()
