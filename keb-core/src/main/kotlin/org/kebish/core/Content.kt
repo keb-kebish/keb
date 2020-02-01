@@ -3,11 +3,11 @@
 package org.kebish.core
 
 import org.openqa.selenium.NoSuchElementException
+import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) {
-    operator fun getValue(thisRef: Any?, prop: KProperty<*>): T {
-        require(thisRef is ContentSupport) { "Content delegate can only be used on objects implementing ContentSupport." }
+class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) : ReadOnlyProperty<ContentSupport, T> {
+    override operator fun getValue(thisRef: ContentSupport, property: KProperty<*>): T {
         return contentInitializer.initialize(thisRef.browser)
     }
 }
