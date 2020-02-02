@@ -6,7 +6,7 @@ interface WaitSupport {
 
     val browser: Browser
 
-    val defaultWaitPreset get() = browser.config.getDefaultPreset()
+    private val defaultWaitPreset get() = browser.config.getDefaultPreset()
 
     fun <T> waitFor(
         preset: String?,
@@ -81,34 +81,34 @@ interface WaitSupport {
         }
     }
 
-}
+    private class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
 
-class WaitTimeoutMessageBuilder(private val timeoutedAfter: Number) {
+        private var detail: String = ""
+        private var lastEvaluatedValue: String = ""
+        private var lastThrowableMessage = ""
 
-    private var detail: String = ""
-    private var lastEvaluatedValue: String = ""
-    private var lastThrowableMessage = ""
+        fun withDetail(detail: String?) = apply {
+            detail?.let { this.detail = " for '$it'" }
+        }
 
-    fun withDetail(detail: String?) = apply {
-        detail?.let { this.detail = " for '$it'" }
+        fun withLastEvaluatedValue(lastEvaluatedValue: Any?) = apply {
+            this.lastEvaluatedValue = " Last evaluated value: '$lastEvaluatedValue'."
+        }
+
+        fun withLastThrown(lastThrown: Throwable?) = apply {
+            lastThrown?.let { this.lastThrowableMessage = " Last exception cause: '${it.message}'." }
+        }
+
+        fun build() =
+            "Waiting$detail has timed out after $timeoutedAfter seconds.$lastEvaluatedValue$lastThrowableMessage"
+
     }
-
-    fun withLastEvaluatedValue(lastEvaluatedValue: Any?) = apply {
-        this.lastEvaluatedValue = " Last evaluated value: '$lastEvaluatedValue'."
-    }
-
-    fun withLastThrown(lastThrown: Throwable?) = apply {
-        lastThrown?.let { this.lastThrowableMessage = " Last exception cause: '${it.message}'." }
-    }
-
-    fun build() =
-        "Waiting$detail has timed out after $timeoutedAfter seconds.$lastEvaluatedValue$lastThrowableMessage"
 
 }
 
 data class WaitPreset(val timeout: Number, val retryInterval: Number)
 
-class WaitPresetFactory {
+internal class WaitPresetFactory {
     fun from(value: Any, configuration: Configuration) = when (value) {
         is Number -> configuration.getDefaultPreset().copy(timeout = value)
         is String -> configuration.getWaitPreset(value)

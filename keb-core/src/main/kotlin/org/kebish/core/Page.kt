@@ -11,10 +11,10 @@ abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupp
         true
     }
 
-    fun verifyAt(waitPreset: String?) {
-        waitFor(
-            waitPreset, desc = "Verifying of ${javaClass.simpleName}", f = ::at
-        )
+    internal fun verifyAt(wait: Any) = apply {
+        WaitPresetFactory().from(wait, browser.config)
+            ?.let { waitFor(it, desc = "Verifying of ${javaClass.simpleName}", f = ::at) }
+            ?: at()
     }
 }
 
