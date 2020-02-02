@@ -62,16 +62,5 @@ interface NavigationSupport {
         return body(this)
     }
 
-    fun <T : Page, R : Any> T.via2(body: (T) -> R): R {
-        return body(this)
-    }
-
-    fun <T : Page, R : Any> T.via3(body: T.(T) -> R): R {
-        return body(this, this)
-    }
-
-    fun <T : Page, R : Any> T.via4(classValidator: KClass<T>, body: T.() -> R): R {
-        return body(this)
-    }
 
 }
