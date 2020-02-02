@@ -30,6 +30,32 @@ class KotlinHomePage : Page() {
     val headerText by content { header.text }
 }
 ```
+ There are multiple options how to handle the selected content:
+- cache 
+  - content can be cached - i.e. only initialized on first access, otherwise invoked on every access
+  - usage: `val title by content(cache=true) { html("h1") }`
+  - default value: `false`
+- required:
+  - you can specify whether the content is required to be present on the page
+  - if required and the content is not present, then the `org.openqa.selenium.NoSuchElementException` exception is thrown, 
+  instance of `org.kebish.core.EmptyContent` is returned otherwise
+  - usage: `val title by content(required=true) { html("h1") }`
+  - default value: `true`
+- wait:
+  - wheter the keb should wait for the given content
+  - usage: 
+  ```kotlin
+  val title by content(wait = true) { html"h1") } // uses the default wait preset
+  
+  val title by content(wait = 60) { html"h1") } // uses custom timeout value with retryInterval from the default wait preset
+  
+  val title by content(wait = "quick") { html"h1") } // uses the given wait preset
+  
+  val title by content(waitTimeout = 10, waitRetryInterval = 2) { html"h1") } // specify both timeout and retry interval
+  ```
+  - if content is still not present after the specified interval, the `org.kebish.core.WaitTimeoutException` exception is thrown
+  - default value: `false`
+  - for more info on waiting, refer to the Waiting section below
 
 ### Page verifier
 In order to verify, that you successfully landed on your page, you can use `at` method.
@@ -68,9 +94,21 @@ class KotlinHomePage : Page() {
 
 `at(::MyPage) { clickMainLink() }` return result of closure
 
+All the methods defined above can be used with constructor reference `to(::MyPage)` or with instance of a page `to(MyPage())`.
+Please note that constructor reference variant can only be used if the required page has no primary constructor parameters.
+
 `MyPage().via { myPageMethod() } ` 
 
 `Page.via(MyPage::class) { myPageMethod() }` the same as method above, but explicitly validate, that method is called on correct page
+
+Both `to` and `at` methods can wait for the transition/verification of page to happen. Wait definition is same as for the content method.
+```kotlin
+val myPage = to(::MyPage, wait = true)
+val myPage = to(::MyPage, wait = 30)
+val myPage = to(::MyPage, wait = "quick")
+val myPage = to(::MyPage, waitTimeout = 10, waitRetryInterval = 1)
+// same for the 'at' methods
+```
 
 
 ## Waiting
@@ -104,16 +142,77 @@ kebConfig {
 }
 ```
 
-## Usage
+## Full usage - keb + JUnit
 ```kotlin
-// configuration
-val config = kebConfig {
-    driver = FirefoxDriver()
+package org.kebish.usage
+
+import io.github.bonigarcia.wdm.WebDriverManager
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.kebish.core.*
+import org.kebish.junit5.KebTest
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.firefox.FirefoxDriver
+
+class KotlinSiteKebTest : KebTest(Browser(kebConfig {
+    WebDriverManager.firefoxdriver().setup()
+    driver = { FirefoxDriver() }
+    baseUrl = "https://kotlinlang.org"
+})) {
+
+    @Test
+    fun `testing kotlin lang page`() {
+        // given
+        val homePage = to(::KotlinHomePage)
+
+        // when
+        val title = homePage.header
+
+        // then
+        Assertions.assertEquals("Kotlin", title.text)
+        Assertions.assertTrue(homePage.licensedUnderApacheLicense())
+
+        // when
+        val docsPage = homePage.openDocumentation()
+
+        // then
+        Assertions.assertEquals("Learn Kotlin", docsPage.title.text)
+    }
+
 }
-Browser.drive(config) {
-    val kotlinHomePage = to(::KotlinHomePage)
-    kotlinHomePage.menu.first().click()
-    // ...
+
+class KotlinHomePage : Page() {
+    override fun url() = "/"
+    override fun at() = header
+
+    val header by content { css(".global-header-logo") }
+    val menu by content { module(NavMenuModule(css(".nav-links"))) }
+    val footer by content { module(FooterModule(html("footer"))) }
+
+    fun openDocumentation(): KotlinDocumentationPage {
+        menu.menuItems.first { it.text.contains("learn", ignoreCase = true) }.click()
+        return at(::KotlinDocumentationPage)
+    }
+
+    fun licensedUnderApacheLicense() = footer.licenseNotice.text.contains("apache", ignoreCase = true)
+
+}
+
+class KotlinDocumentationPage : Page() {
+    override fun url() = "/docs/reference"
+    override fun at() = title
+
+    val title by content { html("h1") }
+
+}
+
+class NavMenuModule(scope: WebElement) : Module(scope) {
+    val menuItems by content { htmlList("a") }
+}
+
+class FooterModule(scope: WebElement) : Module(scope) {
+    val licenseNotice by content { css(".terms-copyright") }
+    val sponsor by content { css(".terms-sponsor") }
 }
 ```
-For full usage example please refer to [/keb-core/src/test/kotlin/keb](/keb-core/src/test/kotlin/keb).
+For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](/keb-core/src/test/kotlin/org/kebish/usage).
