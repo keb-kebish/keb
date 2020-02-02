@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.kebish.Bintray
 import java.util.*
 
-fun findProperty(s: String) = project.findProperty(s) as String?
+fun buildParam(s: String) = project.findProperty(s) as String?
 
 plugins {
     kotlin("jvm") version "1.3.61"
@@ -20,7 +20,7 @@ plugins {
 // Publish - start
 bintray {
     user = Bintray.user
-    key = findProperty("bintrayApiKey")
+    key = buildParam("bintrayApiKey")
 
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = Bintray.repo
