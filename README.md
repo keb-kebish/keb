@@ -81,7 +81,11 @@ class NavMenuModule(scope: WebElement) : Module(scope) {
 class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
     
+    // initialize the module by passing the module object into the 'module' method
     val menu by content { module(NavMenuModule(css(".nav-links"))) }
+    
+    // initialize the module by calling the 'module' method on already existing module object
+    val menu2 by content { NavMenuModule(css(".nav-links")).module() }
 }
 ```       
 
