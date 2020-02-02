@@ -38,6 +38,7 @@ bintray {
             vcsTag = project.version.toString()
         })
         setPublications("keb-publish-artifact")
+        publish = true
     })
 
 }
