@@ -1,9 +1,9 @@
+
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
-import org.kebish.Versions
 
 plugins {
-    kotlin("jvm") version Versions.kotlin
+    kotlin("jvm") version "1.3.61"
 }
 
 dependencies {
@@ -21,7 +21,7 @@ tasks {
         kotlinOptions.jvmTarget = "1.8"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "1.8"                                
     }
 }
 
