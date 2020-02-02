@@ -101,10 +101,6 @@ class KotlinHomePage : Page() {
 All the methods defined above can be used with constructor reference `to(::MyPage)` or with instance of a page `to(MyPage())`.
 Please note that constructor reference variant can only be used if the required page has no primary constructor parameters.
 
-`MyPage().via { myPageMethod() } ` 
-
-`Page.via(MyPage::class) { myPageMethod() }` the same as method above, but explicitly validate, that method is called on correct page
-
 Both `to` and `at` methods can wait for the transition/verification of page to happen. Wait definition is same as for the content method.
 ```kotlin
 val myPage = to(::MyPage, wait = true)
@@ -113,6 +109,20 @@ val myPage = to(::MyPage, wait = "quick")
 val myPage = to(::MyPage, waitTimeout = 10, waitRetryInterval = 1)
 // same for the 'at' methods
 ```
+
+#### Navigating pages using fluent API
+```kotlin
+val joeContact = MyPage()
+    .via { clickOnContacts() }
+    .via { findContact("joe") } 
+``` 
+
+```kotlin
+// Same as method above, but explicitly validate, that method is called on correct page
+val joeContact = Page
+    .via(MyPage::class) { clickOnContacts() }
+    .via(ContactsPage::class) { findContact("joe") } 
+``` 
 
 
 ## Waiting
