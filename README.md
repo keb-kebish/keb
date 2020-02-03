@@ -112,14 +112,14 @@ val myPage = to(::MyPage, waitTimeout = 10, waitRetryInterval = 1)
 
 #### Navigating pages using fluent API
 ```kotlin
-val joeContact = MyPage()
+val joeContact = to(::MyPage)
     .via { clickOnContacts() }
     .via { findContact("joe") } 
 ``` 
 
 ```kotlin
 // Same as method above, but explicitly validate, that method is called on correct page
-val joeContact = Page
+val joeContact = to(::MyPage)
     .via(MyPage::class) { clickOnContacts() }
     .via(ContactsPage::class) { findContact("joe") } 
 ``` 
