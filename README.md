@@ -45,13 +45,13 @@ class KotlinHomePage : Page() {
   - wheter the keb should wait for the given content
   - usage: 
   ```kotlin
-  val title by content(wait = true) { html"h1") } // uses the default wait preset
+  val title by content(wait = true) { html("h1") } // uses the default wait preset
   
-  val title by content(wait = 60) { html"h1") } // uses custom timeout value with retryInterval from the default wait preset
+  val title by content(wait = 60) { html("h1") } // uses custom timeout value with retryInterval from the default wait preset
   
-  val title by content(wait = "quick") { html"h1") } // uses the given wait preset
+  val title by content(wait = "quick") { html("h1") } // uses the given wait preset
   
-  val title by content(waitTimeout = 10, waitRetryInterval = 2) { html"h1") } // specify both timeout and retry interval
+  val title by content(waitTimeout = 10, waitRetryInterval = 2) { html("h1") } // specify both timeout and retry interval
   ```
   - if content is still not present after the specified interval, the `org.kebish.core.WaitTimeoutException` exception is thrown
   - default value: `false`
