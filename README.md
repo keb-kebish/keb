@@ -1,5 +1,13 @@
 # Keb
-Web Testing, Browser Automation, Page Object Pattern and more  
+Web Testing, Browser Automation, Page Object Pattern and more
+
+## Content
+1. [Page object pattern](#page-object-pattern)
+2. [Modules](#modules)
+3. [Navigation](#navigation)
+4. [Waiting](#waiting)
+5. [Installation](#installation)
+6. [Usage](#full-usage---keb--junit)
 
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
@@ -8,25 +16,6 @@ class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
 }
 ```
-
-### Installation
-Relesed jar files are available in jcenter().
-
-Gradle setup:
-```kotlin
-repositories {
-    jcenter()
-}
-
-val kebVersion = "<insert_actual_version>"
-dependencies{
-  implementation("org.kebish:keb-core:$kebVersion")
-  implementation("org.kebish:keb-junit5:$kebVersion")
-  implementation("org.kebish:keb-bobril:$kebVersion")
-}
-```
-If you use Keb in tests you will probably use configuration `testImplementation` instead of `implementation`
-
 
 ### Page elements
 To select web element on your page use the following methods.
@@ -91,7 +80,7 @@ class KotlinHomePage : Page() {
 Whether every page has to define `at` verifier can be controlled by configuration property `atVerifierRequired`. If no
 verifier is defined and neither is required, no page verification is performed.
 
-### Modules
+## Modules
 If you want to reuse page content present on multiple pages, you can use modules. Module has an optional constructor
 parameter `scope`, which can be used as a search root for all the module's content. To initialize module with use the `module` method.
 ```kotlin
@@ -110,7 +99,7 @@ class KotlinHomePage : Page() {
 }
 ```       
 
-### Navigation
+## Navigation
 `at(::MyPage)` create instance of page and wait until validator `at()` is satisfied
 
 `to(::MyPage)` write url of page into browser and call method `at()`
@@ -131,7 +120,7 @@ val myPage = to(::MyPage, waitTimeout = 10, waitRetryInterval = 1)
 // same for the 'at' methods
 ```
 
-#### Navigating pages using fluent API
+### Navigating pages using fluent API
 ```kotlin
 val joeContact = to(::MyPage)
     .via { clickOnContacts() }
@@ -176,6 +165,25 @@ kebConfig {
     }
 }
 ```
+
+## Installation
+Relesed jar files are available in jcenter().
+
+Gradle setup:
+```kotlin
+repositories {
+    jcenter()
+}
+
+val kebVersion = "<insert_actual_version>"
+dependencies{
+  implementation("org.kebish:keb-core:$kebVersion")
+  implementation("org.kebish:keb-junit5:$kebVersion")
+  implementation("org.kebish:keb-bobril:$kebVersion")
+}
+```
+If you use Keb in tests you will probably use configuration `testImplementation` instead of `implementation`
+
 
 ## Full usage - keb + JUnit
 ```kotlin
