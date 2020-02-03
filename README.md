@@ -1,4 +1,5 @@
 # Keb
+Web Testing, Browser Automation, Page Object Pattern and more  
 
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
