@@ -1,4 +1,5 @@
 # Keb
+
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
 ```kotlin
@@ -6,6 +7,25 @@ class KotlinHomePage : Page() {
     override fun url() = "https://kotlinlang.org"
 }
 ```
+
+### Installation
+Relesed jar files are available in jcenter().
+
+Gradle setup:
+```kotlin
+repositories {
+    jcenter()
+}
+
+val kebVersion = "<insert_actual_version>"
+dependencies{
+  implementation("org.kebish:keb-core:$kebVersion")
+  implementation("org.kebish:keb-junit5:$kebVersion")
+  implementation("org.kebish:keb-bobril:$kebVersion")
+}
+```
+If you use Keb in tests you will probably use configuration `testImplementation` instead of `implementation`
+
 
 ### Page elements
 To select web element on your page use the following methods.
