@@ -39,7 +39,7 @@ class HttpResourceFolderServer(
 
 class HttpBuilderServer(private vararg val content: HtmlContent) : KtorHttpServer({
     routing {
-        content.forEach { (content, path) ->
+        content.forEach { (path, content) ->
             get(path) {
                 call.respondHtml { content() }
             }
@@ -48,8 +48,8 @@ class HttpBuilderServer(private vararg val content: HtmlContent) : KtorHttpServe
 })
 
 data class HtmlContent(
-    val content: HTML.() -> Unit,
-    val path: String = "/"
+    val path: String = "/",
+    val content: HTML.() -> Unit
 )
 
 

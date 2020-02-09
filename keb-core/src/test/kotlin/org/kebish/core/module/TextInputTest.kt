@@ -24,12 +24,12 @@ class TextInputTest : KebTest(Browser(kebConfig {
 
     private val serverExtension = register(HttpBuilderServerExtension(
         browser,
-        HtmlContent({
+        HtmlContent {
             body {
                 textInput(classes = "text") { value = "initial value" }
                 checkBoxInput(classes = "checkbox")
             }
-        })
+        }
     ))
 
     @Test
