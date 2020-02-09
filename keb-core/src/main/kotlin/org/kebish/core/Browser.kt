@@ -1,6 +1,8 @@
 package org.kebish.core
 
 import org.kebish.core.util.ResettableLazy
+import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.html5.WebStorage
 
 class Browser(val config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
@@ -26,6 +28,24 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
 
     fun quit() {
         driverDelegate.reset()
+    }
+
+    fun clearCookies() {
+        driver.manage().deleteAllCookies()
+    }
+
+    fun clearCookiesQuietly() {
+        try {
+            clearCookies()
+        } catch (e: WebDriverException) {
+            // ignore
+        }
+    }
+
+    fun clearWebStorage() {
+        val driverCasted = driver as WebStorage
+        driverCasted.localStorage.clear()
+        driverCasted.sessionStorage.clear()
     }
 
 }
