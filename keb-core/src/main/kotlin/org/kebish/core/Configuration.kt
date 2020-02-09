@@ -51,10 +51,10 @@ class Configuration {
         private val decorated: Map<String, T>
     ) : Map<String, T> by decorated.mapKeys({ it.key.toLowerCase() }) {
 
-        override fun get(key: String): T = get(key.toLowerCase())
+        override fun get(key: String): T? = decorated[key.toLowerCase()]
 
-        override fun getOrDefault(key: String, defaultValue: T): T = getOrDefault(key.toLowerCase(), defaultValue)
+        override fun getOrDefault(key: String, defaultValue: T): T = decorated.getOrDefault(key.toLowerCase(), defaultValue)
 
-        override fun containsKey(key: String): Boolean = containsKey(key.toLowerCase())
+        override fun containsKey(key: String): Boolean = decorated.containsKey(key.toLowerCase())
     }
 }
