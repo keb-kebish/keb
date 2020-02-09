@@ -38,38 +38,38 @@ class FormElementTest : KebTest(Browser(kebConfig {
         val page = to(::FormElementTestPage)
 
         // when
-        val enabled = page.enabled
+        val enabledModule = page.enabledModule
 
         // then
-        assertThat(enabled.isEnabled()).isTrue()
-        assertThat(enabled.isDisabled()).isFalse()
+        assertThat(enabledModule.isEnabled()).isTrue()
+        assertThat(enabledModule.isDisabled()).isFalse()
 
         // when
-        val disabled = page.disabled
+        val disabledModule = page.disabledModule
 
         // then
-        assertThat(disabled.isEnabled()).isFalse()
-        assertThat(disabled.isDisabled()).isTrue()
+        assertThat(disabledModule.isEnabled()).isFalse()
+        assertThat(disabledModule.isDisabled()).isTrue()
 
         // when
-        val editable = page.editable
+        val editableModule = page.editableModule
 
         // then
-        assertThat(editable.isEditable()).isTrue()
-        assertThat(editable.isReadOnly()).isFalse()
+        assertThat(editableModule.isEditable()).isTrue()
+        assertThat(editableModule.isReadOnly()).isFalse()
 
         // when
-        val readonly = page.readonly
+        val readonlyModule = page.readonlyModule
 
         // then
-        assertThat(readonly.isEditable()).isFalse()
-        assertThat(readonly.isReadOnly()).isTrue()
+        assertThat(readonlyModule.isEditable()).isFalse()
+        assertThat(readonlyModule.isReadOnly()).isTrue()
     }
 }
 
 private class FormElementTestPage : Page() {
-    val enabled by content { module(TextInput(css(".enabled"))) }
-    val disabled by content { module(TextInput(css(".disabled"))) }
-    val editable by content { module(TextInput(css(".editable"))) }
-    val readonly by content { module(TextInput(css(".readonly"))) }
+    val enabledModule by content { module(TextInput(css(".enabled"))) }
+    val disabledModule by content { module(TextInput(css(".disabled"))) }
+    val editableModule by content { module(TextInput(css(".editable"))) }
+    val readonlyModule by content { module(TextInput(css(".readonly"))) }
 }
