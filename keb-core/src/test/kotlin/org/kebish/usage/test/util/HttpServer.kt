@@ -39,9 +39,9 @@ class HttpResourceFolderServer(
 
 class HttpBuilderServer(private vararg val content: HtmlContent) : KtorHttpServer({
     routing {
-        content.forEach { (path, content) ->
+        content.forEach { (path, htmlBuilder) ->
             get(path) {
-                call.respondHtml { content() }
+                call.respondHtml { htmlBuilder() }
             }
         }
     }
@@ -49,7 +49,7 @@ class HttpBuilderServer(private vararg val content: HtmlContent) : KtorHttpServe
 
 data class HtmlContent(
     val path: String = "/",
-    val content: HTML.() -> Unit
+    val htmlBuilder: HTML.() -> Unit
 )
 
 
@@ -62,9 +62,7 @@ abstract class KtorHttpServer(private val initializer: Application.() -> Unit) :
 
     override fun start() {
         port = SocketUtil().findFreePort()
-        server = embeddedServer(Netty, port = port) {
-            initializer()
-        }.start()
+        server = embeddedServer(Netty, port = port) { initializer() }.start()
     }
 
     override fun stop() {
