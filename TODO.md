@@ -61,6 +61,9 @@
 - closing browser register onJVMExit() - less browsers will hang in processes
    - probably will be needed need reference to browser as "weak reference" - to release memory  
      
+- add contact informations to Readme, and web pages
+
+- migrate to github :(  account  keb-kebish
      
 ## Ideas
 

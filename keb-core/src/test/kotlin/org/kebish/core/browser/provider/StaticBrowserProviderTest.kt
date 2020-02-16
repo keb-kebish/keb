@@ -1,14 +1,13 @@
 package org.kebish.core.browser.provider
 
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.withSettings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.kebConfig
 import org.mockito.BDDMockito
 import org.openqa.selenium.WebDriver
 
-internal class StaticBrowserProviderTest {
+class StaticBrowserProviderTest {
 
     @Test
     fun `browser handling`() {
@@ -41,7 +40,7 @@ internal class StaticBrowserProviderTest {
         // given
         StaticBrowserProvider.reset()
         var driverCreationCount = 0
-        val driverMock : WebDriver = mock(withSettings().name("elementName"))
+        val driverMock : WebDriver = mock()
         val sbp = StaticBrowserProvider(kebConfig {
             driver = {
                 driverCreationCount++
