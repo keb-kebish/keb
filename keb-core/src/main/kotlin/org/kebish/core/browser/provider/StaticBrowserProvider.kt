@@ -3,24 +3,30 @@ package org.kebish.core.browser.provider
 import org.kebish.core.Browser
 import org.kebish.core.Configuration
 
-class StaticBrowserProvider {
+class StaticBrowserProvider(configuration: Configuration) : BrowserProvider {
+
+    init {
+        //TODO - every instance reset static field - it should work, but think about it
+        config = configuration
+    }
 
     companion object {
 
-        lateinit var config: Configuration
+        private lateinit var config: Configuration
 
         private val browser by lazy {
-            if (!::config.isInitialized) {
-                throw IllegalStateException("config was not initialized")
-            }
+            //TODO why cannot compile
+//            if (!::config.isInitialized) {
+//                throw IllegalStateException("config was not initialized")
+//            }
             Browser(config)
         }
 
 
     }
 
-    fun provideBrowser(): Browser {
-         return browser
+    override fun provideBrowser(): Browser {
+        return browser
     }
 
 }

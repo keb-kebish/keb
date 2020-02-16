@@ -3,16 +3,18 @@ package org.kebish.usage
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.kebish.core.*
+import org.kebish.core.Module
+import org.kebish.core.Page
+import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
-class KotlinSiteKebTest : KebTest(Browser(kebConfig {
+class KotlinSiteKebTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
-})) {
+}) {
 
     @Test
     fun `testing kotlin lang page`() {

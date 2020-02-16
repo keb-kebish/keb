@@ -2,7 +2,6 @@ package org.kebish.usage.multipage
 
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
 import org.kebish.core.Module
 import org.kebish.core.Page
 import org.kebish.core.kebConfig
@@ -14,10 +13,10 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 
-class MultiPageTest : KebTest(Browser(kebConfig {
+class MultiPageTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }
-})), Extendable by ExtendableImpl() {
+}), Extendable by ExtendableImpl() {
 
     var serverExtension = register(HttpResourceFolderServerExtension("org/kebish/usage/multipage", browser))
 

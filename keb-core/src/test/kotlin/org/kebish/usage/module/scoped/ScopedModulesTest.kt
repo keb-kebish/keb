@@ -1,22 +1,22 @@
 package org.kebish.usage.module.scoped
 
-import org.kebish.core.Browser
-import org.kebish.core.kebConfig
 import io.github.bonigarcia.wdm.WebDriverManager
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.kebish.usage.test.util.HttpResourceFolderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.openqa.selenium.firefox.FirefoxDriver
 
 
-class ScopedModulesTest : KebTest(Browser(kebConfig {
+class ScopedModulesTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }
-})), Extendable by ExtendableImpl() {
+}), Extendable by ExtendableImpl() {
 
+    @Suppress("unused")
     var server = register(HttpResourceFolderServerExtension("org/kebish/usage/module/scoped", browser))
 
     @Test
