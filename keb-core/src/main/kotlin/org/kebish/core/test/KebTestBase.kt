@@ -17,10 +17,10 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
     /** Test runner must call this method after each test */
     fun afterEachTest() {
 //        TODO calling this method depends on configuration
-        closeDriver()
+//        closeDriver()
     }
 
-    private fun closeDriver() {
-        browser.quit()
-    }
+//    private fun closeDriver() {
+//        browser.quit()
+//    }
 }
