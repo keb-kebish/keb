@@ -19,7 +19,7 @@ class MultiPageTest : KebTest(Browser(kebConfig {
     this.driver = { FirefoxDriver() }
 })), Extendable by ExtendableImpl() {
 
-    var serverExtension = register(HttpResourceFolderServerExtension("org/kebish/usage/multipage", browser))
+    var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
 
     @Test
     fun `navigation menu works`() {
