@@ -25,6 +25,7 @@ class StaticBrowserProviderIntegrationTest : KebTest(kebConfig {
     }
 
     @BeforeAll
+    @AfterAll
     fun prepare() {
        StaticBrowserProvider.reset()
     }

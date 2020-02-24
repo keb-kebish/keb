@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.kebConfig
-import org.mockito.BDDMockito
+import org.mockito.BDDMockito.then
 import org.openqa.selenium.WebDriver
 
 class StaticBrowserProviderTest {
@@ -65,7 +65,7 @@ class StaticBrowserProviderTest {
         StaticBrowserProvider.reset()
         
         // then
-        BDDMockito.then(driverMock).should().quit()
+        then(driverMock).should().quit()
 
         // when
         sbp.provideBrowser().driver
