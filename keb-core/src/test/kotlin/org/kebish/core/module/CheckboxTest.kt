@@ -3,9 +3,8 @@ package org.kebish.core.module
 import io.github.bonigarcia.wdm.WebDriverManager
 import kotlinx.html.body
 import kotlinx.html.checkBoxInput
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
 import org.kebish.core.Page
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
@@ -15,10 +14,10 @@ import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
 import org.openqa.selenium.firefox.FirefoxDriver
 
-class CheckboxTest: KebTest(Browser(kebConfig {
+class CheckboxTest: KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }
-})), Extendable by ExtendableImpl() {
+}), Extendable by ExtendableImpl() {
 
     private val serverExtension = register(HttpBuilderServerExtension(
         browser,
@@ -40,13 +39,13 @@ class CheckboxTest: KebTest(Browser(kebConfig {
         checkbox.check()
 
         // then
-        Assertions.assertThat(checkbox.isChecked()).isTrue()
+        assertThat(checkbox.isChecked()).isTrue()
 
         // when
         checkbox.uncheck()
 
         // then
-        Assertions.assertThat(checkbox.isChecked()).isFalse()
+        assertThat(checkbox.isChecked()).isFalse()
     }
 }
 
