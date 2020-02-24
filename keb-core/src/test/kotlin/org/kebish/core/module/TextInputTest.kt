@@ -7,7 +7,6 @@ import kotlinx.html.textInput
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
 import org.kebish.core.Page
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
@@ -17,11 +16,12 @@ import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
 import org.openqa.selenium.firefox.FirefoxDriver
 
-class TextInputTest : KebTest(Browser(kebConfig {
+class TextInputTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }
-})), Extendable by ExtendableImpl() {
+}), Extendable by ExtendableImpl() {
 
+    @Suppress("unused")
     private val serverExtension = register(HttpBuilderServerExtension(
         browser,
         HtmlContent {

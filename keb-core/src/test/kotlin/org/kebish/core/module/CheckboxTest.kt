@@ -19,6 +19,7 @@ class CheckboxTest: KebTest(kebConfig {
     this.driver = { FirefoxDriver() }
 }), Extendable by ExtendableImpl() {
 
+    @Suppress("unused")
     private val serverExtension = register(HttpBuilderServerExtension(
         browser,
         HtmlContent {
