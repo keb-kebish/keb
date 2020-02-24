@@ -17,7 +17,7 @@ class ScopedModulesTest : KebTest(kebConfig {
 }), Extendable by ExtendableImpl() {
 
     @Suppress("unused")
-    var server = register(HttpResourceFolderServerExtension("org/kebish/usage/module/scoped", browser))
+    var server = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/module/scoped"))
 
     @Test
     fun `surname can be cleared`() {

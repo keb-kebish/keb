@@ -17,7 +17,7 @@ class NavigationTest : KebTest(kebConfig {
 }), Extendable by ExtendableImpl() {
 
     @Suppress("unused")
-    var serverExtension = register(HttpResourceFolderServerExtension("org/kebish/usage/multipage", browser))
+    var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
 
     @Test
     fun `to without closure returns page`() {

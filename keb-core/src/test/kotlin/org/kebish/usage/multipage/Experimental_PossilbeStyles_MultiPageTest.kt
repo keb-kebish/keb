@@ -15,7 +15,7 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
     this.driver = { FirefoxDriver() }
 }), Extendable by ExtendableImpl() {
 
-    var serverExtension = register(HttpResourceFolderServerExtension("org/kebish/usage/multipage", browser))
+    var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
 
 
     // Page objects are simple, do not return other page
