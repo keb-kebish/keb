@@ -15,6 +15,7 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
     this.driver = { FirefoxDriver() }
 }), Extendable by ExtendableImpl() {
 
+    @Suppress("unused")
     var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
 
 
@@ -66,6 +67,7 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
     }
 
     // + pure kotlin default functions - no magic
+    @Suppress("unused")
     @Test
     fun `navigation menu works style3`() {
         to(::HomePage).run {
@@ -106,7 +108,7 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
     }
 
 
-    //TODO mechanismus, který hlídá, že jsi na správné stránce.
+    // POSSIBLE IDEA mechanismus, který hlídá, že jsi na správné stránce.
     // neco jak, že by si browser hlídal na jaké jsi stránce (třeba při validátoru by si to zapamatoval)
     // A pak by hlídal, že se volá jen z instancí té strpávné stránky (problém je, že tam nevím, kde se na to chytit...
     // To bych musel se chytit někde někde před metodou, která je naimplementovaná na stránce a to je problém.
