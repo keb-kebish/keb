@@ -53,7 +53,6 @@
 
   
 ## Other
-- publish Maven artifact
 
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
@@ -63,7 +62,11 @@
      
 - add contact informations to Readme, and web pages
 
-- migrate to github :(  account  keb-kebish
+- to deprecated repositories gitlab etc. commit message about deprecation and link to kebish.org
+
+- To web site add links to all kinds of logos
+
+- publishing to maven central
      
 ## Ideas
 
