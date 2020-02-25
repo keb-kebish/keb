@@ -200,11 +200,11 @@ import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
-class KotlinSiteKebTest : KebTest(Browser(kebConfig {
+class KotlinSiteKebTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
-})) {
+}) {
 
     @Test
     fun `testing kotlin lang page`() {

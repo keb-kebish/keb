@@ -54,6 +54,8 @@
   
 ## Other
 
+- readme section Contacts  and  Contributors  -  Pavel Sajda
+
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
      
