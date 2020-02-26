@@ -10,7 +10,12 @@ http://kebish.org/
 4. [Waiting](#waiting)
 5. [Installation](#installation)
 6. [Usage](#full-usage---keb--junit)
-7. [Change log](#change-log)
+7. [About project](#about-project)
+    1. [Committers](#committers)
+    2. [Contributors](#contributors)
+    3. [Change log](#change-log)
+
+
 
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
@@ -263,8 +268,16 @@ class FooterModule(scope: WebElement) : Module(scope) {
 ```
 For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](/keb-core/src/test/kotlin/org/kebish/usage).
 
+## About project
+### Committers
+- Michal Horčičko
+- Jan Vondrouš 
 
-## Change log
+### Contributors
+- Pavel Sajda - http://pseudofotograf.cz/
+  - Keb logo
+
+### Change log
 
 - **0.3**
   - _Breaking changes_ 

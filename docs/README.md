@@ -1,6 +1,8 @@
 # Keb
 Web Testing, Browser Automation, Page Object Pattern and more
 
+http://kebish.org/
+
 ## Content
 1. [Page object pattern](#page-object-pattern)
 2. [Modules](#modules)
@@ -8,6 +10,12 @@ Web Testing, Browser Automation, Page Object Pattern and more
 4. [Waiting](#waiting)
 5. [Installation](#installation)
 6. [Usage](#full-usage---keb--junit)
+7. [About project](#about-project)
+    1. [Committers](#committers)
+    2. [Contributors](#contributors)
+    3. [Change log](#change-log)
+
+
 
 ## Page object pattern
 Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
@@ -197,11 +205,11 @@ import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
-class KotlinSiteKebTest : KebTest(Browser(kebConfig {
+class KotlinSiteKebTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
-})) {
+}) {
 
     @Test
     fun `testing kotlin lang page`() {
@@ -259,3 +267,19 @@ class FooterModule(scope: WebElement) : Module(scope) {
 }
 ```
 For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](/keb-core/src/test/kotlin/org/kebish/usage).
+
+## About project
+### Committers
+- Michal Horčičko
+- Jan Vondrouš 
+
+### Contributors
+- Pavel Sajda - http://pseudofotograf.cz/
+  - Keb logo
+
+### Change log
+
+- **0.3**
+  - _Breaking changes_ 
+    - KebTest - Take Configuration object instead of Browser
+  - By default keb reuse the same WebDriver (Browser window) and hold it in static field
