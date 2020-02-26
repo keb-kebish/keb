@@ -274,7 +274,7 @@ For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usa
 - Jan Vondrouš 
 
 ### Contributors
-- Pavel Sajda - http://pseudofotograf.cz/
+- Pavel Sajda - [http://pseudofotograf.cz/](http://pseudofotograf.cz/)
   - Keb logo
 
 ### Change log
