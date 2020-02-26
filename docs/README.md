@@ -269,6 +269,10 @@ class FooterModule(scope: WebElement) : Module(scope) {
 For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](/keb-core/src/test/kotlin/org/kebish/usage).
 
 ## About project
+Any questions, issues, consultation ... ?
+
+Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
+
 ### Committers
 - Michal Horčičko
 - Jan Vondrouš 
