@@ -185,9 +185,9 @@ repositories {
 
 val kebVersion = "<insert_actual_version>"
 dependencies{
-  implementation("org.kebish:keb-core:$kebVersion")
-  implementation("org.kebish:keb-junit5:$kebVersion")
-  implementation("org.kebish:keb-bobril:$kebVersion")
+  testImplementation("org.kebish:keb-core:$kebVersion")
+  testImplementation("org.kebish:keb-junit5:$kebVersion")
+  testImplementation("org.kebish:keb-bobril:$kebVersion")
 }
 ```
 If you use Keb in tests you will probably use configuration `testImplementation` instead of `implementation`

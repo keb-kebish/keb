@@ -37,7 +37,9 @@
 - lateinit browser not initialized
   - Kdyz delas stranku a primo se do ni selecti obsah,
   - Tak vyleti     lateinit browser   has not been initialized
-    - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku  
+    - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku 
+    
+- in wait is used "Any" - to configure waiting presets, use static types 
    
 ## Keb configuration
 - in config   driver have to be closure 
