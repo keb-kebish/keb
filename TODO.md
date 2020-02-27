@@ -39,7 +39,10 @@
   - Tak vyleti     lateinit browser   has not been initialized
     - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku 
     
-- in wait is used "Any" - to configure waiting presets, use static types 
+- in wait is used "Any" - to configure waiting presets, use static types
+
+- after cleaning browser - add support for closing message dialog - in the way it is done in Scaler
+ 
    
 ## Keb configuration
 - in config   driver have to be closure 
@@ -69,6 +72,11 @@
 - To web site add links to all kinds of logos
 
 - publishing to maven central
+
+- write to documentation
+   - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
+   - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
+ 
      
 ## Ideas
 
