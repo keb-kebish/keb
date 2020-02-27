@@ -8,9 +8,6 @@
      is really awful. .getAttribute('valeu') for input i really don't like
    - We realized, that  `WebElement.getAttribute("value")` is not nice. And that we can solve it by normal prepared modules: 
      `val input by content { module(InputModule(css("#selector"))) }`
-  
-- IMPORTATNT TO MULTIPLE TESTS Lazily start the browser inside tests 
-  - not when the test starts, but on first browser access
 
 - Browser should have possibility to directly get and set url. 
   This should not been required:
