@@ -55,6 +55,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
         Actions(driver)
             .apply(block)
             .build()
+            .perform()
     }
 
 }
