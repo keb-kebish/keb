@@ -12,8 +12,6 @@ abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupp
             true
         }
 
-    fun refresh() = browser.driver.navigate().refresh()
-
     internal fun verifyAt(wait: Any) = apply {
         WaitPresetFactory().from(wait, browser.config)
             ?.let { waitFor(it, desc = "Verifying of ${javaClass.simpleName}", f = ::at) }

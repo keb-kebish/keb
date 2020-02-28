@@ -24,6 +24,8 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
 
     var baseUrl = config.baseUrl
 
+    fun refresh() = driver.navigate().refresh()
+
     override val browser get() = this
 
     fun quit() {
