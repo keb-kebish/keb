@@ -56,6 +56,8 @@
   
 ## Other
 
+- Document way, how to use WebDriverManager - So everybody is able to use it
+
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
      
@@ -73,7 +75,8 @@
 - write to documentation
    - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
    - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
- 
+
+- In our pages we need current latest version of our artifact - so everybody can easily search for it
      
 ## Ideas
 

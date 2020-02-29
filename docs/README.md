@@ -183,11 +183,17 @@ repositories {
     jcenter()
 }
 
-val kebVersion = "<insert_actual_version>"
+val kebVersion = "<insert_actual_keb_version>"
 dependencies{
   testImplementation("org.kebish:keb-core:$kebVersion")
   testImplementation("org.kebish:keb-junit5:$kebVersion")
   testImplementation("org.kebish:keb-bobril:$kebVersion")
+
+
+  // For downloading correct WebDriver we recommend to use WebDriverManager
+  // https://github.com/bonigarcia/webdrivermanager  
+  testImplementation("io.github.bonigarcia:webdrivermanager:<insert_webdrivermanager_version>")
+
 }
 ```
 If you use Keb in tests you will probably use configuration `testImplementation` instead of `implementation`
@@ -206,7 +212,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 class KotlinSiteKebTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup()
+    WebDriverManager.firefoxdriver().setup() 
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
 }) {
@@ -280,6 +286,7 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 ### Contributors
 - Pavel Sajda - [http://pseudofotograf.cz/](http://pseudofotograf.cz/)
   - Keb logo
+- Petr Kostka
 
 ### Change log
 
