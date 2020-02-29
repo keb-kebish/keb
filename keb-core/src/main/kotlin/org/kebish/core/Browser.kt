@@ -3,6 +3,7 @@ package org.kebish.core
 import org.kebish.core.util.ResettableLazy
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.html5.WebStorage
+import org.openqa.selenium.interactions.Actions
 
 class Browser(val config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
@@ -48,6 +49,13 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
         val driverCasted = driver as WebStorage
         driverCasted.localStorage.clear()
         driverCasted.sessionStorage.clear()
+    }
+
+    fun interact(block: Actions.() -> Unit) {
+        Actions(driver)
+            .apply(block)
+            .build()
+            .perform()
     }
 
 }
