@@ -1,5 +1,11 @@
 # TODOs
 ## Core functionality
+
+- support for method  browser.navigate("www.kebish.org") or some similar shortcut 
+- Page and test should have access to "title" - page title by default
+- Content Parameters (wait=true  and  required=false) makes probably no sence together 
+        add there validation with explaining error message 
+
 - Prepare support for basic elements via out-of-the-box modules
    - for example, because this:
       
