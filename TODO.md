@@ -25,9 +25,15 @@
   - So that user doesn't have to investigate how to obtain driver
   
 - By default we don't want to close browser after each test
-    - Share browser between tests. (plus do it configurable)
+    - Share browser between tests.  DONE
+      (plus do it configurable) TODO
         - Probably Implementation of "KebTest" will be needed.
         - Let there some possibility to write tests, which use multiple Browsers...
+        - Clear browser between tests.
+           - In the same way as Geb
+           - plus close browser dialogs - the same way as Scaler do
+           - if test open multiple tabs/windows - it should reduce it to one
+           - Do it configurable
 
 - We want to capture images on fail test (maybe even on every test)
 
@@ -43,9 +49,9 @@
     - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku 
     
 - in wait is used "Any" - to configure waiting presets, use static types
-
-- after cleaning browser - add support for closing message dialog - in the way it is done in Scaler
  
+- keb config have to be "inheritable"
+   c = kebConfig{someOptions};  c.extend {some local custom options}   
    
 ## Keb configuration
 - in config   driver have to be closure 
@@ -66,11 +72,6 @@
 
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
-     
-- closing browser register onJVMExit() - less browsers will hang in processes
-   - probably will be needed need reference to browser as "weak reference" - to release memory  
-     
-- add contact informations to Readme, and web pages
 
 - to deprecated repositories gitlab etc. commit message about deprecation and link to kebish.org
 
