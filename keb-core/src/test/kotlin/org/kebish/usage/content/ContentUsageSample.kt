@@ -14,6 +14,7 @@ import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
 import org.openqa.selenium.firefox.FirefoxDriver
 
+/** Look at class EventPage there are shown different kinds of content parameters */
 class ContentUsageSample : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }

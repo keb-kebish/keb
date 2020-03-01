@@ -66,6 +66,16 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
         at(::AboutPage)
     }
 
+
+    @Test
+    fun `navigation menu works style2_1`() {
+        val homePage = to(::HomePage)
+        val contactsPage = homePage.menu.toContacts()
+        contactsPage.menu.toAbout()
+    }
+
+
+
     // + pure kotlin default functions - no magic
     @Suppress("unused")
     @Test

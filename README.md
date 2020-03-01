@@ -39,6 +39,8 @@ by(MyCustomBy()) // can be used with custom implementation of org.openqa.seleniu
 byList(MyCustomBy())
 ```
 
+#### Content
+
 In order to lazily access page content use the `content` delegate.
 ```kotlin
 class KotlinHomePage : Page() {
@@ -74,6 +76,8 @@ class KotlinHomePage : Page() {
   - if content is still not present after the specified interval, the `org.kebish.core.WaitTimeoutException` exception is thrown
   - default value: `false`
   - for more info on waiting, refer to the Waiting section below
+  
+  For basic content example see test [ContentUsageSample](https://github.com/keb-kebish/keb/blob/master/keb-core/src/test/kotlin/org/kebish/usage/content/ContentUsageSample.kt)
 
 ### Page verifier
 In order to verify, that you successfully landed on your page, you can use `at` method.
@@ -272,7 +276,7 @@ class FooterModule(scope: WebElement) : Module(scope) {
     val sponsor by content { css(".terms-sponsor") }
 }
 ```
-For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](/keb-core/src/test/kotlin/org/kebish/usage).
+For full usage example please refer to [/keb-core/src/test/kotlin/org/kebish/usage](https://github.com/keb-kebish/keb/tree/master/keb-core/src/test/kotlin/org/kebish/usage).
 
 ## About project
 Any questions, issues, consultation ... ?
@@ -286,7 +290,7 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 ### Contributors
 - Pavel Sajda - [http://pseudofotograf.cz/](http://pseudofotograf.cz/)
   - Keb logo
-- Petr Kostka
+- [Petr Kostka](https://github.com/mierak)
 
 ### Change log
 
