@@ -68,6 +68,10 @@
   
 ## Other
 
+- Initial documentation section
+  - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
+  - what it resolve for you  
+
 - Document way, how to use WebDriverManager - So everybody is able to use it
 
 - verify, that setup project and write first working tests is as simple and prepared as possible
