@@ -2,12 +2,20 @@ package org.kebish.core.browser.provider
 
 import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.kebish.core.kebConfig
 import org.mockito.BDDMockito.then
 import org.openqa.selenium.WebDriver
 
 class StaticBrowserProviderTest {
+
+    @BeforeEach
+    @AfterEach
+    fun prepare() {
+       StaticBrowserProvider.reset()
+    }
 
     @Test
     fun `browser handling`() {
