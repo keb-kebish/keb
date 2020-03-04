@@ -291,6 +291,7 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - Pavel Sajda - [http://pseudofotograf.cz/](http://pseudofotograf.cz/)
   - Keb logo
 - [Petr Kostka](https://github.com/mierak)
+- David Richter
 
 ### Change log
 

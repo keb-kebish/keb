@@ -67,6 +67,10 @@
 
   
 ## Other
+- Documentation - "Selectors" 
+  - explain, that its just common selectors
+  - add there link to Selenium, where possibilities of selectors are desciribed
+    => David was confused, what he can write into selectors
 
 - Initial documentation section
   - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
@@ -90,6 +94,8 @@
 - In our pages we need current latest version of our artifact - so everybody can easily search for it
      
 ## Ideas
+- KebTest - Could be only Interface and not Class
+   => no restrictions for tests
 
 - Consider usage of "concept of CurrentPage"
    - e.g. browser will remember on which page is this can be set by "at" method
