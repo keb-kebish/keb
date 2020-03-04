@@ -14,3 +14,7 @@ Run command:
 
 - In main build.gradle.kts set version e.g. 
 `version = "1.2-SNAPSHOT"`
+
+- Update version in README.md
+
+- commit push
