@@ -15,7 +15,7 @@ import org.kebish.usage.test.util.extendable.ExtendableImpl
 import org.openqa.selenium.firefox.FirefoxDriver
 
 /** Look at class EventPage there are shown different kinds of content parameters */
-class ContentUsageSample : KebTest(kebConfig {
+class ContentUsageSampleTest : KebTest(kebConfig {
     WebDriverManager.firefoxdriver().setup()
     this.driver = { FirefoxDriver() }
 }), Extendable by ExtendableImpl() {
@@ -80,7 +80,7 @@ class ContentUsageSample : KebTest(kebConfig {
     }
 
     @Test
-    fun `wait until content appers at page content`() {
+    fun `wait until content appears at page content`() {
         // given
         to(::EventPage) {
             // when
