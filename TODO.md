@@ -53,6 +53,10 @@
 - keb config have to be "inheritable"
    c = kebConfig{someOptions};  c.extend {some local custom options}   
    
+- browser.baseUrl - why it is directly on browser? should not it be just in configuration?
+
+- at in page do not accept lambda - maybe it could accept it and execute it
+   
 ## Keb configuration
 - in config   driver have to be closure 
      - to start browser in lazy way
@@ -74,7 +78,17 @@
 
 - Initial documentation section
   - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
-  - what it resolve for you  
+  - what it resolve for you  = advantages = why use keb
+     - browser management
+     - page objects
+     - modules
+     - screenshots
+     - powerful content selectors
+     - extendable
+     - advice you, how to write and manage your tests
+     - screenshots, videos
+     - jquery selectors
+     - and more...
 
 - Document way, how to use WebDriverManager - So everybody is able to use it
 
@@ -92,6 +106,15 @@
    - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
 
 - In our pages we need current latest version of our artifact - so everybody can easily search for it
+
+- if i write this
+   val aa by content { ClearableInput(css("#name")) }
+   instead of this
+   val aa by content { module(ClearableInput(css("#name"))) }
+   I get ugly error - browser is not initialized - with no hint what is wrong
+  -- Consider if method module is really needed
+    When content get object instanceOf module - it can be initialize it 
+      - and then the first example would work and it is even more readable
      
 ## Ideas
 - KebTest - Could be only Interface and not Class
@@ -105,3 +128,13 @@
     - even  WebElement.click() - is tried multiple times until it succeeed (with maxTimeout ofcourse)   
        - e.g.  element is covered by loader, thats why click fails, when loader disapper it will succeed
        - to achive this, some kind of WebElement proxy will be needed (or use custom KebElement)
+
+
+- JQuery
+    - module with support for JQuery selectors
+      https://subscription.packtpub.com/book/web_development/9781849515740/1/ch01lvl1sec18/using-jquery-selectors
+    - it will be needed to avoid conflicts with different versions of jQuery in case, that jQuery is already loaded:
+       https://stackoverflow.com/questions/1566595/can-i-use-multiple-versions-of-jquery-on-the-same-page
+       And luckyli it seems to be possible
+      
+      

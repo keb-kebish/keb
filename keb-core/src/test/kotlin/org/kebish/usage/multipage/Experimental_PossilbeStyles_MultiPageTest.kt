@@ -19,6 +19,22 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
     var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
 
 
+
+
+    //RECOMMENDED style
+    // + pure keb functions for working with Page
+    @Test
+    fun `navigation menu works style5_2`() {
+        to(::HomePage) {
+            menu.toContacts()
+        }.via(ContactsPage::class) {
+            menu.toAbout()
+        }
+    }
+
+
+
+
     // Page objects are simple, do not return other page
     // When you are writing test. You decide and write on which page you are
     //
@@ -106,17 +122,6 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
             menu.toAbout()
         }
     }
-
-    // + pure keb functions for working with Page
-    @Test
-    fun `navigation menu works style5_2`() {
-        to(::HomePage) {
-            menu.toContacts()
-        }.via(ContactsPage::class) {
-            menu.toAbout()
-        }
-    }
-
 
     // POSSIBLE IDEA mechanismus, který hlídá, že jsi na správné stránce.
     // neco jak, že by si browser hlídal na jaké jsi stránce (třeba při validátoru by si to zapamatoval)

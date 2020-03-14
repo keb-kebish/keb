@@ -37,7 +37,9 @@ xpath("/html/body/h1")
 xpathList("/html/body/h1")
 by(MyCustomBy()) // can be used with custom implementation of org.openqa.selenium.By
 byList(MyCustomBy())
-```
+```    
+
+Module "nuc-bobril" adds support for [Bobril](https://bobril.com/) selectors. 
 
 #### Content
 
