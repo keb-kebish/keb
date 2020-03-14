@@ -39,6 +39,8 @@ by(MyCustomBy()) // can be used with custom implementation of org.openqa.seleniu
 byList(MyCustomBy())
 ```    
 
+For details see https://www.selenium.dev/documentation/en/getting_started_with_webdriver/locating_elements/
+
 Module "nuc-bobril" adds support for [Bobril](https://bobril.com/) selectors. 
 
 #### Content

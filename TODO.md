@@ -73,8 +73,6 @@
 ## Other
 - Documentation - "Selectors" 
   - explain, that its just common selectors
-  - add there link to Selenium, where possibilities of selectors are desciribed
-    => David was confused, what he can write into selectors
 
 - Initial documentation section
   - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
