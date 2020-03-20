@@ -118,10 +118,7 @@
 - Create sample app - covered with KebTest - With all 
     - use it as sample and documentation - How To Write GUI Keb Tests
     - use all good techniques - Autostart app - Good Validators - Inherit pages - Page for Dialog and for context menu     
-     
-- Documentation - "Selectors" 
-    - explain, that its just common selectors
-     
+         
 ## Ideas
 - KebTest - Could be only Interface and not Class
    => no restrictions for tests
