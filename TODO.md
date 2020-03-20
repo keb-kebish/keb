@@ -71,22 +71,6 @@
 
   
 ## Other
-- Documentation - "Selectors" 
-  - explain, that its just common selectors
-
-- Initial documentation section
-  - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
-  - what it resolve for you  = advantages = why use keb
-     - browser management
-     - page objects
-     - modules
-     - screenshots
-     - powerful content selectors
-     - extendable
-     - advice you, how to write and manage your tests
-     - screenshots, videos
-     - jquery selectors
-     - and more...
 
 - Document way, how to use WebDriverManager - So everybody is able to use it
 
@@ -99,10 +83,6 @@
 
 - publishing to maven central
 
-- write to documentation
-   - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
-   - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
-
 - In our pages we need current latest version of our artifact - so everybody can easily search for it
 
 - if i write this
@@ -113,6 +93,34 @@
   -- Consider if method module is really needed
     When content get object instanceOf module - it can be initialize it 
       - and then the first example would work and it is even more readable
+     
+     
+## Documentation       
+
+- Initial documentation section
+    - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
+    - what it resolve for you  = advantages = why use keb
+        - browser management
+        - page objects
+        - modules
+        - screenshots
+        - powerful content selectors
+        - extendable
+        - advice you, how to write and manage your tests
+        - screenshots, videos
+        - jquery selectors
+        - and more...
+
+- write to documentation
+   - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
+   - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
+
+- Create sample app - covered with KebTest - With all 
+    - use it as sample and documentation - How To Write GUI Keb Tests
+    - use all good techniques - Autostart app - Good Validators - Inherit pages - Page for Dialog and for context menu     
+     
+- Documentation - "Selectors" 
+    - explain, that its just common selectors
      
 ## Ideas
 - KebTest - Could be only Interface and not Class
