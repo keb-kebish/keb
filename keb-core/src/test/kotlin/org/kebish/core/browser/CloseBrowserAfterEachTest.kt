@@ -26,14 +26,16 @@ class CloseBrowserAfterEachTest : KebTest(kebConfig {
 
     @Test
     @Order(1)
-    fun `each test has different browser 1`() {
+    fun `each test has different driver part 1`() {
+        // When - frist test create driver
         driver1 = browser.driver
 
     }
 
     @Test
     @Order(2)
-    fun `each test has different browser 2`() {
+    fun `each test has different driver part 2`() {
+        //And - second test create driver
         val driver2 = browser.driver
 
         //Then - driver from first test is different from driver used in second test
