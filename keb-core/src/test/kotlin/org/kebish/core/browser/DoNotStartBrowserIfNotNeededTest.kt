@@ -13,7 +13,10 @@ class DoNotStartBrowserIfNotNeededTest : KebTest(kebConfig {
 
     @Test
     fun `browser is not started when were not used`() {
-        println("When browser is not used, then no browser is initialized.")
+        println(
+            "Assert - When browser is not used, then no browser is initialized.\n" +
+                    "If test try to create browser, exception will be thrown and this test fails."
+        )
     }
 
 }
