@@ -46,9 +46,13 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
     }
 
     fun clearWebStorage() {
-        val driverCasted = driver as WebStorage
-        driverCasted.localStorage.clear()
-        driverCasted.sessionStorage.clear()
+        if (driver is WebStorage) {
+            val driverCasted = driver as WebStorage
+            driverCasted.localStorage.clear()
+            driverCasted.sessionStorage.clear()
+        } else {
+            // TODO logger warn "WebStorage cannot be cleared. Driver is not instanceof "org.openqa.selenium.html5.WebStorage" "
+        }
     }
 
     fun interact(block: Actions.() -> Unit) {

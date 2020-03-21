@@ -299,6 +299,9 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 
 ### Change log
 
+- **0.4**
+  - Basic configuration for Browser Management
+
 - **0.3**
   - _Breaking changes_ 
     - KebTest - Take Configuration object instead of Browser

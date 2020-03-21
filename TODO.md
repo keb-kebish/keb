@@ -56,6 +56,8 @@
 - browser.baseUrl - why it is directly on browser? should not it be just in configuration?
 
 - at in page do not accept lambda - maybe it could accept it and execute it
+
+- Logger
    
 ## Keb configuration
 - in config   driver have to be closure 

@@ -19,6 +19,8 @@ class Configuration {
     var baseUrl = ""
     var atVerifierRequired = false
 
+    var browserManagement = BrowserManagement()
+
     private var waitPresets: Map<String, WaitPreset> = WaitingDslBuilder().build()
     fun waiting(dsl: WaitingDslBuilder.() -> Unit) {
         waitPresets = WaitingDslBuilder().apply(dsl).build()
@@ -53,8 +55,22 @@ class Configuration {
 
         override fun get(key: String): T? = decorated[key.toLowerCase()]
 
-        override fun getOrDefault(key: String, defaultValue: T): T = decorated.getOrDefault(key.toLowerCase(), defaultValue)
+        override fun getOrDefault(key: String, defaultValue: T): T =
+            decorated.getOrDefault(key.toLowerCase(), defaultValue)
 
         override fun containsKey(key: String): Boolean = decorated.containsKey(key.toLowerCase())
     }
+
+    class BrowserManagement(
+//        var closeBrowserAfterNTest: Int = -1,
+        /** Cost approximately 7s per test */
+        var closeBrowserAfterEachTest: Boolean = false,
+        /** Cost approximately 15ms per test */
+        var clearCookiesAfterEachTest: Boolean = true,
+        /** Cost approximately 45ms per test */
+        var clearWebStorageAfterEachTest: Boolean = true //todo Geb has false
+
+
+
+    )
 }

@@ -11,16 +11,31 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
 
     private val browserProvider: BrowserProvider = StaticBrowserProvider(config)
 
-    override val browser: Browser
-        get() = browserProvider.provideBrowser()
+    private val browserDelegate = lazy {
+        browserProvider.provideBrowser()
+    }
+
+    override val browser: Browser by browserDelegate
 
     /** Test runner must call this method after each test */
     fun afterEachTest() {
-//        TODO calling this method depends on configuration
-//        closeDriver()
+
+        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserAfterEachTest) {
+            closeDriver()
+        } else {
+            if (browserDelegate.isInitialized() && config.browserManagement.clearCookiesAfterEachTest) {
+                browser.clearCookiesQuietly()
+            }
+            if (browserDelegate.isInitialized() && config.browserManagement.clearWebStorageAfterEachTest) {
+                browser.clearWebStorage()
+            }
+        }
+
     }
 
-//    private fun closeDriver() {
-//        browser.quit()
-//    }
+    private fun closeDriver() {
+        browser.quit()
+    }
+
+
 }

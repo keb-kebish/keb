@@ -4,21 +4,19 @@ import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
+import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HttpResourceFolderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
 import org.openqa.selenium.firefox.FirefoxDriver
 
 
-class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup()
-    this.driver = { FirefoxDriver() }
-}), Extendable by ExtendableImpl() {
+class Experimental_PossilbeStyles_MultiPageTest : KebTest(
+    commonTestKebConfig()
+), Extendable by ExtendableImpl() {
 
     @Suppress("unused")
     var serverExtension = register(HttpResourceFolderServerExtension(browser, "org/kebish/usage/multipage"))
-
-
 
 
     //RECOMMENDED style
@@ -31,8 +29,6 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
             menu.toAbout()
         }
     }
-
-
 
 
     // Page objects are simple, do not return other page
@@ -89,7 +85,6 @@ class Experimental_PossilbeStyles_MultiPageTest : KebTest(kebConfig {
         val contactsPage = homePage.menu.toContacts()
         contactsPage.menu.toAbout()
     }
-
 
 
     // + pure kotlin default functions - no magic
