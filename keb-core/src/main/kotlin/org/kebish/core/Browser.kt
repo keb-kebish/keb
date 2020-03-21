@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.html5.WebStorage
 import org.openqa.selenium.interactions.Actions
 
+
 class Browser(val config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
     companion object {
@@ -30,7 +31,7 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
     override val browser get() = this
 
     fun quit() {
-        driverDelegate.reset()
+        driverDelegate.reset() // during this WebDriver.quit() is called
     }
 
     fun clearCookies() {
