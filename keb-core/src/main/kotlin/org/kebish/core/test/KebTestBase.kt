@@ -29,14 +29,26 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
             if (browserDelegate.isInitialized() && config.browserManagement.clearWebStorageAfterEachTest) {
                 browser.clearWebStorage()
             }
-            //TODO close all windows except one
-
-            //TODO close all tabs except one
+            if (browserDelegate.isInitialized() && config.browserManagement.leftOnlyOneOpenedTab) {
+                closeAllWindowsAndTabsExceptOne()
+            }
 
             //TODO close forgotten dialog windows
         }
 
     }
+
+    private fun closeAllWindowsAndTabsExceptOne() {
+        val windowHandles = browser.driver.windowHandles.toList()
+        if (windowHandles.size > 1) {
+            browser.driver.switchTo().window(windowHandles.first())
+            for (handle in windowHandles.subList(1, windowHandles.size)) {
+                browser.driver.close()
+                browser.driver.switchTo().window(handle)
+            }
+        }
+    }
+
 
     private fun closeDriver() {
         browser.quit()
