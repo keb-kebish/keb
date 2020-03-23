@@ -60,9 +60,10 @@
 - Logger
    
 ## Keb configuration
-- in config   driver have to be closure 
-     - to start browser in lazy way
-     - to be able start browser before each test
+
+- do configuration immutable
+   - it will be easier to inherit configuration
+   - and safely do changes in configuration, which affects only one particular test in one thread
 
 - KebConfig can be defined global, or locally overridden by test  "probably not so important for the beginning"
 

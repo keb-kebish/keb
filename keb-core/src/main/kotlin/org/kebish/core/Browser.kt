@@ -24,7 +24,11 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
         initializer = { config.driver() })
     val driver by driverDelegate
 
-    var baseUrl = config.baseUrl
+    var baseUrl
+        get() = config.baseUrl
+        set(value) {
+            config.baseUrl = value
+        }
 
     fun refresh() = driver.navigate().refresh()
 
