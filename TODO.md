@@ -95,8 +95,7 @@
    I get ugly error - browser is not initialized - with no hint what is wrong
   -- Consider if method module is really needed
     When content get object instanceOf module - it can be initialize it 
-      - and then the first example would work and it is even more readable
-     
+      - and then the first example would work and it is even more readable     
      
 ## Documentation       
 
@@ -120,7 +119,21 @@
 
 - Create sample app - covered with KebTest - With all 
     - use it as sample and documentation - How To Write GUI Keb Tests
-    - use all good techniques - Autostart app - Good Validators - Inherit pages - Page for Dialog and for context menu     
+    - use all good techniques - Autostart app - Good Validators - Inherit pages - Page for Dialog and for context menu
+    
+    
+- Write and show example, that you can pass instance of page to "to" method
+  - _to(JobDetail(jobId = "88489"))_ and this open page "<app_url>/jobDetail?jobId=88489"
+    ```kotlin
+       class JobDetail(jobId :String) : Page() {
+         override url = "jobDetaion/$jobId"
+       }
+    ```
+    - very nice beutiful - even geb is not able to do it :)
+
+  - You want remove duplication from your tests, thats why you dont want to test your navigation menu again and again.
+    - In advance if you change your navigation menu, or move your page somewhere else. Your tests will still work.    
+    
          
 ## Ideas
 - KebTest - Could be only Interface and not Class
