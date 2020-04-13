@@ -58,6 +58,10 @@
 - at in page do not accept lambda - maybe it could accept it and execute it
 
 - Logger
+
+-  Support for Javascript - See Geb "Javascript, AJAX and dynamic pages"
+
+- Keb rerun failed tests - reseni pluginem do gradlu - viz d.richter 
    
 ## Keb configuration
 

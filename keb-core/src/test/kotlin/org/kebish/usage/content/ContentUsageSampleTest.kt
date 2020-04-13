@@ -1,34 +1,30 @@
 package org.kebish.usage.content
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import kotlinx.html.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.EmptyWebElement
 import org.kebish.core.Page
-import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
+import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent
 import org.kebish.usage.test.util.HttpBuilderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
-import org.openqa.selenium.firefox.FirefoxDriver
 
 /** Look at class EventPage there are shown different kinds of content parameters */
-class ContentUsageSampleTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup()
-    this.driver = { FirefoxDriver() }
-}), Extendable by ExtendableImpl() {
+class ContentUsageSampleTest : KebTest(commonTestKebConfig()), Extendable by ExtendableImpl() {
 
     @Suppress("unused")
-    private val serverExtension = register(HttpBuilderServerExtension(
-        browser,
-        HtmlContent {
-            head {
-                title = "Event Page"
-            }
-            body {
-                h1 {
+    private val serverExtension = register(
+        HttpBuilderServerExtension(
+            browser,
+            HtmlContent {
+                head {
+                    title = "Event Page"
+                }
+                body {
+                    h1 {
                     id = "EventName"
                     text("Football event")
                 }

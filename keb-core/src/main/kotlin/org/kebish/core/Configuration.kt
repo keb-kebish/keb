@@ -70,7 +70,7 @@ class Configuration {
         /** Cost approximately 45ms per test */
         var clearWebStorageAfterEachTest: Boolean = true, //todo Geb has false
         /** Close all tabs and windows except one */
-        var leftOnlyOneOpenedTab: Boolean = true
+        var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true
 
 
     )
