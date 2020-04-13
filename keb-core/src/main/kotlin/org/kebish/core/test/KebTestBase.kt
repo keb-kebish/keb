@@ -18,12 +18,18 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
 
     override val browser: Browser by browserDelegate
 
+    fun beforeEachTest() {
+        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserBeforeAndAfterEachTest) {
+            closeDriver()
+        }
+    }
+
     /** Test runner must call this method after each test */
     fun afterEachTest() {
 
         //TODO extract this to "browserDelegate.isInitialized()" - do not repeat it everywhere
 
-        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserAfterEachTest) {
+        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserBeforeAndAfterEachTest) {
             closeDriver()
         } else {
             if (browserDelegate.isInitialized() && config.browserManagement.clearCookiesAfterEachTest) {

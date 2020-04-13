@@ -1,4 +1,4 @@
-package org.kebish.core.browser
+package org.kebish.core.browser.management
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
@@ -17,7 +17,7 @@ class SameBrowserIsUsedByEachTest : KebTest(
     kebConfig {
         driver = { mock(defaultAnswer = RETURNS_DEEP_STUBS) }
         browserManagement.apply {
-            closeBrowserAfterEachTest = false  // Tests this default option
+            closeBrowserBeforeAndAfterEachTest = false  // Tests this default option
         }
     }
 ) {

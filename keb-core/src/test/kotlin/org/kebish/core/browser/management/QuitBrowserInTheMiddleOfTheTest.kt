@@ -1,4 +1,4 @@
-package org.kebish.core.browser
+package org.kebish.core.browser.management
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
@@ -12,7 +12,7 @@ class QuitBrowserInTheMiddleOfTheTest : KebTest(
     kebConfig {
         driver = { mock(defaultAnswer = RETURNS_DEEP_STUBS) }
         browserManagement.apply {
-            closeBrowserAfterEachTest = true
+            closeBrowserBeforeAndAfterEachTest = true
         }
     }
 

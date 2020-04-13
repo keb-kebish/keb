@@ -1,14 +1,12 @@
-package org.kebish.core.browser
+package org.kebish.core.browser.management
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
-import org.junit.jupiter.api.Order
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
-import org.junit.jupiter.api.TestMethodOrder
+import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebDriver
@@ -18,9 +16,16 @@ import org.openqa.selenium.WebDriver
 class CloseBrowserAfterEachTest : KebTest(kebConfig {
     driver = { mock() }
     browserManagement.apply {
-        closeBrowserAfterEachTest = true
+        closeBrowserBeforeAndAfterEachTest = true
     }
 }) {
+
+
+    @BeforeAll
+    @AfterAll
+    fun clearDriverMock() {
+        StaticBrowserProvider.reset()
+    }
 
     lateinit var driver1: WebDriver
     lateinit var driver2: WebDriver

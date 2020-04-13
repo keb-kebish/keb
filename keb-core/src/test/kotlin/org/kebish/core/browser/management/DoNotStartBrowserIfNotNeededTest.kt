@@ -1,9 +1,8 @@
-package org.kebish.core.browser
+package org.kebish.core.browser.management
 
 import org.junit.jupiter.api.Test
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
-import java.lang.IllegalStateException
 
 class DoNotStartBrowserIfNotNeededTest : KebTest(kebConfig {
     driver = {
