@@ -25,7 +25,6 @@ class Configuration {
      * NewBrowserForEachTestProvider - which quit WebDriver (close browser) after each test
      * StaticBrowserProvider - which reuse same browser among tests
      * */
-    //TODO write documentation for this (i mean README.md)
     var browserProvider: BrowserProvider = StaticBrowserProvider(
         config = this,
         clearCookiesAfterEachTest = true,

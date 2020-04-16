@@ -8,9 +8,10 @@ http://kebish.org/
 2. [Modules](#modules)
 3. [Navigation](#navigation)
 4. [Waiting](#waiting)
-5. [Installation](#installation)
-6. [Usage](#full-usage---keb--junit)
-7. [About project](#about-project)
+5. [Browser Management](#browser-management)
+6. [Installation](#installation)
+7. [Usage](#full-usage---keb--junit)
+8. [About project](#about-project)
     1. [Committers](#committers)
     2. [Contributors](#contributors)
     3. [Change log](#change-log)
@@ -181,6 +182,26 @@ kebConfig {
     }
 }
 ```
+
+## Browser Management
+For creating, providing and quiting browser is responsible `BrowserProvider`
+Which can be set in configuration e.g.
+```kotlin
+kebConfig {
+   browserProvider = NewBrowserForEachTestProvider(this) 
+}
+```
+Prepared providers:
+  -  `NewBrowserForEachTestProvider` - Quit WebDriver (close browser) after each test.<br>
+       This is the most robust option because your tests are truly independent.
+       But this approach is very SLOW because creating a new WebDriver takes approximately 7 seconds per test.
+       
+  - `StaticBrowserProvider` (used by default) - Reuse the same browser(WebDriver) among tests.<br>
+   Browser is stored in `static` field and reused which reuse same field.
+   That's why this is not suitable for parallel execution of tests.      
+
+
+Anybody can write BrowserProvider, but for most use cases prepared implementation will be sufficient.
 
 ## Installation
 Relesed jar files are available in jcenter().
