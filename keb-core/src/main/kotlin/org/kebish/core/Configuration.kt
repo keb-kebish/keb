@@ -2,6 +2,8 @@
 
 package org.kebish.core
 
+import org.kebish.core.browser.provider.BrowserProvider
+import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
@@ -19,7 +21,17 @@ class Configuration {
     var baseUrl = ""
     var atVerifierRequired = false
 
-    var browserManagement = BrowserManagement()
+    /** Keb support have two providers
+     * NewBrowserForEachTestProvider - which quit WebDriver (close browser) after each test
+     * StaticBrowserProvider - which reuse same browser among tests
+     * */
+    //TODO write documentation for this (i mean README.md)
+    var browserProvider: BrowserProvider = StaticBrowserProvider(
+        config = this,
+        clearCookiesAfterEachTest = true,
+        clearWebStorageAfterEachTest = true,
+        openNewEmptyWindowAndCloseOtherAfterEachTest = true
+    )
 
     private var waitPresets: Map<String, WaitPreset> = WaitingDslBuilder().build()
     fun waiting(dsl: WaitingDslBuilder.() -> Unit) {
@@ -61,63 +73,5 @@ class Configuration {
         override fun containsKey(key: String): Boolean = decorated.containsKey(key.toLowerCase())
     }
 
-
-    class BrowserManagement(
-
-        //TODO put implementation into these classes - so everyone can customize it easily
-        var strategy: BrowserManagementStrategy = ReuseSameBrowserAmongTests(),
-
-//        var closeBrowserAfterNTest: Int = -1,
-        /** Cost approximately 7s per test
-         * Advanced note: Before - is needed for case where previous test had different configuration.
-         * */
-        var closeBrowserBeforeAndAfterEachTest: Boolean = false,
-        /** Cost approximately 15ms per test */
-        var clearCookiesAfterEachTest: Boolean = true,
-        /** Cost approximately 45ms per test */
-        var clearWebStorageAfterEachTest: Boolean = true,
-        /**
-         *  Close all tabs and windows except one.
-         *  If you close windows after test - you can be sure, that this test will not block execution of other tests.
-         *  (e.g. by opening dialog windows on exit from page)
-         *  */
-        var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true
-
-
-    )
-
-    interface BrowserManagementStrategy
-
-    class CloseBrowser(
-        /**
-         *  Before test is hand in case, that previous test had different configuration
-         *  and you want new browser with your configuration for your test.
-         *
-         *  Note: closing browser before and after test has no addition costs (closing already closed browser cost nothing).
-         *  */
-        beforeEachTest: Boolean = true,
-        /**
-         * Closing browser after your test is good for early detections of errors.
-         * If your test somehow prevent browser from closing you will be noticed about it by this test
-         * and not by innocent tests which runs after this test.
-         *
-         *  Note: closing browser before and after test has no addition costs (closing already closed browser cost nothing).
-         */
-        afterEachTest: Boolean = true
-    ) : BrowserManagementStrategy
-
-    class ReuseSameBrowserAmongTests(
-        /** Cost approximately 15ms per test */
-        var clearCookiesAfterEachTest: Boolean = true,
-        /** Cost approximately 45ms per test */
-        var clearWebStorageAfterEachTest: Boolean = true,
-        /**
-         *  Close all tabs and windows except one.
-         *  If you close windows after test - you can be sure, that this test will not block execution of other tests.
-         *  (e.g. by opening dialog windows on exit from page)
-         *  */
-        var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true
-
-    ) : BrowserManagementStrategy
 
 }

@@ -17,10 +17,11 @@ class StaticBrowserProviderIntegrationTest : KebTest(kebConfig {
         val driver: WebDriver = mock()
         driver
     }
-    browserManagement.apply {
-        clearCookiesAfterEachTest = false
+    browserProvider = StaticBrowserProvider(
+        config = this,
+        clearCookiesAfterEachTest = false,
         clearWebStorageAfterEachTest = false
-    }
+    )
 }) {
 
     companion object {

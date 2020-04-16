@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.TestInstance.Lifecycle
+import org.kebish.core.browser.provider.NewBrowserForEachTestProvider
 import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
@@ -15,9 +16,7 @@ import org.openqa.selenium.WebDriver
 @TestMethodOrder(OrderAnnotation::class)
 class CloseBrowserAfterEachTest : KebTest(kebConfig {
     driver = { mock() }
-    browserManagement.apply {
-        closeBrowserBeforeAndAfterEachTest = true
-    }
+    browserProvider = NewBrowserForEachTestProvider(this)
 }) {
 
 

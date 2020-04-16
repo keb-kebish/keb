@@ -4,6 +4,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
+import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
@@ -16,13 +17,19 @@ import org.openqa.selenium.WebDriver
 class SameBrowserIsUsedByEachTest : KebTest(
     kebConfig {
         driver = { mock(defaultAnswer = RETURNS_DEEP_STUBS) }
-        browserManagement.apply {
-            closeBrowserBeforeAndAfterEachTest = false  // Tests this default option
-        }
+        //Static browser provider is default option
     }
 ) {
     lateinit var driver1: WebDriver
     lateinit var driver2: WebDriver
+
+    @BeforeAll
+    @AfterAll
+    fun resetBrowser() {
+        // BeforeAll - To "mock driver" and prevent using driver from previous test
+        // AfterAll - To prevent passing "mock driver" to subsequent tests
+        StaticBrowserProvider.reset()
+    }
 
     @Test
     @Order(1)

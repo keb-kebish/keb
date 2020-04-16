@@ -9,6 +9,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent
@@ -19,7 +20,10 @@ import org.kebish.usage.test.util.extendable.ExtendableImpl
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class ClosingWindowsAndTabsAfterEachTestBasicTest : KebTest(
     commonTestKebConfig().apply {
-        browserManagement.openNewEmptyWindowAndCloseOtherAfterEachTest = true
+        browserProvider = StaticBrowserProvider(
+            this,
+            openNewEmptyWindowAndCloseOtherAfterEachTest = true // This is default, but this option is being tested here
+        )
     }
 ), Extendable by ExtendableImpl() {
 
