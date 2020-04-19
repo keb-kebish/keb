@@ -7,8 +7,10 @@ import org.openqa.selenium.JavascriptExecutor
 
 class StaticBrowserProvider(
     val config: Configuration,
+
+    //TODO document these options into README.md
     /** Cost approximately 15ms per test */
-    val clearCookiesAfterEachTest: Boolean = true,
+    var clearCookiesAfterEachTest: Boolean = true,
     /** Cost approximately 45ms per test */
     var clearWebStorageAfterEachTest: Boolean = true,
     /**
@@ -74,7 +76,7 @@ class StaticBrowserProvider(
 //            closeDriver()
 //        } else {
 
-        if (browserDelegate.isInitialized()) {
+        if (browserDelegate.isInitialized() && browser.isDriverInitialized()) {
             if (clearCookiesAfterEachTest) {
                 browser.clearCookiesQuietly()
             }

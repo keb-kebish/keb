@@ -6,7 +6,7 @@ import org.openqa.selenium.html5.WebStorage
 import org.openqa.selenium.interactions.Actions
 
 
-class Browser(val config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
+class Browser(var config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
     companion object {
         fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
@@ -66,5 +66,10 @@ class Browser(val config: Configuration) : ContentSupport, NavigationSupport, Mo
             .build()
             .perform()
     }
+
+    /**
+     * Return true if browser hold reference to WebDriver.
+     */
+    fun isDriverInitialized(): Boolean = driverDelegate.isInitialized()
 
 }

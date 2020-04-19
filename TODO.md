@@ -137,7 +137,13 @@
 
   - You want remove duplication from your tests, thats why you dont want to test your navigation menu again and again.
     - In advance if you change your navigation menu, or move your page somewhere else. Your tests will still work.    
-    
+  
+  - document, that each test can create its own configuration in case you need it. 
+    (in general, all your test will share same configuration, but e.g. then you may want write test,
+      which works with multiple
+       browsers and you may want to pass him different browser provider, only for this test)  
+       
+       
          
 ## Ideas
 - KebTest - Could be only Interface and not Class
