@@ -14,7 +14,8 @@ class NewBrowserForEachTestProvider(val config: Configuration) : BrowserProvider
     private val browser by browserDelegate
 
 
-    override fun provideBrowser(): Browser {
+    override fun provideBrowser(config: Configuration): Browser {
+        browser.config = config
         return browser
     }
 

@@ -56,7 +56,8 @@ class StaticBrowserProvider(
 
     }
 
-    override fun provideBrowser(): Browser {
+    override fun provideBrowser(config: Configuration): Browser {
+        browser.config = config
         return browser
     }
 
