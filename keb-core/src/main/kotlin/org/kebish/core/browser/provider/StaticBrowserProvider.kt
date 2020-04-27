@@ -6,13 +6,11 @@ import org.kebish.core.util.ResettableLazy
 import org.openqa.selenium.JavascriptExecutor
 
 class StaticBrowserProvider(
-    val config: Configuration,
-
     //TODO document these options into README.md
     /** Cost approximately 15ms per test */
     var clearCookiesAfterEachTest: Boolean = true,
     /** Cost approximately 45ms per test */
-    var clearWebStorageAfterEachTest: Boolean = true,
+    var clearWebStorageAfterEachTest: Boolean = false,
     /**
      *  Close all tabs and windows except one.
      *  If you close windows after test - you can be sure, that this test will not block execution of other tests.
@@ -21,17 +19,14 @@ class StaticBrowserProvider(
     var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true
 ) : BrowserProvider {
 
-    init {
-        configC = config
-    }
 
     companion object {
 
-        private lateinit var configC: Configuration
+        private lateinit var config: Configuration
 
         private val browserDelegate = ResettableLazy(
             initializer = {
-                val browser = Browser(configC)
+                val browser = Browser(config)
                 //TODO there is no need to have extra thread for each browser
                 //But there is no issue in StaticBrowser provider, because there is only one all the time
                 //With multiple browsers consider - static WeakReference Set of browsers and only one shutdown hook
@@ -57,6 +52,7 @@ class StaticBrowserProvider(
     }
 
     override fun provideBrowser(config: Configuration): Browser {
+        StaticBrowserProvider.config = config
         browser.config = config
         return browser
     }

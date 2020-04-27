@@ -21,7 +21,6 @@ import org.kebish.usage.test.util.extendable.ExtendableImpl
 class ClosingWindowsAndTabsAfterEachTestBasicTest : KebTest(
     commonTestKebConfig().apply {
         browserProvider = StaticBrowserProvider(
-            this,
             openNewEmptyWindowAndCloseOtherAfterEachTest = true // This is default, but this option is being tested here
         )
     }

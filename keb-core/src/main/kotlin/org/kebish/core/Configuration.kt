@@ -26,9 +26,8 @@ class Configuration {
      * StaticBrowserProvider - which reuse same browser among tests
      * */
     var browserProvider: BrowserProvider = StaticBrowserProvider(
-        config = this,
         clearCookiesAfterEachTest = true,
-        clearWebStorageAfterEachTest = true,
+        clearWebStorageAfterEachTest = false,
         openNewEmptyWindowAndCloseOtherAfterEachTest = true
     )
 

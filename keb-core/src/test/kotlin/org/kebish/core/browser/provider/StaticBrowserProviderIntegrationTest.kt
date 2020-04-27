@@ -18,7 +18,6 @@ class StaticBrowserProviderIntegrationTest : KebTest(kebConfig {
         driver
     }
     browserProvider = StaticBrowserProvider(
-        config = this,
         clearCookiesAfterEachTest = false,
         clearWebStorageAfterEachTest = false
     )

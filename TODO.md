@@ -2,6 +2,17 @@
 ## Core functionality
 
 - support for method  browser.navigate("www.kebish.org") or some similar shortcut 
+   browser.navigate
+   browser.go
+   browser.get
+   browser.url
+   - relative = based on baseUrl  (if set)
+   - absolute 
+   
+- support for screenshots
+- videos (https://www.ignatiuz.com/blog/selenium/recording-of-test-execution-using-atutestrecorder/, ATUTestRecorder)   
+   
+   
 - Page and test should have access to "title" - page title by default
 - Content Parameters (wait=true  and  required=false) makes probably no sence together 
         add there validation with explaining error message 
@@ -113,7 +124,7 @@
         - powerful content selectors
         - extendable
         - advice you, how to write and manage your tests
-        - screenshots, videos
+        - screenshots, videos 
         - jquery selectors
         - and more...
 

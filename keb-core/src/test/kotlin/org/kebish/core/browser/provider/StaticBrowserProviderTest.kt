@@ -22,7 +22,7 @@ class StaticBrowserProviderTest {
         // given
         val config = kebConfig { }
         StaticBrowserProvider.reset()
-        val sbp = StaticBrowserProvider(config)
+        val sbp = StaticBrowserProvider()
 
         // when
         val browser1 = sbp.provideBrowser(config)
@@ -56,7 +56,7 @@ class StaticBrowserProviderTest {
                 driverMock
             }
         }
-        val sbp = StaticBrowserProvider(config)
+        val sbp = StaticBrowserProvider()
         assertThat(driverCreationCount).isEqualTo(0)
 
         // when
