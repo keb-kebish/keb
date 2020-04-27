@@ -1,4 +1,4 @@
-package org.kebish.core.browser.management
+package org.kebish.core.browser.provider
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
@@ -6,19 +6,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.TestInstance.Lifecycle
-import org.kebish.core.browser.provider.NewBrowserForEachTestProvider
-import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebDriver
 
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation::class)
-class CloseBrowserAfterEachTest : KebTest(kebConfig {
+class NewBrowserForEachTestProvider_CloseBrowserAfterEachTest : KebTest(kebConfig {
     driver = { mock() }
-    browserProvider = NewBrowserForEachTestProvider(this)
+    browserProvider = NewBrowserForEachTestProvider()
 }) {
-
 
     @BeforeAll
     @AfterAll

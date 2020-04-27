@@ -4,17 +4,19 @@ import org.kebish.core.Browser
 import org.kebish.core.Configuration
 import org.kebish.core.util.ResettableLazy
 
-class NewBrowserForEachTestProvider(val config: Configuration) : BrowserProvider {
+class NewBrowserForEachTestProvider() : BrowserProvider {
 
     private val browserDelegate = ResettableLazy(
         initializer = { Browser(config) },
         onReset = { browser -> browser.quit() }
     )
+    private lateinit var config: Configuration
 
     private val browser by browserDelegate
 
 
     override fun provideBrowser(config: Configuration): Browser {
+        this.config = config
         browser.config = config
         return browser
     }

@@ -1,18 +1,17 @@
-package org.kebish.core.browser.management
+package org.kebish.core.browser.provider
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.kebish.core.browser.provider.NewBrowserForEachTestProvider
 import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
 
-class QuitBrowserInTheMiddleOfTheTest : KebTest(
+class NewBrowserForEachTestProvider_QuitBrowserInTheMiddleOfTheTest : KebTest(
     kebConfig {
         driver = { mock(defaultAnswer = RETURNS_DEEP_STUBS) }
-        browserProvider = NewBrowserForEachTestProvider(this)
+        browserProvider = NewBrowserForEachTestProvider()
     }
 
 ) {
