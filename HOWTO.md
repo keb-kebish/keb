@@ -1,17 +1,23 @@
-### Publish version to bintray
-Release plugin would help
+### Release version 
+Release plugin would help :)
 
+###### Release documentation
+copy ./README.md to ./docs/README.md
+
+###### Remove snapshot from version
 - In main build.gradle.kts set version e.g. 
 `version = "1.1"`
 
 - commit push
 - create tag e.g. "1.1"
 
+
+###### Upload to Bintray
 Run command:
 
 `gradlew bintrayUpload -PbintrayApiKey=<API_KEY>`
 
-
+###### Prepare next snapshot version
 - In main build.gradle.kts set version e.g. 
 `version = "1.2-SNAPSHOT"`
 
