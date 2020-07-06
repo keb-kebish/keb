@@ -30,6 +30,11 @@ class Browser(var config: Configuration) : ContentSupport, NavigationSupport, Mo
             config.baseUrl = value
         }
 
+
+    var url: String
+        get() = driver.currentUrl
+        set(url) = driver.get(url) //TODO work with baseUrl - e.g. baseUrl=kebis.org, then  set("hello") will open "kebish.org/hello"
+
     fun refresh() = driver.navigate().refresh()
 
     override val browser get() = this

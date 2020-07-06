@@ -1,6 +1,7 @@
 package org.kebish.core.test
 
 import org.kebish.core.*
+import org.kebish.core.config.TestInfo
 
 /**
  * Implementation of keb test base
@@ -16,10 +17,28 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
         config.browserProvider.beforeTest()
     }
 
-    /** Test runner must call this method after each test */
-    fun afterEachTest() {
-        config.browserProvider.afterTest()
+
+//TODO clean this up
+//    fun afterTestSuccess() {
+//
+//    }
+
+
+    /** Test runner must call this method on test failure. Before finalizeTest() method.  */
+    fun afterTestFail(testInfo: TestInfo) {
+        config.reports.testFailReporters.forEach { reporter ->
+            reporter.report(testInfo, browser)
+        }
     }
 
 
+    /** Test runner must call this method as LAST method after test*/
+    fun finalizeTest() {
+        config.browserProvider.afterTest()
+    }
+
+    @Deprecated("Old name of method use 'finalizeTest()' method instead.", ReplaceWith("finalizeTest()"))
+    fun afterEachTest() {
+        finalizeTest()
+    }
 }

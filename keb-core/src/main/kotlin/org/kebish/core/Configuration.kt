@@ -4,6 +4,7 @@ package org.kebish.core
 
 import org.kebish.core.browser.provider.BrowserProvider
 import org.kebish.core.browser.provider.StaticBrowserProvider
+import org.kebish.core.config.TestInfo
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
@@ -69,6 +70,16 @@ class Configuration {
             decorated.getOrDefault(key.toLowerCase(), defaultValue)
 
         override fun containsKey(key: String): Boolean = decorated.containsKey(key.toLowerCase())
+    }
+
+    val reports = Reports()
+
+    //TODO testSuccess reporter, afterEachTest reproter
+    //TODO specify report directory
+    class Reports(val testFailReporters: MutableList<Reporter> = mutableListOf())
+
+    interface Reporter {
+        fun report(testInfo: TestInfo, browser: Browser)
     }
 
 
