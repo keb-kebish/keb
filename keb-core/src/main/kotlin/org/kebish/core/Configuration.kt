@@ -75,17 +75,18 @@ class Configuration {
 
     val reports = Reports()
 
-    //TODO testSuccess reporter, afterEachTest reproter
     class Reports(
         /** Directory for reports. For reporters which use it. */
         var reporterDir: File = File("")
 
     ) {
-        val testFailReporters: ReportsList = ReportsList(this)
+        val testFailReporters: ReportersList = ReportersList(this)
+        val testSuccessReporters: ReportersList = ReportersList(this)
+        val afterEachTestReporters: ReportersList = ReportersList(this)
     }
 
 
-    class ReportsList(val reports: Reports) : Iterable<Reporter> {
+    class ReportersList(val reports: Reports) : Iterable<Reporter> {
 
         val list: MutableList<Reporter> = mutableListOf()
 

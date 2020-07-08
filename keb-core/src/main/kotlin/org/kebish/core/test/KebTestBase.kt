@@ -18,15 +18,27 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
     }
 
 
-//TODO clean this up
-//    fun afterTestSuccess() {
-//
-//    }
-
-
-    /** Test runner must call this method on test failure. Before finalizeTest() method.  */
+    /** Test runner must call this method on test failure. Before afterTest() and finalizeTest() methods.  */
     fun afterTestFail(testInfo: TestInfo) {
         config.reports.testFailReporters.forEach { reporter ->
+            reporter.report(testInfo, browser)
+        }
+    }
+
+    /** Test runner must call this method on test success. Before afterTest() and finalizeTest() methods.  */
+    fun afterTestSuccess(testInfo: TestInfo) {
+        config.reports.testSuccessReporters.forEach { reporter ->
+            reporter.report(testInfo, browser)
+        }
+    }
+
+    /**
+     * Test runner must call this method after test.
+     * Before finalizeTest() method.
+     * After afterTestFail/afterTestSuccess methods.
+     */
+    fun afterTest(testInfo: TestInfo) {
+        config.reports.afterEachTestReporters.forEach { reporter ->
             reporter.report(testInfo, browser)
         }
     }

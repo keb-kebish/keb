@@ -51,12 +51,13 @@ class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
     override fun afterTestExecution(context: ExtensionContext) {
         val failed = context.executionException.isPresent
 
+        val testInfo = TestInfo(context.displayName)
         if (failed) {
-            val testInfo = TestInfo(context.displayName)
             kebTest.afterTestFail(testInfo)
         } else {
-            val i = 0
+            kebTest.afterTestSuccess(testInfo)
         }
+        kebTest.afterTest(testInfo)
 
         kebTest.finalizeTest()
 
