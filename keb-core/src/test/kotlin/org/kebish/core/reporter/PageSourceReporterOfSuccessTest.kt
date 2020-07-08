@@ -3,10 +3,7 @@ package org.kebish.core.reporter
 import kotlinx.html.body
 import kotlinx.html.p
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.MethodOrderer
-import org.junit.jupiter.api.Order
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestMethodOrder
+import org.junit.jupiter.api.*
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent
@@ -41,15 +38,14 @@ class PageSourceReporterOfSuccessTest : KebTest(commonTestKebConfig().apply {
         }
     ))
 
-    @Test
-    @Order(1)
+    @BeforeAll
     fun `clean reports directory`() {
         config.reports.reporterDir.deleteRecursively()
     }
 
     // When - test is successful
     @Test
-    @Order(2)
+    @Order(1)
     fun `successful test`() {
         browser.url = config.baseUrl
         waitFor { cssList(".common-text") }
@@ -58,7 +54,7 @@ class PageSourceReporterOfSuccessTest : KebTest(commonTestKebConfig().apply {
 
     // Then - screenshot was created
     @Test
-    @Order(3)
+    @Order(2)
     fun `report was created`() {
         val screenshots = config.reports.reporterDir.listFiles()!!
         assertThat(screenshots.size).isEqualTo(1)
