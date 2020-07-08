@@ -7,6 +7,7 @@ import org.kebish.core.browser.provider.StaticBrowserProvider
 import org.kebish.core.config.TestInfo
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
+import java.io.File
 
 fun kebConfig(conf: Configuration.() -> Unit) = Configuration().apply { conf() }
 
@@ -75,11 +76,41 @@ class Configuration {
     val reports = Reports()
 
     //TODO testSuccess reporter, afterEachTest reproter
-    //TODO specify report directory
-    class Reports(val testFailReporters: MutableList<Reporter> = mutableListOf())
+    class Reports(
+        /** Directory for reports. For reporters which use it. */
+        var reporterDir: File = File("")
+
+    ) {
+        val testFailReporters: ReportsList = ReportsList(this)
+    }
+
+
+    class ReportsList(val reports: Reports) : Iterable<Reporter> {
+
+        val list: MutableList<Reporter> = mutableListOf()
+
+        fun add(reporter: Reporter) {
+            reporter.setConfig(reports)
+            list.add(reporter)
+        }
+
+        fun clear() = list.clear()
+
+        fun remove(reporter: Reporter): Boolean = list.remove(reporter)
+
+        fun getAll(): List<Reporter> = object : List<Reporter> by list {}
+
+        override fun iterator(): Iterator<Reporter> = list.iterator()
+
+
+    }
+
 
     interface Reporter {
         fun report(testInfo: TestInfo, browser: Browser)
+
+        /** Configuration call set this. So that reportsDir can be shared between configurations */
+        fun setConfig(reports: Reports)
     }
 
 

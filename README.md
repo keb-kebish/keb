@@ -203,6 +203,14 @@ Prepared providers:
 
 Anybody can write BrowserProvider, but for most use cases prepared implementation will be sufficient.
 
+## Reporters
+Reporters work like plugins. A custom reporter can be configured or prepared Reporter can be used.
+For example `ScreenshotReporter`, which can be configured to save screenshot after each failed test. 
+```kotlin
+
+
+```
+
 ## Installation
 Relesed jar files are available in jcenter().
 

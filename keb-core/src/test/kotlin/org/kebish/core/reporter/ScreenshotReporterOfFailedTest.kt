@@ -10,9 +10,13 @@ import org.kebish.usage.test.util.HtmlContent
 import org.kebish.usage.test.util.HttpBuilderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
+import java.io.File
 
 class ScreenshotReporterOfFailedTest : KebTest(commonTestKebConfig().apply {
-    reports.testFailReporters.add(ScreenshotReporter())
+    reports.run {
+        reporterDir = File("build/keb-reports")
+        testFailReporters.add(ScreenshotReporter())
+    }
 }), Extendable by ExtendableImpl() {
 
     @Suppress("unused")
