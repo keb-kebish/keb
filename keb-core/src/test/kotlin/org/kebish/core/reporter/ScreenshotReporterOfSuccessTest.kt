@@ -19,7 +19,7 @@ import java.io.File
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class ScreenshotReporterOfSuccessTest : KebTest(commonTestKebConfig().apply {
     reports.run {
-        reporterDir = File("build/keb-reports-just-for-tests")
+        reporterDir = File("build/keb-reports-just-for-ScreenshotReporterOfSuccessTest")
         // Given - success test is configured
         testSuccessReporters.add(ScreenshotReporter())
     }
