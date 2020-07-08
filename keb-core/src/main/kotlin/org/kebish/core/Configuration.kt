@@ -106,7 +106,8 @@ class Configuration {
 
     }
 
-
+    //TODO move to own file
+    //TODO consider rename to plugin
     interface Reporter {
         fun report(testInfo: TestInfo, browser: Browser)
 

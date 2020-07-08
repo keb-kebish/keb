@@ -1,14 +1,12 @@
 package org.kebish.core.reporter
 
 import org.kebish.core.Browser
-import org.kebish.core.Configuration
 import org.kebish.core.config.TestInfo
 import org.kebish.core.tool.ScreenshotMaker
 import java.io.File
 
-class ScreenshotReporter : Configuration.Reporter {
+class ScreenshotReporter : ReportsDirReporter() {
 
-    private lateinit var reportsConfig: Configuration.Reports
 
     override fun report(testInfo: TestInfo, browser: Browser) {
         if (!browser.isDriverInitialized()) {
@@ -17,21 +15,13 @@ class ScreenshotReporter : Configuration.Reporter {
 
         val screenshotMaker = ScreenshotMaker(browser)
         //TODO test that reporter dir is used maybe pull it out to Abstract parent
-        val reportsDir = if (::reportsConfig.isInitialized) {
-            reportsConfig.reporterDir
-        } else {
-            File("")
-        }
-        reportsDir.mkdirs()
 
-        val screenshotFile = File(reportsDir, testInfo.name + ".png").canonicalFile
+
+        val screenshotFile = File(resolvedReportsDir(), testInfo.name + ".png").canonicalFile
         //TODO logger
         println("TAKING SCREENSHOT TO - '$screenshotFile'")
         screenshotMaker.takeScreenshot(screenshotFile)
         println("Done.")
     }
 
-    override fun setConfig(reports: Configuration.Reports) {
-        this.reportsConfig = reports
-    }
 }

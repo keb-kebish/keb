@@ -23,7 +23,6 @@ class ScreenshotMaker(val browser: Browser) {
             return driver
         }
 
-        //TODO Consider if die, or just log and silently continue
         throw IllegalStateException("Cannot take screenshot. Driver is not instance of 'org.openqa.selenium.TakesScreenshot'")
     }
 
