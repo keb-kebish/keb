@@ -43,7 +43,8 @@ class Browser(var config: Configuration) : ContentSupport, NavigationSupport, Mo
         driverDelegate.reset() // during this WebDriver.quit() is called
     }
 
-    fun pageSource() = driver.pageSource
+    val pageSource
+        get() = driver.pageSource
 
     fun clearCookies() {
         driver.manage().deleteAllCookies()

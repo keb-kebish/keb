@@ -11,14 +11,9 @@ class PageSourceReporter : ReportsDirReporter() {
             return
         }
 
+        val pageSourceFile = File(resolvedReportsDir(), testInfo.name + ".html").canonicalFile
 
-        //TODO test that reporter dir is used maybe pull it out to Abstract parent
-
-
-        val screenshotFile = File(resolvedReportsDir(), testInfo.name + ".html").canonicalFile
-
-        screenshotFile.writeText(browser.driver.pageSource)
-
+        pageSourceFile.writeText(browser.pageSource)
     }
 
 }
