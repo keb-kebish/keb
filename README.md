@@ -10,11 +10,13 @@ http://kebish.org/
 4. [Waiting](#waiting)
 5. [Browser Management](#browser-management)
 6. [Installation](#installation)
+6. [Reporters](#reporters)
 7. [Usage](#full-usage---keb--junit)
 8. [About project](#about-project)
     1. [Committers](#committers)
     2. [Contributors](#contributors)
     3. [Change log](#change-log)
+
 
 
 
@@ -209,7 +211,7 @@ For example `ScreenshotReporter`, which can be configured to save screenshot aft
 ```kotlin
 
 
-```
+```     
 
 ## Installation
 Relesed jar files are available in jcenter().

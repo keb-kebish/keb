@@ -1,33 +1,30 @@
 package org.kebish.core.module
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import kotlinx.html.body
 import kotlinx.html.checkBoxInput
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.Page
-import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
+import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent
 import org.kebish.usage.test.util.HttpBuilderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
-import org.openqa.selenium.firefox.FirefoxDriver
 
-class CheckboxTest: KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup()
-    this.driver = { FirefoxDriver() }
-}), Extendable by ExtendableImpl() {
+class CheckboxTest : KebTest(commonTestKebConfig())
+    , Extendable by ExtendableImpl() {
 
     @Suppress("unused")
-    private val serverExtension = register(HttpBuilderServerExtension(
-        browser,
-        HtmlContent {
-            body {
-                checkBoxInput(classes = "checkbox") {
-                    checked = false
+    private val serverExtension = register(
+        HttpBuilderServerExtension(
+            browser,
+            HtmlContent {
+                body {
+                    checkBoxInput(classes = "checkbox") {
+                        checked = false
+                    }
                 }
-            }
         }
     ))
 

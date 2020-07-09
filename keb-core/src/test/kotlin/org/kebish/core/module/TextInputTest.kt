@@ -1,6 +1,5 @@
 package org.kebish.core.module
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import kotlinx.html.body
 import kotlinx.html.checkBoxInput
 import kotlinx.html.textInput
@@ -8,28 +7,26 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 import org.kebish.core.Page
-import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
+import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent
 import org.kebish.usage.test.util.HttpBuilderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
-import org.openqa.selenium.firefox.FirefoxDriver
 
-class TextInputTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup()
-    this.driver = { FirefoxDriver() }
-}), Extendable by ExtendableImpl() {
+class TextInputTest : KebTest(commonTestKebConfig())
+    , Extendable by ExtendableImpl() {
 
     @Suppress("unused")
-    private val serverExtension = register(HttpBuilderServerExtension(
-        browser,
-        HtmlContent {
-            body {
-                textInput(classes = "text") { value = "initial value" }
-                checkBoxInput(classes = "checkbox")
+    private val serverExtension = register(
+        HttpBuilderServerExtension(
+            browser,
+            HtmlContent {
+                body {
+                    textInput(classes = "text") { value = "initial value" }
+                    checkBoxInput(classes = "checkbox")
+                }
             }
-        }
     ))
 
     @Test
