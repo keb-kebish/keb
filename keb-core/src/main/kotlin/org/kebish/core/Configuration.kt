@@ -77,7 +77,7 @@ class Configuration {
 
     class Reports(
         /** Directory for reports. For reporters which use it. */
-        var reporterDir: File = File("")
+        var reporterDir: File = File("keb-reports")
 
     ) {
         val testFailReporters: ReportersList = ReportersList(this)
