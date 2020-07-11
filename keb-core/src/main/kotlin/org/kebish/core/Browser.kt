@@ -1,6 +1,7 @@
 package org.kebish.core
 
 import org.kebish.core.util.ResettableLazy
+import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.html5.WebStorage
 import org.openqa.selenium.interactions.Actions
@@ -66,12 +67,15 @@ class Browser(var config: Configuration) : ContentSupport, NavigationSupport, Mo
     }
 
     fun clearWebStorage() {
-        if (driver is WebStorage) {
-            val driverCasted = driver as WebStorage
-            driverCasted.localStorage.clear()
-            driverCasted.sessionStorage.clear()
-        } else {
-            // TODO logger warn "WebStorage cannot be cleared. Driver is not instanceof "org.openqa.selenium.html5.WebStorage" "
+        val castDriver = driver
+        if (castDriver is WebStorage) {
+            try {
+                castDriver.localStorage.clear()
+                castDriver.sessionStorage.clear()
+            } catch (e: JavascriptException) {
+                // swallow this exception. It cannot be detected and is thrown, when no url is set in browser.
+                // see test: org.kebish.core.browser.management.ClearWebStorage.clearWebStorageAfterEachTest on empty browser
+            }
         }
     }
 
