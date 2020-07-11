@@ -12,6 +12,7 @@ class ScreenshotMaker(val browser: Browser) {
 
 
         var decoded = screenshotDriver.getScreenshotAs(OutputType.BYTES)
+        destination.parentFile.mkdirs()
         destination.writeBytes(decoded)
 
     }

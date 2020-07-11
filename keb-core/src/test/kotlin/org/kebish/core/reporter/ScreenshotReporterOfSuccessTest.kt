@@ -53,7 +53,7 @@ class ScreenshotReporterOfSuccessTest : KebTest(commonTestKebConfig().apply {
     @Test
     @Order(2)
     fun `report was created`() {
-        val screenshots = config.reports.reporterDir.listFiles()!!
+        val screenshots = config.reports.reporterDir.walkTopDown().filter { it.isFile }.toList()
         assertThat(screenshots.size).isEqualTo(1)
         assertThat(screenshots[0].length()).isGreaterThan(5 * 1024)
         assertThat(screenshots[0].name).endsWith(".png")

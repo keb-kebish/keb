@@ -11,11 +11,7 @@ abstract class ReportsDirReporter : Configuration.Reporter {
     }
 
     protected fun resolvedReportsDir(): File {
-        val reportsDir = if (::reportsConfig.isInitialized) {
-            reportsConfig.reporterDir
-        } else {
-            File("")
-        }
+        val reportsDir = reportsConfig.reporterDir
         reportsDir.mkdirs()
         return reportsDir
     }

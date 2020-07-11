@@ -13,6 +13,7 @@ class PageSourceReporter : ReportsDirReporter() {
 
         val pageSourceFile = File(resolvedReportsDir(), testInfo.reportPath + ".html").canonicalFile
 
+        pageSourceFile.parentFile.mkdirs()
         pageSourceFile.writeText(browser.pageSource)
     }
 

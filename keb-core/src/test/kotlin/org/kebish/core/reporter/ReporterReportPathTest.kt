@@ -12,7 +12,7 @@ import org.kebish.usage.test.util.extendable.ExtendableImpl
 import java.io.File
 import java.nio.file.Path
 
-class PathTestReporter() : ReportsDirReporter() {
+class PathTestReporter : ReportsDirReporter() {
     lateinit var testInfo: TestInfo
 
     override fun report(testInfo: TestInfo, browser: Browser) {
@@ -39,6 +39,7 @@ class ReporterReportPathTest : KebTest(kebConfig { }),
     // When - test is successful
     @Test
     @Order(1)
+    @Suppress("NonAsciiCharacters")
     fun `žluťoučký kůň`(@TempDir tmpDri: Path) {
 
     }
