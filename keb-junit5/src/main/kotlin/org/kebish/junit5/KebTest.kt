@@ -51,7 +51,8 @@ class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
     override fun afterTestExecution(context: ExtensionContext) {
         val failed = context.executionException.isPresent
 
-        val testInfo = TestInfo(context.displayName)
+        val reportPath = constructReportPath(context)
+        val testInfo = TestInfo(reportPath)
         if (failed) {
             kebTest.afterTestFail(testInfo)
         } else {
@@ -61,5 +62,16 @@ class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
 
         kebTest.finalizeTest()
 
+    }
+
+    private fun constructReportPath(context: ExtensionContext): String {
+        val testClass = context.testClass.get()
+        val packageDirs = testClass.`package`.name.replace('.', '/')
+        val className = testClass.simpleName
+        val methodName = context.testMethod.get().name
+
+        // This is not strictly unique (only package, className and methodName) - but well readable
+        // method parameters can be obtained like this context.testMethod.get().parameters[0].type.canonicalName
+        return "$packageDirs/$className.$methodName()"
     }
 }

@@ -17,7 +17,7 @@ class ScreenshotReporter : ReportsDirReporter() {
         //TODO test that reporter dir is used maybe pull it out to Abstract parent
 
 
-        val screenshotFile = File(resolvedReportsDir(), testInfo.name + ".png").canonicalFile
+        val screenshotFile = File(resolvedReportsDir(), testInfo.reportPath + ".png").canonicalFile
         //TODO logger
         println("TAKING SCREENSHOT TO - '$screenshotFile'")
         screenshotMaker.takeScreenshot(screenshotFile)

@@ -47,10 +47,14 @@ class Browser(var config: Configuration) : ContentSupport, NavigationSupport, Mo
     }
 
     /** return browser.driver.pageSource or NO_PAGE_SOURCE_SUBSTITUTE in cas it is null */
-    val pageSource: String = browser.driver.pageSource ?: NO_PAGE_SOURCE_SUBSTITUTE
+    val pageSource: String
+        get() = browser.driver.pageSource ?: NO_PAGE_SOURCE_SUBSTITUTE
+
 
     fun clearCookies() {
-        driver.manage().deleteAllCookies()
+        if (isDriverInitialized()) {
+            driver.manage().deleteAllCookies()
+        }
     }
 
     fun clearCookiesQuietly() {

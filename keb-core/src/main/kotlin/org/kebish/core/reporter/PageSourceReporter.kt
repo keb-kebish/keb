@@ -11,7 +11,7 @@ class PageSourceReporter : ReportsDirReporter() {
             return
         }
 
-        val pageSourceFile = File(resolvedReportsDir(), testInfo.name + ".html").canonicalFile
+        val pageSourceFile = File(resolvedReportsDir(), testInfo.reportPath + ".html").canonicalFile
 
         pageSourceFile.writeText(browser.pageSource)
     }
