@@ -9,6 +9,9 @@ import org.openqa.selenium.interactions.Actions
 class Browser(var config: Configuration) : ContentSupport, NavigationSupport, ModuleSupport, WaitSupport {
 
     companion object {
+
+        const val NO_PAGE_SOURCE_SUBSTITUTE: String = "-- no page source --"
+
         fun drive(config: Configuration = Configuration(), block: Browser.() -> Unit) {
             val browser = Browser(config)
             try {
@@ -43,8 +46,8 @@ class Browser(var config: Configuration) : ContentSupport, NavigationSupport, Mo
         driverDelegate.reset() // during this WebDriver.quit() is called
     }
 
-    val pageSource
-        get() = driver.pageSource
+    /** return browser.driver.pageSource or NO_PAGE_SOURCE_SUBSTITUTE in cas it is null */
+    val pageSource: String = browser.driver.pageSource ?: NO_PAGE_SOURCE_SUBSTITUTE
 
     fun clearCookies() {
         driver.manage().deleteAllCookies()
