@@ -58,41 +58,17 @@ class StaticBrowserProvider(
     }
 
     override fun beforeTest() {
-
-//        TODO use special BrowserProvider instead
-//        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserBeforeAndAfterEachTest) {
-//            closeDriver()
-//        }
     }
 
     override fun afterTest() {
-
-
-        //        TODO use special BrowserProvider instead
-//        if (browserDelegate.isInitialized() && config.browserManagement.closeBrowserBeforeAndAfterEachTest) {
-//            closeDriver()
-//        } else {
-
         if (browserDelegate.isInitialized() && browser.isDriverInitialized()) {
             if (clearCookiesAfterEachTest) {
                 browser.clearCookiesQuietly()
             }
             if (clearWebStorageAfterEachTest) {
-                //                val driver = browser.driver
-                //                if (driver is RemoteWebDriver) {
-                //                    val sessionId = driver.sessionId
-                //                    browser.clearWebStorage()
-                //                } else {
                 browser.clearWebStorage()
-                //                }
-                //                try {
-                //                    browser.clearWebStorage()
-                //                } catch (e: NoSuchSessionException) {
-                //                    //TODO just log
-                //                }
             }
             if (openNewEmptyWindowAndCloseOtherAfterEachTest) {
-                //                closeAllWindowsAndTabsExceptOne()
                 openNewTabAndCloseOtherTabsAndWindows()
             }
         }
@@ -101,13 +77,6 @@ class StaticBrowserProvider(
 
 
     }
-
-
-    private fun closeDriver() {
-        //TODO this should reset BrowserDelegate as well
-        browser.quit()
-    }
-
 
     private fun openNewTabAndCloseOtherTabsAndWindows() {
 
