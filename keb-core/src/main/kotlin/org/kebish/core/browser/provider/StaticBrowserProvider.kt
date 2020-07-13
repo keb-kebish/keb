@@ -4,6 +4,8 @@ import org.kebish.core.Browser
 import org.kebish.core.Configuration
 import org.kebish.core.util.ResettableLazy
 import org.openqa.selenium.JavascriptExecutor
+import org.openqa.selenium.NoAlertPresentException
+import org.openqa.selenium.UnhandledAlertException
 
 class StaticBrowserProvider(
     //TODO document these options into README.md
@@ -16,7 +18,11 @@ class StaticBrowserProvider(
      *  If you close windows after test - you can be sure, that this test will not block execution of other tests.
      *  (e.g. by opening dialog windows on exit from page)
      *  */
-    var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true
+    var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true,
+    /**
+     * If window have opened alert dialog, which prevent window to close. This will try to close alert.
+     */
+    var autoCloseAlerts: Boolean = true
 ) : BrowserProvider {
 
 
@@ -109,8 +115,19 @@ class StaticBrowserProvider(
 
     private fun closeTab(windowHandle: String) {
         browser.driver.switchTo().window(windowHandle)
-        browser.driver.close() //TODO if window do not close, try close opened dialogs
-        //        browser.driver.switchTo().alert().dismiss()
+        try {
+            browser.driver.close()
+        } catch (e: UnhandledAlertException) {
+            if (autoCloseAlerts) {
+                try {
+                    browser.driver.switchTo().alert().dismiss()
+                } catch (e: NoAlertPresentException) {
+                    // close may dismiss dialog - so this is possible
+                }
+                browser.driver.close()
+            }
+        }
+
     }
 
 }

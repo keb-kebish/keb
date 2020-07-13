@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page With Confirm</title>
+</head>
+<body onload="confirmDialog()">
+<p>This page show confirm "on load"</p>
+<p id="result"></p>
+
+<script>
+    function confirmDialog() {
+        var txt;
+        if (confirm("Press a button!")) {
+            txt = "You pressed OK!";
+        } else {
+            txt = "You pressed Cancel!";
+        }
+        document.getElementById("result").innerHTML = txt;
+    }
+</script>
+</body>
+</html>

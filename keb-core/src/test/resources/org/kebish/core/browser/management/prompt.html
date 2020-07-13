@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page With Prompt</title>
+</head>
+<body onload="promptDialog()">
+<p>This page show prompt "on load"</p>
+<p id="result"></p>
+
+<script>
+    function promptDialog() {
+        var txt;
+        // var person = prompt("Please enter your name:", "Harry Potter");
+        var person = prompt("Please enter your name:");
+        if (person == null || person == "") {
+            txt = "User cancelled the prompt.";
+        } else {
+            txt = "Hello " + person + "! How are you today?";
+        }
+        document.getElementById("result").innerHTML = txt;
+    }
+</script>
+
+
+</body>
+</html>
+
