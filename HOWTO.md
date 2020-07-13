@@ -1,3 +1,10 @@
+### Run Tests
+`gradlew test`
+
+
+
+
+
 ### Release version 
 Release plugin would help :)
 
@@ -24,3 +31,6 @@ Run command:
 - Update version in README.md
 
 - commit push
+
+
+
