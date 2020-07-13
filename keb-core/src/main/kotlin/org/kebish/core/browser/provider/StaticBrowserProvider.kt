@@ -27,7 +27,7 @@ class StaticBrowserProvider(
         private val browserDelegate = ResettableLazy(
             initializer = {
                 val browser = Browser(config)
-                //TODO there is no need to have extra thread for each browser
+                //There is no need to have extra thread for each browser
                 //But there is no issue in StaticBrowser provider, because there is only one all the time
                 //With multiple browsers consider - static WeakReference Set of browsers and only one shutdown hook
                 Runtime.getRuntime().addShutdownHook(object : Thread() {
@@ -126,20 +126,16 @@ class StaticBrowserProvider(
             windowsToClose.forEach { closeTab(it) }
 
             driver.switchTo().window(newEmptyWindow)
-
         } else {
-            //TODO only close windows
+            val iterator = browser.driver.windowHandles.iterator()
+            if (iterator.hasNext()) {
+                val handle = iterator.next()
+                iterator.forEachRemaining { closeTab(it) }
+
+                driver.switchTo().window(handle)
+            }
         }
 
-
-        //        val windowHandles = browser.driver.windowHandles.toList()
-        //        if (windowHandles.size > 1) {
-        //            browser.driver.switchTo().window(windowHandles.first())
-        //            for (handle in windowHandles.subList(1, windowHandles.size)) {
-        //                browser.driver.close()
-        //                browser.driver.switchTo().window(handle)
-        //            }
-        //        }
     }
 
     private fun closeTab(windowHandle: String) {
@@ -147,28 +143,5 @@ class StaticBrowserProvider(
         browser.driver.close() //TODO if window do not close, try close opened dialogs
         //        browser.driver.switchTo().alert().dismiss()
     }
-
-
-    //    private fun openNewTabAndCloseOtherTabsAndWindows() {
-    //        val windowHandles = browser.driver.windowHandles.toList()
-    //        if (windowHandles.size > 1) {
-    //            browser.driver.switchTo().window(windowHandles.first())
-    //            for (handle in windowHandles.subList(1, windowHandles.size)) {
-    //                browser.driver.close()
-    //                browser.driver.switchTo().window(handle)
-    //            }
-    //        }
-    //    }
-    //
-    //    private fun closeAllWindowsAndTabsExceptOne() {
-    //        val windowHandles = browser.driver.windowHandles.toList()
-    //        if (windowHandles.size > 1) {
-    //            browser.driver.switchTo().window(windowHandles.first())
-    //            for (handle in windowHandles.subList(1, windowHandles.size)) {
-    //                browser.driver.close()
-    //                browser.driver.switchTo().window(handle)
-    //            }
-    //        }
-    //    }
 
 }

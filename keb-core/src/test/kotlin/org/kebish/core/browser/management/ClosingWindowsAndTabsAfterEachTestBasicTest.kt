@@ -68,7 +68,7 @@ class ClosingWindowsAndTabsAfterEachTestBasicTest : KebTest(
         assertThat(browser.driver.windowHandles).hasSize(1)
 
         // And - opened window is empty
-        browser.driver.pageSource.contains("<body></body>")
+        assertThat(browser.pageSource).contains("<body></body>")
     }
 
 
