@@ -8,7 +8,6 @@ import org.openqa.selenium.NoAlertPresentException
 import org.openqa.selenium.UnhandledAlertException
 
 class StaticBrowserProvider(
-    //TODO document these options into README.md
     /** Cost approximately 15ms per test */
     var clearCookiesAfterEachTest: Boolean = true,
     /** Cost approximately 45ms per test */

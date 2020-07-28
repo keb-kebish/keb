@@ -199,11 +199,34 @@ Prepared providers:
        But this approach is very SLOW because creating a new WebDriver takes approximately 7 seconds per test.
        
   - `StaticBrowserProvider` (used by default) - Reuse the same browser(WebDriver) among tests.<br>
-   Browser is stored in `static` field and reused which reuse same field.
-   That's why this is not suitable for parallel execution of tests.      
-
+   Browser is stored in `static` field, all tests with StaticBrowserProvider use the same Browser.
+   That's why this is not suitable for parallel execution of tests.  
+   Attributes: 
+     - `clearCookiesAfterEachTest` 
+       default value is `true`   
+       After each test clear all cookies from browser.  
+       Cost is approximately 15ms per test.      
+     - `clearWebStorageAfterEachTest`  
+       default value is `false`  
+       After each test clear WebStorage. More precise it clear
+       `org.openqa.selenium.html5.LocalStorage` and `org.openqa.selenium.html5.SessionStorage`
+       Cost is approximately 45ms per test.
+     - `openNewEmptyWindowAndCloseOtherAfterEachTest`  
+       default value is `true`  
+       After each test it will open a new tab and close all other tabs and windows.  
+       Thanks to this - each test starts with one empty tab.
+       And you will avoid issues caused by tabs opened by previous tests.
+     - `autoCloseAlerts`  
+       default value is `true`  
+       An additional option for the previous attribute.
+       If closing the window will be prevented by an alert dialog.
+       This option will try to close this alert and then attept to close the window again.
+            
 
 Anybody can write BrowserProvider, but for most use cases prepared implementation will be sufficient.
+If you need implement for example Provider, which share browser per thread 
+(it would be suitable for parallel execution of tests)
+You can do it on your own or do not hesitate to ask us, and we will add this feature.
 
 ## Reporters
 Reporters work like plugins. A custom reporter can be configured or prepared Reporter can be used.
