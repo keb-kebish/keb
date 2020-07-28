@@ -78,10 +78,6 @@ class StaticBrowserProvider(
                 openNewTabAndCloseOtherTabsAndWindows()
             }
         }
-
-        //TODO close forgotten dialog windows during closing windows
-
-
     }
 
     private fun openNewTabAndCloseOtherTabsAndWindows() {

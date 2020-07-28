@@ -30,7 +30,8 @@ class Configuration {
     var browserProvider: BrowserProvider = StaticBrowserProvider(
         clearCookiesAfterEachTest = true,
         clearWebStorageAfterEachTest = false,
-        openNewEmptyWindowAndCloseOtherAfterEachTest = true
+        openNewEmptyWindowAndCloseOtherAfterEachTest = true,
+        autoCloseAlerts = true
     )
 
     private var waitPresets: Map<String, WaitPreset> = WaitingDslBuilder().build()
