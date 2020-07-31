@@ -11,9 +11,6 @@ import java.nio.file.Files
 
 internal class ScreenshotMakerTest {
 
-    //TODO html reporter  PageSourceReporter
-
-
     val browser = Browser(commonTestKebConfig())
 
     @BeforeEach

@@ -12,16 +12,9 @@ class ScreenshotReporter : ReportsDirReporter() {
         if (!browser.isDriverInitialized()) {
             return
         }
-
         val screenshotMaker = ScreenshotMaker(browser)
-        //TODO test that reporter dir is used maybe pull it out to Abstract parent
-
-
         val screenshotFile = File(resolvedReportsDir(), testInfo.reportPath + ".png").canonicalFile
-        //TODO logger
-        println("TAKING SCREENSHOT TO - '$screenshotFile'")
         screenshotMaker.takeScreenshot(screenshotFile)
-        println("Done.")
     }
 
 }
