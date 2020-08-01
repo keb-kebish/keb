@@ -11,12 +11,10 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
     override val browser: Browser
         get() = config.browserProvider.provideBrowser(config) //TODO maybe config could go there in this direction instead of constructor
 
-
     /** Test runner must call this method before each test */
     fun beforeEachTest() {
         config.browserProvider.beforeTest()
     }
-
 
     /** Test runner must call this method on test failure. Before afterTest() and finalizeTest() methods.  */
     fun afterTestFail(testInfo: TestInfo) {
@@ -42,7 +40,6 @@ abstract class KebTestBase(val config: Configuration) : ContentSupport, ModuleSu
             reporter.report(testInfo, browser)
         }
     }
-
 
     /** Test runner must call this method as LAST method after test*/
     fun finalizeTest() {

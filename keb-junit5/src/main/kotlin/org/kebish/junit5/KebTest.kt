@@ -12,7 +12,7 @@ abstract class KebTest(config: Configuration) : KebTestBase(config) {
 
     @RegisterExtension
     @JvmField
-    val afterTest = AfterTest(this)
+    val kebAfterTest = KebAfterTest(this)
 
     @BeforeEach
     fun beforeEachTestJunit5() {
@@ -21,7 +21,7 @@ abstract class KebTest(config: Configuration) : KebTestBase(config) {
 
 }
 
-class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
+class KebAfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
 
     override fun afterTestExecution(context: ExtensionContext) {
         val failed = context.executionException.isPresent
