@@ -25,7 +25,6 @@ class ClosingWindowsAndTabsAfterEachTest_WindowsWithAlertTest : KebTest(
         HttpResourceFolderServerExtension(browser, "org/kebish/core/browser/management")
     )
 
-
     @Test
     @Order(1)
     fun `'given', 'when' part of test`() {
@@ -33,12 +32,12 @@ class ClosingWindowsAndTabsAfterEachTest_WindowsWithAlertTest : KebTest(
         browser.driver.get(browser.baseUrl)
         waitFor { css("#AlertLink") }
 
-        // When - test open multiple windows
-
+        // When - test open multiple windows with differemnt kinds of allerts
         css("#AlertLink").click()
+        waitFor { assertThat(browser.driver.windowHandles).hasSize(2) }
         css("#ConfirmLink").click()
+        waitFor { assertThat(browser.driver.windowHandles).hasSize(3) }
         css("#PromptLink").click()
-
         waitFor { assertThat(browser.driver.windowHandles).hasSize(4) }
     }
 
