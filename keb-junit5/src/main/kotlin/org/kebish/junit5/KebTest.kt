@@ -19,34 +19,9 @@ abstract class KebTest(config: Configuration) : KebTestBase(config) {
         super.beforeEachTest()
     }
 
-    //TODO clean this up
-//    @AfterEach
-//    fun afterEachTestJunit5() {
-//        val i = 0
-////        super.finalizeTest()
-//    }
-
 }
 
 class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
-
-
-    //TODO clean this up
-//    override fun testFailed(context: ExtensionContext, cause: Throwable) {
-//        testFailedCallback(context, cause)
-//    }
-//
-//    override fun testSuccessful(context: ExtensionContext?) {
-//        super.testSuccessful(context)
-//    }
-//
-//    override fun testDisabled(context: ExtensionContext?, reason: Optional<String>?) {
-//        super.testDisabled(context, reason)
-//    }
-//
-//    override fun testAborted(context: ExtensionContext?, cause: Throwable?) {
-//        super.testAborted(context, cause)
-//    }
 
     override fun afterTestExecution(context: ExtensionContext) {
         val failed = context.executionException.isPresent
@@ -61,7 +36,6 @@ class AfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
         kebTest.afterTest(testInfo)
 
         kebTest.finalizeTest()
-
     }
 
     private fun constructReportPath(context: ExtensionContext): String {
