@@ -85,8 +85,13 @@
 - Load KebConfig from external file.
   - Preferably Kotlin Script format
   
-- add prepared setup of network trottling for chrome e.g.
-  ```chromeDriver.networkThrottling.slow3G()
+- add prepared setup of network trottling for chrome
+  Resources:  
+  https://seleniumjava.com/2019/02/27/how-to-simulate-network-conditions/  
+  https://webdriver.io/docs/api/chromium.html#getnetworkconditions  
+  e.g.
+  ```
+  chromeDriver.networkThrottling.slow3G()
   chromeDriver.networkThrottling.set(latency, uploadInBytes, downloadInBytes)```
 
 ## Tests semantic
