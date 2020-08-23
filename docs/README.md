@@ -8,12 +8,15 @@ http://kebish.org/
 2. [Modules](#modules)
 3. [Navigation](#navigation)
 4. [Waiting](#waiting)
-5. [Installation](#installation)
-6. [Usage](#full-usage---keb--junit)
-7. [About project](#about-project)
+5. [Browser Management](#browser-management)
+6. [Installation](#installation)
+6. [Reporters](#reporters)
+7. [Usage](#full-usage---keb--junit)
+8. [About project](#about-project)
     1. [Committers](#committers)
     2. [Contributors](#contributors)
     3. [Change log](#change-log)
+
 
 
 
@@ -37,7 +40,11 @@ xpath("/html/body/h1")
 xpathList("/html/body/h1")
 by(MyCustomBy()) // can be used with custom implementation of org.openqa.selenium.By
 byList(MyCustomBy())
-```
+```    
+
+For details see https://www.selenium.dev/documentation/en/getting_started_with_webdriver/locating_elements/
+
+Module "nuc-bobril" adds support for [Bobril](https://bobril.com/) selectors. 
 
 #### Content
 
@@ -178,6 +185,65 @@ kebConfig {
 }
 ```
 
+## Browser Management
+For creating, providing and quiting browser is responsible `BrowserProvider`
+Which can be set in configuration e.g.
+```kotlin
+kebConfig {
+   browserProvider = NewBrowserForEachTestProvider(this) 
+}
+```
+Prepared providers:
+  -  `NewBrowserForEachTestProvider` - Quit WebDriver (close browser) after each test.<br>
+       This is the most robust option because your tests are truly independent.
+       But this approach is very SLOW because creating a new WebDriver takes approximately 7 seconds per test.
+       
+  - `StaticBrowserProvider` (used by default) - Reuse the same browser(WebDriver) among tests.<br>
+   Browser is stored in `static` field, all tests with StaticBrowserProvider use the same Browser.
+   That's why this is not suitable for parallel execution of tests.  
+   Attributes: 
+     - `clearCookiesAfterEachTest` 
+       default value is `true`   
+       After each test clear all cookies from browser.  
+       Cost is approximately 15ms per test.      
+     - `clearWebStorageAfterEachTest`  
+       default value is `false`  
+       After each test clear WebStorage. More precise it clear
+       `org.openqa.selenium.html5.LocalStorage` and `org.openqa.selenium.html5.SessionStorage`
+       Cost is approximately 45ms per test.
+     - `openNewEmptyWindowAndCloseOtherAfterEachTest`  
+       default value is `true`  
+       After each test it will open a new tab and close all other tabs and windows.  
+       Thanks to this - each test starts with one empty tab.
+       And you will avoid issues caused by tabs opened by previous tests.
+     - `autoCloseAlerts`  
+       default value is `true`  
+       An additional option for the previous attribute.
+       If closing the window will be prevented by an alert dialog.
+       This option will try to close this alert and then attept to close the window again.
+            
+
+Anybody can write BrowserProvider, but for most use cases prepared implementation will be sufficient.
+If you need implement for example Provider, which share browser per thread 
+(it would be suitable for parallel execution of tests)
+You can do it on your own or do not hesitate to ask us, and we will add this feature.
+
+## Reporters
+Reporters work like plugins. A custom reporter can be configured or prepared Reporter can be used.
+  - `ScreenshotReporter` save `png` screenshot into "reporterDir"
+  - `PageSourceReporter` save `html` screenshot into "reproterDir"
+  
+e.g - save `png` and `html` after each failed test:
+```kotlin  
+    kebConfig  {
+        reports.apply {
+            reporterDir = File("keb-reports")
+            testFailReporters.add(ScreenshotReporter())
+            testFailReporters.add(PageSourceReporter())
+        }
+    }
+```     
+
 ## Installation
 Relesed jar files are available in jcenter().
 
@@ -294,6 +360,19 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - David Richter
 
 ### Change log
+
+- **0.4**
+  - Basic configuration for Browser Management 
+     - **`StaticBrowserProvider`**
+     - `NewBrowserForEachTestProvider`
+     - see ["Browser Management"](#browser-management) section for details
+  - Keb close all windows and tabs after each test
+     - even close forgotten alert dialogs
+     - see section "Browser Management" => "StaticBrowserProvider" => "openNewEmptyWindowAndCloseOtherAfterEachTest"
+  - "Reporter" - possibility to implement own reporters 
+    - ScreenshotReporter - which can take screenshot after test
+    - see ["Reporters"](#reporters) section for details  
+  - PasswordInput module
 
 - **0.3**
   - _Breaking changes_ 
