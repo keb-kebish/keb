@@ -22,7 +22,8 @@ copy ./README.md to ./docs/README.md
 ###### Upload to Bintray
 Run command:
 
-`gradlew bintrayUpload -PbintrayApiKey=<API_KEY>`
+`gradlew bintrayUpload -PbintrayApiKey=<API_KEY>`  
+<API_KEY> - search for email _"Keb - Kebish - Bintray API Key"_
 
 ###### Prepare next snapshot version
 - In main build.gradle.kts set version e.g. 
