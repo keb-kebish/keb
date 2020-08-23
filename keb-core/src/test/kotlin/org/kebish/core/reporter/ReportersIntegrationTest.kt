@@ -5,7 +5,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
-import org.kebish.core.Configuration
+import org.kebish.core.config.Reporter
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.extendable.Extendable
@@ -16,9 +16,9 @@ class ReportersIntegrationTest : KebTest(commonTestKebConfig())
     , Extendable by ExtendableImpl() {
 
     // Given - config with reporters
-    val successReporter = mock<Configuration.Reporter>()
-    val failReporter = mock<Configuration.Reporter>()
-    val afterTestReporter = mock<Configuration.Reporter>()
+    val successReporter = mock<Reporter>()
+    val failReporter = mock<Reporter>()
+    val afterTestReporter = mock<Reporter>()
 
     init {
         config.reports.testSuccessReporters.add(successReporter)
