@@ -230,10 +230,18 @@ You can do it on your own or do not hesitate to ask us, and we will add this fea
 
 ## Reporters
 Reporters work like plugins. A custom reporter can be configured or prepared Reporter can be used.
-For example `ScreenshotReporter`, which can be configured to save screenshot after each failed test. 
-```kotlin
-
-
+  - `ScreenshotReporter` save `png` screenshot into "reporterDir"
+  - `PageSourceReporter` save `html` screenshot into "reproterDir"
+  
+e.g - save `png` and `html` after each failed test:
+```kotlin  
+    kebConfig  {
+        reports.apply {
+            reporterDir = File("keb-reports")
+            testFailReporters.add(ScreenshotReporter())
+            testFailReporters.add(PageSourceReporter())
+        }
+    }
 ```     
 
 ## Installation
@@ -354,7 +362,17 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 ### Change log
 
 - **0.4**
-  - Basic configuration for Browser Management
+  - Basic configuration for Browser Management 
+     - **`StaticBrowserProvider`**
+     - `NewBrowserForEachTestProvider`
+     - see ["Browser Management"](#browser-management) section for details
+  - Keb close all windows and tabs after each test
+     - even close forgotten alert dialogs
+     - see section "Browser Management" => "StaticBrowserProvider" => "openNewEmptyWindowAndCloseOtherAfterEachTest"
+  - "Reporter" - possibility to implement own reporters 
+    - ScreenshotReporter - which can take screenshot after test
+    - see ["Reporters"](#reporters) section for details  
+  - PasswordInput module
 
 - **0.3**
   - _Breaking changes_ 
