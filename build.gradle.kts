@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "org.kebish"
-    version = "0.4"
+    version = "0.5-SNAPSHOT"
     description = "Library for browser tests implementing Page Object pattern and using Selenium"
 
     repositories {

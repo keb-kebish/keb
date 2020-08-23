@@ -9,9 +9,9 @@
 Release plugin would help :)
 
 ###### Release documentation
-In ./README.md set actual version e.g. `val kebVersion = 1.1`
+- In `./README.md` set version e.g. `val kebVersion = 1.1`
 
-copy ./README.md to ./docs/README.md
+- copy ./README.md to `./docs/README.md`
 
 ###### Remove snapshot from version
 - In main build.gradle.kts set version e.g. 
@@ -25,13 +25,11 @@ copy ./README.md to ./docs/README.md
 Run command:
 
 `gradlew bintrayUpload -PbintrayApiKey=<API_KEY>`  
-<API_KEY> - search for email _"Keb - Kebish - Bintray API Key"_
+<API_KEY> - is in email _"Keb - Kebish - Bintray API Key"_
 
 ###### Prepare next snapshot version
 - In main build.gradle.kts set version e.g. 
 `version = "1.2-SNAPSHOT"`
-
-- Update version in README.md
 
 - commit push
 
