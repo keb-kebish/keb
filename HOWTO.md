@@ -9,6 +9,8 @@
 Release plugin would help :)
 
 ###### Release documentation
+In ./README.md set actual version e.g. `val kebVersion = 1.1`
+
 copy ./README.md to ./docs/README.md
 
 ###### Remove snapshot from version

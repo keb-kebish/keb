@@ -253,7 +253,7 @@ repositories {
     jcenter()
 }
 
-val kebVersion = "0.3"
+val kebVersion = "0.4"
 dependencies{
   testImplementation("org.kebish:keb-core:$kebVersion")
   testImplementation("org.kebish:keb-junit5:$kebVersion")
