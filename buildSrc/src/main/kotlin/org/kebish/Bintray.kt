@@ -4,7 +4,7 @@ object Bintray {
     const val user = "vondrous"
 
     const val repo = "kebish"
-    val licenses = arrayOf("WTFPL")
+    val licenses = arrayOf("MIT")
     const val vcsUrl = "https://gitlab.com/horca23/keb.git"
     const val websiteUrl = "https://gitlab.com/horca23/keb"
     const val description = "Library for browser tests implementing Page Object pattern and using Selenium"
