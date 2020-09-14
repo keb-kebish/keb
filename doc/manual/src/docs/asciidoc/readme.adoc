@@ -1,0 +1,100 @@
+== Keb
+
+Web Testing, Browser Automation, Page Object Pattern and more
+
+http://kebish.org/
+
+=== Content
+
+[arabic]
+. link:#page-object-pattern[Page object pattern]
+. link:#modules[Modules]
+. link:#navigation[Navigation]
+. link:#waiting[Waiting]
+. link:#browser-management[Browser Management]
+. link:#installation[Installation]
+. link:#reporters[Reporters]
+. link:#full-usage---keb--junit[Usage]
+. link:#about-project[About project]
+
+[arabic]
+.. link:#committers[Committers]
+.. link:#contributors[Contributors]
+.. link:#change-log[Change log]
+
+=== Page object pattern
+
+Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.
+
+[source,kotlin]
+----
+class KotlinHomePage : Page() {
+    override fun url() = "https://kotlinlang.org"
+}
+----
+
+==== Page elements
+
+To select web element on your page use the following methods.
+
+[source,kotlin]
+----
+css(".my-selector") // returns single DOM element by CSS selector
+cssList(".my-select") // returns list of all elements found by CSS selector
+// following selectors are also available
+html("h1")
+htmlList("h1")
+xpath("/html/body/h1")
+xpathList("/html/body/h1")
+by(MyCustomBy()) // can be used with custom implementation of org.openqa.selenium.By
+byList(MyCustomBy())
+----
+
+For details see
+https://www.selenium.dev/documentation/en/getting_started_with_webdriver/locating_elements/
+
+Module "nuc-bobril" adds support for https://bobril.com/[Bobril]
+selectors.
+
+===== Content
+
+In order to lazily access page content use the `content` delegate.
+
+[source,kotlin]
+----
+class KotlinHomePage : Page() {
+    override fun url() = "https://kotlinlang.org"
+
+    val header by content { css(".global-header-logo") }
+    val headerText by content { header.text }
+}
+----
+
+There are multiple options how to handle the selected content:
+
+* cache
+** content can be cached - i.e. only initialized on first access, otherwise invoked on every access
+** usage: `val title by content(cache=true) { html("h1") }`
+** default value: `false`
+* required:
+** you can specify whether the content is required to be present on the page
+** if required and the content is not present, then the
+`org.openqa.selenium.NoSuchElementException` exception is thrown, instance of `org.kebish.core.EmptyContent` is returned otherwise
+** usage: `val title by content(required=true) { html("h1") }`
+** default value: `true`
+* wait:
+** wheter the keb should wait for the given content
+** usage:
++
+[source,kotlin]
+----
+val title by content(wait = true) { html("h1") } // uses the default wait preset
+
+val title by content(wait = 60) { html("h1") } // uses custom timeout value with retryInterval from the default wait preset
+
+val title by content(wait = "quick") { html("h1") } // uses the given wait preset
+
+val title by content(waitTimeout = 10, waitRetryInterval = 2) { html("h1") } // specify both timeout and retry interval
+----
+
+** if content is still not present after the specified interval, the `org.kebish.core.WaitTimeoutExcep

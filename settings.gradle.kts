@@ -2,6 +2,7 @@ rootProject.name = "keb"
 include("keb-core")
 include("keb-junit5")
 include("keb-bobril")
+include("doc:manual")
 
 
 fun setupBuildFileName(project: ProjectDescriptor) {
