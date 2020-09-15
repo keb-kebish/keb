@@ -7,7 +7,7 @@ import java.util.*
 fun buildParam(s: String) = project.findProperty(s) as String?
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.4.10"
 
     // Publish plugins - start
     `java-library`

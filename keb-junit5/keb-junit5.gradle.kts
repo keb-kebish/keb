@@ -6,7 +6,7 @@ import java.util.*
 fun buildParam(s: String) = project.findProperty(s) as String?
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.4.10"
 
     // Publish plugins - start
     `java-library`
@@ -74,7 +74,7 @@ tasks {
 
 // jUnit setup --------- start
 dependencies {
-    implementation("org.junit.jupiter:junit-jupiter:5.5.2")
+    implementation("org.junit.jupiter:junit-jupiter:5.7.0")
 }
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()

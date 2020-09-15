@@ -51,7 +51,7 @@ class WaitSupportTest {
                 val number = 0
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { number } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { number }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -79,7 +79,7 @@ class WaitSupportTest {
                 val string = ""
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { string } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { string }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -107,7 +107,7 @@ class WaitSupportTest {
                 val bool = false
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { bool } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { bool }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -135,7 +135,7 @@ class WaitSupportTest {
                 val collection = listOf(true, false)
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { collection } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { collection }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -147,7 +147,7 @@ class WaitSupportTest {
                 val collection = emptyList<Boolean>()
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { collection } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { collection }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -175,7 +175,7 @@ class WaitSupportTest {
                 val webElement = mock<WebElement> { on { location }.doReturn<Point?>(null) }
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { webElement } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { webElement }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -217,7 +217,7 @@ class WaitSupportTest {
                 val module = TestModule(mock { on { location }.doReturn<Point?>(null) })
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { module } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { module }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)
@@ -245,7 +245,7 @@ class WaitSupportTest {
                 val obj: Any? = null
 
                 // when
-                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { obj } }
+                val result = catchThrowable { objectUnderTest.waitFor(1, 1) { obj }; Unit }
 
                 // then
                 assertThat(result).isInstanceOf(WaitTimeoutException::class.java)

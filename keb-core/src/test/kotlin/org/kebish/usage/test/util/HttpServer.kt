@@ -1,18 +1,12 @@
 package org.kebish.usage.test.util
 
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.html.respondHtml
-import io.ktor.http.content.resource
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.routing.get
-import io.ktor.routing.routing
-import io.ktor.server.engine.ApplicationEngine
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
+import io.ktor.application.*
+import io.ktor.html.*
+import io.ktor.http.content.*
+import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import kotlinx.html.HTML
-import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 
@@ -66,7 +60,7 @@ abstract class KtorHttpServer(private val initializer: Application.() -> Unit) :
     }
 
     override fun stop() {
-        server.stop(1, 1, TimeUnit.SECONDS)
+        server.stop(1000, 1000)
     }
 }
 

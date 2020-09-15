@@ -8,7 +8,7 @@ import java.util.*
 fun buildParam(s: String) = project.findProperty(s) as String?
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.4.10"
 
     // Publish plugins - start
     `java-library`
@@ -91,12 +91,12 @@ dependencies {
     api(group = "org.seleniumhq.selenium", name = "selenium-java", version = "3.141.59")
 
     testImplementation(project(":keb-junit5"))
-    testImplementation(group = "io.github.bonigarcia", name = "webdrivermanager", version = "3.8.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
-    testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation(group = "io.ktor", name = "ktor-server-netty", version = "1.2.6")
-    implementation(group = "io.ktor", name = "ktor-html-builder", version = "1.2.6")
+    testImplementation(group = "io.github.bonigarcia", name = "webdrivermanager", version = "4.2.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("org.assertj:assertj-core:3.17.2")
+    testImplementation(group = "io.ktor", name = "ktor-server-netty", version = "1.4.0")
+    implementation(group = "io.ktor", name = "ktor-html-builder", version = "1.4.0")
     testImplementation(group = "com.nhaarman", name = "mockito-kotlin", version = "1.6.0")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
