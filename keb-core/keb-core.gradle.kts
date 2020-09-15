@@ -95,7 +95,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testImplementation("org.assertj:assertj-core:3.17.2")
     testImplementation(group = "io.ktor", name = "ktor-server-netty", version = "1.4.0")
-    implementation(group = "io.ktor", name = "ktor-html-builder", version = "1.4.0")
+    testImplementation(group = "io.ktor", name = "ktor-html-builder", version = "1.4.0")
     testImplementation(group = "com.nhaarman", name = "mockito-kotlin", version = "1.6.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
