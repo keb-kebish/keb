@@ -1,4 +1,4 @@
-package org.kebish.core.module
+package org.kebish.core.module.form
 
 import kotlinx.html.body
 import kotlinx.html.checkBoxInput
@@ -6,7 +6,7 @@ import kotlinx.html.textInput
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
-import org.kebish.core.Page
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent

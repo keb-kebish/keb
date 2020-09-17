@@ -1,9 +1,10 @@
-package org.kebish.core
+package org.kebish.core.browser
 
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.kebish.core.config.kebConfig
 import org.openqa.selenium.WebDriver
 
 internal class BrowserTest {

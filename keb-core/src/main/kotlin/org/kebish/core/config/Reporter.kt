@@ -1,7 +1,6 @@
 package org.kebish.core.config
 
-import org.kebish.core.Browser
-import org.kebish.core.Configuration
+import org.kebish.core.browser.Browser
 
 interface Reporter {
     fun report(testInfo: TestInfo, browser: Browser)

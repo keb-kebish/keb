@@ -1,6 +1,6 @@
 package org.kebish.usage.test.util
 
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.usage.test.util.extendable.Extension
 
 /**

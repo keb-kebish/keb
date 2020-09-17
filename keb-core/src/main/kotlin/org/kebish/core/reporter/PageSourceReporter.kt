@@ -1,6 +1,6 @@
 package org.kebish.core.reporter
 
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.core.config.TestInfo
 import java.io.File
 

@@ -1,7 +1,7 @@
 package org.kebish.bobril
 
-import org.kebish.core.Browser
-import org.kebish.core.Selector
+import org.kebish.core.browser.Browser
+import org.kebish.core.content.Selector
 import org.openqa.selenium.WebElement
 
 class BobrilSelector(override val selector: String, private val browser: Browser) : Selector<String>() {

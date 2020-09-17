@@ -1,5 +1,10 @@
-package org.kebish.core
+package org.kebish.core.browser
 
+import org.kebish.core.ContentSupport
+import org.kebish.core.ModuleSupport
+import org.kebish.core.NavigationSupport
+import org.kebish.core.WaitSupport
+import org.kebish.core.config.Configuration
 import org.kebish.core.util.ResettableLazy
 import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.WebDriverException

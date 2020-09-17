@@ -1,10 +1,11 @@
 @file:Suppress("PropertyName", "MayBeConstant", "MapGetWithNotNullAssertionOperator")
 
-package org.kebish.core
+package org.kebish.core.config
 
+import org.kebish.core.WaitPreset
+import org.kebish.core.WaitPresetNotFoundException
 import org.kebish.core.browser.provider.BrowserProvider
 import org.kebish.core.browser.provider.StaticBrowserProvider
-import org.kebish.core.config.Reporter
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import java.io.File

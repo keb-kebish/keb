@@ -3,9 +3,9 @@ package org.kebish.usage.module
 import kotlinx.html.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.kebish.core.Module
-import org.kebish.core.Page
-import org.kebish.core.module.TextInput
+import org.kebish.core.module.Module
+import org.kebish.core.module.form.TextInput
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent

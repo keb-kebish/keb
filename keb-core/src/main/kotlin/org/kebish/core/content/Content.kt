@@ -1,7 +1,10 @@
 @file:Suppress("UNCHECKED_CAST", "ClassName")
 
-package org.kebish.core
+package org.kebish.core.content
 
+import org.kebish.core.ContentSupport
+import org.kebish.core.WaitPresetFactory
+import org.kebish.core.browser.Browser
 import org.openqa.selenium.NoSuchElementException
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty

@@ -1,6 +1,6 @@
 package org.kebish.usage.module.scoped
 
-import org.kebish.core.Page
+import org.kebish.core.page.Page
 
 class PageWithModulesPage : Page() {
     override fun url() = "page.html"

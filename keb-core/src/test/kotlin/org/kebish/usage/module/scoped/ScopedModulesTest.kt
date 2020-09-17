@@ -3,7 +3,7 @@ package org.kebish.usage.module.scoped
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 import org.kebish.usage.test.util.HttpResourceFolderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable

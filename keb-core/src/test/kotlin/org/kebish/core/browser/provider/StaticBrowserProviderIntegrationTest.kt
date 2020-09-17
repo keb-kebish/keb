@@ -4,8 +4,8 @@ import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
-import org.kebish.core.Browser
-import org.kebish.core.kebConfig
+import org.kebish.core.browser.Browser
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebDriver
 

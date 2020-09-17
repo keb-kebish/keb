@@ -1,6 +1,6 @@
-package org.kebish.core.module
+package org.kebish.core.module.form
 
-import org.kebish.core.Module
+import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
 abstract class FormElement(scope: WebElement?) : Module(scope) {

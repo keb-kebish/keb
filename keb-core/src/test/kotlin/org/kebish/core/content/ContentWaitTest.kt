@@ -1,9 +1,11 @@
-package org.kebish.core
+package org.kebish.core.content
 
 import com.nhaarman.mockito_kotlin.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.kebish.core.WaitPreset
+import org.kebish.core.config.Configuration
 
 class ContentWaitTest {
 

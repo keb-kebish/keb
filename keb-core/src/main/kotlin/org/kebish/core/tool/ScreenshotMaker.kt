@@ -1,6 +1,6 @@
 package org.kebish.core.tool
 
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
 import java.io.File

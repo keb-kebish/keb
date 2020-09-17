@@ -1,4 +1,4 @@
-package org.kebish.core.module
+package org.kebish.core.module.form
 
 import org.openqa.selenium.WebElement
 

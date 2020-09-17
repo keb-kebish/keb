@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.kebish.core.browser.Browser
+import org.kebish.core.module.Module
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebElement
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.api.extension.RegisterExtension
-import org.kebish.core.Configuration
+import org.kebish.core.config.Configuration
 import org.kebish.core.config.TestInfo
 import org.kebish.core.test.KebTestBase
 

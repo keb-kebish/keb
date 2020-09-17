@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.core.config.TestInfo
 
 internal class ScreenshotReporterTest {

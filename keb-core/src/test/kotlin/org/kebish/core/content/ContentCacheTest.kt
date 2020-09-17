@@ -1,4 +1,4 @@
-package org.kebish.core
+package org.kebish.core.content
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Nested

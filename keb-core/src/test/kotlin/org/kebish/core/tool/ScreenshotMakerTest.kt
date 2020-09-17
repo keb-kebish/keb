@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.test.config.commonTestKebConfig
 import java.io.File
 import java.nio.file.Files

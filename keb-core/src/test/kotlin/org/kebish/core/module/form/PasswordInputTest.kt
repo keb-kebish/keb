@@ -1,10 +1,10 @@
-package org.kebish.core.module
+package org.kebish.core.module.form
 
 import kotlinx.html.body
 import kotlinx.html.passwordInput
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.kebish.core.Page
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent

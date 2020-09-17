@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.kebish.core.browser.provider.StaticBrowserProvider
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
 import org.mockito.Mockito.never

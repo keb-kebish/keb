@@ -1,4 +1,4 @@
-package org.kebish.core
+package org.kebish.core.content
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
