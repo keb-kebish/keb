@@ -65,7 +65,7 @@ class KotlinHomePage : Page() {
 - required:
   - you can specify whether the content is required to be present on the page
   - if required and the content is not present, then the `org.openqa.selenium.NoSuchElementException` exception is thrown, 
-  instance of `org.kebish.core.EmptyContent` is returned otherwise
+  instance of `org.kebish.core.content.EmptyContent` is returned otherwise
   - usage: `val title by content(required=true) { html("h1") }`
   - default value: `true`
 - wait:
