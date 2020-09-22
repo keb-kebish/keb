@@ -1,5 +1,7 @@
 package org.kebish.core
 
+import org.kebish.core.browser.Browser
+import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
 interface ModuleSupport {

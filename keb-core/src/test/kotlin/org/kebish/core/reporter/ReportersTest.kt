@@ -3,7 +3,7 @@ package org.kebish.core.reporter
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import org.junit.jupiter.api.Test
-import org.kebish.core.Configuration
+import org.kebish.core.config.Configuration
 import org.kebish.core.config.Reporter
 
 class ReportersTest {

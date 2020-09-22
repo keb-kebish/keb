@@ -1,6 +1,11 @@
 package org.kebish.core.test
 
-import org.kebish.core.*
+import org.kebish.core.ContentSupport
+import org.kebish.core.ModuleSupport
+import org.kebish.core.NavigationSupport
+import org.kebish.core.WaitSupport
+import org.kebish.core.browser.Browser
+import org.kebish.core.config.Configuration
 import org.kebish.core.config.TestInfo
 
 /**

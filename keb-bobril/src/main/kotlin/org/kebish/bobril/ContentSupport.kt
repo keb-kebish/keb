@@ -1,7 +1,7 @@
 package org.kebish.bobril
 
-import org.kebish.core.Browser
 import org.kebish.core.ContentSupport
+import org.kebish.core.browser.Browser
 import org.openqa.selenium.WebElement
 
 fun ContentSupport.bb(selector: String, scope: WebElement? = getDefaultScope()) =

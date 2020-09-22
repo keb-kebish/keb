@@ -1,7 +1,7 @@
 package org.kebish.core.browser.provider
 
-import org.kebish.core.Browser
-import org.kebish.core.Configuration
+import org.kebish.core.browser.Browser
+import org.kebish.core.config.Configuration
 
 /**
  * Is responsible for creating, providing and QUITING!!! Browser

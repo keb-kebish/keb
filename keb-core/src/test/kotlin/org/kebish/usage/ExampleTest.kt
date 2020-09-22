@@ -3,9 +3,9 @@ package org.kebish.usage
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.kebish.core.Module
-import org.kebish.core.Page
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
+import org.kebish.core.module.Module
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver

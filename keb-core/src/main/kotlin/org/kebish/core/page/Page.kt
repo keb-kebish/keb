@@ -1,4 +1,7 @@
-package org.kebish.core
+package org.kebish.core.page
+
+import org.kebish.core.*
+import org.kebish.core.browser.Browser
 
 abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
 

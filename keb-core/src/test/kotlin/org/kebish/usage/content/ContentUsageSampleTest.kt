@@ -3,8 +3,8 @@ package org.kebish.usage.content
 import kotlinx.html.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.kebish.core.EmptyWebElement
-import org.kebish.core.Page
+import org.kebish.core.content.EmptyWebElement
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HtmlContent

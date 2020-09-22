@@ -3,9 +3,9 @@ package org.kebish.core.reporter
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.io.TempDir
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.core.config.TestInfo
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl

@@ -1,6 +1,6 @@
 package org.kebish.core.reporter
 
-import org.kebish.core.Configuration
+import org.kebish.core.config.Configuration
 import org.kebish.core.config.Reporter
 import java.io.File
 

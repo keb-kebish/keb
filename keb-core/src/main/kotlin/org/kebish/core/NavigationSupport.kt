@@ -1,5 +1,7 @@
 package org.kebish.core
 
+import org.kebish.core.browser.Browser
+import org.kebish.core.page.Page
 import java.net.URI
 import kotlin.reflect.KClass
 

@@ -1,14 +1,11 @@
 package org.kebish.usage.multipage
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
-import org.kebish.core.kebConfig
 import org.kebish.junit5.KebTest
 import org.kebish.test.config.commonTestKebConfig
 import org.kebish.usage.test.util.HttpResourceFolderServerExtension
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
-import org.openqa.selenium.firefox.FirefoxDriver
 
 
 class Experimental_PossilbeStyles_MultiPageTest : KebTest(

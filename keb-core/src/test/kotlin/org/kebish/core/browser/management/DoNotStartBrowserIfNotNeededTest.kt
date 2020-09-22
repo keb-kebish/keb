@@ -1,7 +1,7 @@
 package org.kebish.core.browser.management
 
 import org.junit.jupiter.api.Test
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 
 class DoNotStartBrowserIfNotNeededTest : KebTest(kebConfig {

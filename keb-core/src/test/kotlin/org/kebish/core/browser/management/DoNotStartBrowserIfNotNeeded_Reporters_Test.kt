@@ -1,10 +1,10 @@
 package org.kebish.core.browser.management
 
 import org.junit.jupiter.api.Test
-import org.kebish.core.Browser
+import org.kebish.core.browser.Browser
 import org.kebish.core.browser.provider.NewBrowserForEachTestProvider
 import org.kebish.core.config.TestInfo
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.core.reporter.ReportsDirReporter
 import org.kebish.junit5.KebTest
 

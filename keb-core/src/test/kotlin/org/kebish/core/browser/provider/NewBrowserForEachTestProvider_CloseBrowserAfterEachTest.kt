@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.TestInstance.Lifecycle
-import org.kebish.core.kebConfig
+import org.kebish.core.config.kebConfig
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebDriver
 

@@ -1,6 +1,6 @@
 package org.kebish.usage.module.scoped
 
-import org.kebish.core.Module
+import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
 class ClearableInputModule(scope: WebElement) : Module(scope) {

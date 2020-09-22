@@ -1,8 +1,8 @@
 package org.kebish.usage.test.util
 
-import org.kebish.core.Browser
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.kebish.core.browser.Browser
 
 interface WithHttpResourceFolderServer {
     val server: HttpResourceFolderServer

@@ -1,6 +1,8 @@
-package org.kebish.core
+package org.kebish.core.content
 
-import org.openqa.selenium.*
+import org.openqa.selenium.By
+import org.openqa.selenium.SearchContext
+import org.openqa.selenium.WebElement
 
 abstract class Selector<T> {
     abstract val selector: T
