@@ -7,25 +7,25 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.NoAlertPresentException
 import org.openqa.selenium.UnhandledAlertException
 
-class StaticBrowserProvider(
+public class StaticBrowserProvider(
     /** Cost approximately 15ms per test */
-    var clearCookiesAfterEachTest: Boolean = true,
+    public var clearCookiesAfterEachTest: Boolean = true,
     /** Cost approximately 45ms per test */
-    var clearWebStorageAfterEachTest: Boolean = false,
+    public var clearWebStorageAfterEachTest: Boolean = false,
     /**
      *  Close all tabs and windows except one.
      *  If you close windows after test - you can be sure, that this test will not block execution of other tests.
      *  (e.g. by opening dialog windows on exit from page)
      *  */
-    var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true,
+    public var openNewEmptyWindowAndCloseOtherAfterEachTest: Boolean = true,
     /**
      * If window have opened alert dialog, which prevent window to close. This will try to close alert.
      */
-    var autoCloseAlerts: Boolean = true
+    public var autoCloseAlerts: Boolean = true
 ) : BrowserProvider {
 
 
-    companion object {
+    public companion object {
 
         private lateinit var config: Configuration
 
@@ -50,7 +50,7 @@ class StaticBrowserProvider(
         /**
          * Close browser and create new one on next call of provideDriver() method.
          */
-        fun reset() {
+        public fun reset() {
             browserDelegate.reset()
         }
 

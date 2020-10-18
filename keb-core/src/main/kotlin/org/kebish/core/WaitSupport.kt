@@ -6,25 +6,25 @@ import org.kebish.core.content.EmptyContent
 import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
-interface WaitSupport {
+public interface WaitSupport {
 
-    val browser: Browser
+    public val browser: Browser
 
     private val defaultWaitPreset get() = browser.config.getDefaultPreset()
 
-    fun <T> waitFor(
+    public fun <T> waitFor(
         preset: String?,
         desc: String? = null,
         f: () -> T?
-    ) = waitFor(preset?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset, desc, f)
+    ): T = waitFor(preset?.let { browser.config.getWaitPreset(it) } ?: defaultWaitPreset, desc, f)
 
-    fun <T> waitFor(
+    public fun <T> waitFor(
         preset: WaitPreset,
         desc: String? = null,
         f: () -> T?
-    ) = waitFor(preset.timeout, preset.retryInterval, desc, f)
+    ): T = waitFor(preset.timeout, preset.retryInterval, desc, f)
 
-    fun <T> waitFor(
+    public fun <T> waitFor(
         timeout: Number = defaultWaitPreset.timeout,
         retryInterval: Number = defaultWaitPreset.retryInterval,
         desc: String? = null,
@@ -110,7 +110,7 @@ interface WaitSupport {
 
 }
 
-data class WaitPreset(val timeout: Number, val retryInterval: Number)
+public data class WaitPreset(val timeout: Number, val retryInterval: Number)
 
 internal class WaitPresetFactory {
     fun from(value: Any, configuration: Configuration) = when (value) {
@@ -122,5 +122,6 @@ internal class WaitPresetFactory {
     }
 }
 
-class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)
-class WaitPresetNotFoundException(presetName: String) : RuntimeException("Preset with name '$presetName' not found.")
+public class WaitTimeoutException(msg: String, cause: Throwable?) : RuntimeException(msg, cause)
+public class WaitPresetNotFoundException(presetName: String) :
+    RuntimeException("Preset with name '$presetName' not found.")

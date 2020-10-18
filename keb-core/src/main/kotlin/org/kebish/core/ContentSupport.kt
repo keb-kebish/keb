@@ -5,46 +5,46 @@ import org.kebish.core.content.*
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 
-interface ContentSupport {
-    val browser: Browser
-    fun getDefaultScope(): WebElement? = null
+public interface ContentSupport {
+    public val browser: Browser
+    public fun getDefaultScope(): WebElement? = null
 
-    fun <T : Any?> content(
+    public fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: Boolean = false,
         initializer: () -> T
-    ) = contentInternal(required, cache, wait, initializer)
+    ): Content<T> = contentInternal(required, cache, wait, initializer)
 
-    fun <T : Any?> content(
+    public fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: String,
         initializer: () -> T
-    ) = contentInternal(required, cache, wait, initializer)
+    ): Content<T> = contentInternal(required, cache, wait, initializer)
 
-    fun <T : Any?> content(
+    public fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: Number,
         initializer: () -> T
-    ) = contentInternal(required, cache, wait, initializer)
+    ): Content<T> = contentInternal(required, cache, wait, initializer)
 
 
-    fun <T : Any?> content(
+    public fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         waitTimeout: Number,
         waitRetryInterval: Number,
         initializer: () -> T
-    ) = content(required, cache, WaitPreset(waitTimeout,waitRetryInterval), initializer)
+    ): Content<T> = content(required, cache, WaitPreset(waitTimeout, waitRetryInterval), initializer)
 
-    fun <T : Any?> content(
+    public fun <T : Any?> content(
         required: Boolean = true,
         cache: Boolean = false,
         wait: WaitPreset,
         initializer: () -> T
-    ) = contentInternal(required, cache, wait, initializer)
+    ): Content<T> = contentInternal(required, cache, wait, initializer)
 
     private fun <T> contentInternal(required: Boolean, cache: Boolean, wait: Any, initializer: () -> T) = Content(
         CachingContentInitializer(
@@ -60,27 +60,28 @@ interface ContentSupport {
         )
     )
 
-    fun css(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun css(selector: String, scope: WebElement? = getDefaultScope()): WebElement =
         cssSelector(browser, selector, scope).getWebElement()
 
-    fun cssList(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun cssList(selector: String, scope: WebElement? = getDefaultScope()): List<WebElement> =
         cssSelector(browser, selector, scope).getWebElements()
 
-    fun html(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun html(selector: String, scope: WebElement? = getDefaultScope()): WebElement =
         htmlSelector(browser, selector, scope).getWebElement()
 
-    fun htmlList(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun htmlList(selector: String, scope: WebElement? = getDefaultScope()): List<WebElement> =
         htmlSelector(browser, selector, scope).getWebElements()
 
-    fun xpath(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun xpath(selector: String, scope: WebElement? = getDefaultScope()): WebElement =
         xpathSelector(browser, selector, scope).getWebElement()
 
-    fun xpathList(selector: String, scope: WebElement? = getDefaultScope()) =
+    public fun xpathList(selector: String, scope: WebElement? = getDefaultScope()): List<WebElement> =
         xpathSelector(browser, selector, scope).getWebElements()
 
-    fun by(selector: By, scope: WebElement? = getDefaultScope()) = bySelector(browser, selector, scope).getWebElement()
+    public fun by(selector: By, scope: WebElement? = getDefaultScope()): WebElement =
+        bySelector(browser, selector, scope).getWebElement()
 
-    fun byList(selector: By, scope: WebElement? = getDefaultScope()) =
+    public fun byList(selector: By, scope: WebElement? = getDefaultScope()): List<WebElement> =
         bySelector(browser, selector, scope).getWebElements()
 
     private fun cssSelector(browser: Browser, selector: String, scope: WebElement?) =

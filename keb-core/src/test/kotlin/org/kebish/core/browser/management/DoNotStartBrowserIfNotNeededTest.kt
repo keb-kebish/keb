@@ -20,6 +20,7 @@ class DoNotStartBrowserIfNotNeededTest : KebTest(kebConfig {
 
     @Test
     fun `WebDriver is not started when driver is not used`() {
+        @Suppress("UNUSED_VARIABLE")
         val obtainedBrowser = browser
         println(
             "Assert - When driver is not used, then no WebDriver is initialized.\n" +

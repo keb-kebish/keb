@@ -4,7 +4,7 @@ import org.kebish.core.browser.Browser
 import org.kebish.core.config.Configuration
 import org.kebish.core.util.ResettableLazy
 
-class NewBrowserForEachTestProvider() : BrowserProvider {
+public class NewBrowserForEachTestProvider() : BrowserProvider {
 
     private val browserDelegate = ResettableLazy(
         initializer = { Browser(config) },

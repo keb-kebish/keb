@@ -10,25 +10,25 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import java.io.File
 
-fun kebConfig(conf: Configuration.() -> Unit) = Configuration().apply { conf() }
+public fun kebConfig(conf: Configuration.() -> Unit): Configuration = Configuration().apply { conf() }
 
-class Configuration {
+public class Configuration {
 
-    companion object {
-        val DEFAULT_PRESET_NAME = "default"
-        val DEFAULT_TIMEOUT: Number = 15
-        val DEFAULT_RETRY_INTERVAL: Number = 1
+    public companion object {
+        public val DEFAULT_PRESET_NAME: String = "default"
+        public val DEFAULT_TIMEOUT: Number = 15
+        public val DEFAULT_RETRY_INTERVAL: Number = 1
     }
 
-    var driver: () -> WebDriver = { FirefoxDriver() }
-    var baseUrl = ""
-    var atVerifierRequired = false
+    public var driver: () -> WebDriver = { FirefoxDriver() }
+    public var baseUrl: String = ""
+    public var atVerifierRequired: Boolean = false
 
     /** Keb support have two providers
      * NewBrowserForEachTestProvider - which quit WebDriver (close browser) after each test
      * StaticBrowserProvider - which reuse same browser among tests
      * */
-    var browserProvider: BrowserProvider = StaticBrowserProvider(
+    public var browserProvider: BrowserProvider = StaticBrowserProvider(
         clearCookiesAfterEachTest = true,
         clearWebStorageAfterEachTest = false,
         openNewEmptyWindowAndCloseOtherAfterEachTest = true,
@@ -36,31 +36,33 @@ class Configuration {
     )
 
     private var waitPresets: Map<String, WaitPreset> = WaitingDslBuilder().build()
-    fun waiting(dsl: WaitingDslBuilder.() -> Unit) {
+    public fun waiting(dsl: WaitingDslBuilder.() -> Unit) {
         waitPresets = WaitingDslBuilder().apply(dsl).build()
     }
 
-    fun getWaitPreset(preset: String) = waitPresets[preset] ?: throw WaitPresetNotFoundException(preset)
-    fun getDefaultPreset(): WaitPreset = waitPresets[DEFAULT_PRESET_NAME]!!
+    public fun getWaitPreset(preset: String): WaitPreset =
+        waitPresets[preset] ?: throw WaitPresetNotFoundException(preset)
 
-    class WaitingDslBuilder {
+    public fun getDefaultPreset(): WaitPreset = waitPresets[DEFAULT_PRESET_NAME]!!
+
+    public class WaitingDslBuilder {
 
         private val presets = mutableMapOf<String, WaitPreset>()
 
-        var timeout = DEFAULT_TIMEOUT
-        var retryInterval = DEFAULT_RETRY_INTERVAL
+        public var timeout: Number = DEFAULT_TIMEOUT
+        public var retryInterval: Number = DEFAULT_RETRY_INTERVAL
 
-        operator fun String.invoke(dsl: WaitPresetDslBuilder.() -> Unit) {
+        public operator fun String.invoke(dsl: WaitPresetDslBuilder.() -> Unit) {
             presets[this] = WaitPresetDslBuilder(timeout, retryInterval).apply(dsl).build()
         }
 
-        fun build(): Map<String, WaitPreset> = CaseInsensitiveMap(
+        public fun build(): Map<String, WaitPreset> = CaseInsensitiveMap(
             presets.plus(DEFAULT_PRESET_NAME to WaitPreset(timeout, retryInterval))
         )
     }
 
-    class WaitPresetDslBuilder(var timeout: Number, var retryInterval: Number) {
-        fun build() = WaitPreset(timeout, retryInterval)
+    public class WaitPresetDslBuilder(public var timeout: Number, public var retryInterval: Number) {
+        public fun build(): WaitPreset = WaitPreset(timeout, retryInterval)
     }
 
     private class CaseInsensitiveMap<T>(
@@ -75,33 +77,33 @@ class Configuration {
         override fun containsKey(key: String): Boolean = decorated.containsKey(key.toLowerCase())
     }
 
-    val reports = Reports()
+    public val reports: Reports = Reports()
 
-    class Reports(
+    public class Reports(
         /** Directory for reports. For reporters which use it. */
-        var reporterDir: File = File("keb-reports")
+        public var reporterDir: File = File("keb-reports")
 
     ) {
-        val testFailReporters: ReportersList = ReportersList(this)
-        val testSuccessReporters: ReportersList = ReportersList(this)
-        val afterEachTestReporters: ReportersList = ReportersList(this)
+        public val testFailReporters: ReportersList = ReportersList(this)
+        public val testSuccessReporters: ReportersList = ReportersList(this)
+        public val afterEachTestReporters: ReportersList = ReportersList(this)
     }
 
 
-    class ReportersList(val reports: Reports) : Iterable<Reporter> {
+    public class ReportersList(public val reports: Reports) : Iterable<Reporter> {
 
-        val list: MutableList<Reporter> = mutableListOf()
+        public val list: MutableList<Reporter> = mutableListOf()
 
-        fun add(reporter: Reporter) {
+        public fun add(reporter: Reporter) {
             reporter.setConfig(reports)
             list.add(reporter)
         }
 
-        fun clear() = list.clear()
+        public fun clear(): Unit = list.clear()
 
-        fun remove(reporter: Reporter): Boolean = list.remove(reporter)
+        public fun remove(reporter: Reporter): Boolean = list.remove(reporter)
 
-        fun getAll(): List<Reporter> = object : List<Reporter> by list {}
+        public fun getAll(): List<Reporter> = object : List<Reporter> by list {}
 
         override fun iterator(): Iterator<Reporter> = list.iterator()
 

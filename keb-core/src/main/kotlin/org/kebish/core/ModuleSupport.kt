@@ -4,14 +4,14 @@ import org.kebish.core.browser.Browser
 import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
-interface ModuleSupport {
+public interface ModuleSupport {
 
-    val browser: Browser
+    public val browser: Browser
 
-    fun <T : Module> module(factory: () -> T) = module(factory())
+    public fun <T : Module> module(factory: () -> T): T = module(factory())
 
-    fun <T : Module> module(module: T) = module.apply { browser = this@ModuleSupport.browser }
+    public fun <T : Module> module(module: T): T = module.apply { browser = this@ModuleSupport.browser }
 
-    fun <T : Module> WebElement.module(factory: (scope: WebElement) -> T) = module(factory(this))
+    public fun <T : Module> WebElement.module(factory: (scope: WebElement) -> T): T = module(factory(this))
 
 }

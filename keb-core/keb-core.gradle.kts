@@ -17,6 +17,10 @@ plugins {
     // Publish plugins - end
 }
 
+kotlin {
+    explicitApi()
+}
+
 // Publish - start
 bintray {
     user = Bintray.user

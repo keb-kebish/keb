@@ -5,70 +5,121 @@ import org.kebish.core.page.Page
 import java.net.URI
 import kotlin.reflect.KClass
 
-interface NavigationSupport {
+public interface NavigationSupport {
 
-    val browser: Browser
+    public val browser: Browser
 
     // TO
     // boolean wait
-    fun <T : Page> to(pageFactory: () -> T, wait: Boolean = true) = pageFactory().let { to(it, wait, { it }) }
-    fun <T : Page, R : Any> to(pageFactory: () -> T, wait: Boolean = true, body: T.() -> R) = to(pageFactory(), wait, body)
-    fun <T : Page> to(page: T, wait: Boolean = true) = to(page, wait, { page })
-    fun <T : Page, R : Any> to(page: T, wait: Boolean = true, body: T.() -> R): R = browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+    public fun <T : Page> to(pageFactory: () -> T, wait: Boolean = true): T = pageFactory().let { to(it, wait, { it }) }
+    public fun <T : Page, R : Any> to(pageFactory: () -> T, wait: Boolean = true, body: T.() -> R): R =
+        to(pageFactory(), wait, body)
+
+    public fun <T : Page> to(page: T, wait: Boolean = true): T = to(page, wait, { page })
+    public fun <T : Page, R : Any> to(page: T, wait: Boolean = true, body: T.() -> R): R =
+        browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+
     // string wait
-    fun <T : Page> to(pageFactory: () -> T, wait: String) = pageFactory().let { to(it, wait, { it }) }
-    fun <T : Page, R : Any> to(pageFactory: () -> T, wait: String, body: T.() -> R) = to(pageFactory(), wait, body)
-    fun <T : Page> to(page: T, wait: String) = to(page, wait, { page })
-    fun <T : Page, R : Any> to(page: T, wait: String, body: T.() -> R): R = browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+    public fun <T : Page> to(pageFactory: () -> T, wait: String): T = pageFactory().let { to(it, wait, { it }) }
+    public fun <T : Page, R : Any> to(pageFactory: () -> T, wait: String, body: T.() -> R): R =
+        to(pageFactory(), wait, body)
+
+    public fun <T : Page> to(page: T, wait: String): T = to(page, wait, { page })
+    public fun <T : Page, R : Any> to(page: T, wait: String, body: T.() -> R): R =
+        browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+
     // number wait
-    fun <T : Page> to(pageFactory: () -> T, wait: Number) = pageFactory().let { to(it, wait, { it }) }
-    fun <T : Page, R : Any> to(pageFactory: () -> T, wait: Number, body: T.() -> R) = to(pageFactory(), wait, body)
-    fun <T : Page> to(page: T, wait: Number) = to(page, wait, { page })
-    fun <T : Page, R : Any> to(page: T, wait: Number, body: T.() -> R): R = browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+    public fun <T : Page> to(pageFactory: () -> T, wait: Number): T = pageFactory().let { to(it, wait, { it }) }
+    public fun <T : Page, R : Any> to(pageFactory: () -> T, wait: Number, body: T.() -> R): R =
+        to(pageFactory(), wait, body)
+
+    public fun <T : Page> to(page: T, wait: Number): T = to(page, wait, { page })
+    public fun <T : Page, R : Any> to(page: T, wait: Number, body: T.() -> R): R =
+        browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+
     // timeout + retry interval wait
-    fun <T : Page> to(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number) = pageFactory().let { to(it, waitTimeout, waitRetryInterval, { it }) }
-    fun <T : Page, R : Any> to(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R) = to(pageFactory(), waitTimeout, waitRetryInterval, body)
-    fun <T : Page> to(page: T, waitTimeout: Number, waitRetryInterval: Number) = to(page, waitTimeout, waitRetryInterval, { page })
-    fun <T : Page, R : Any> to(page: T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R): R = browser.driver.get(resolveUrl(page.url())).run { at(page, waitTimeout, waitRetryInterval, body) }
+    public fun <T : Page> to(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number): T =
+        pageFactory().let { to(it, waitTimeout, waitRetryInterval, { it }) }
+
+    public fun <T : Page, R : Any> to(
+        pageFactory: () -> T,
+        waitTimeout: Number,
+        waitRetryInterval: Number,
+        body: T.() -> R
+    ): R = to(pageFactory(), waitTimeout, waitRetryInterval, body)
+
+    public fun <T : Page> to(page: T, waitTimeout: Number, waitRetryInterval: Number): T =
+        to(page, waitTimeout, waitRetryInterval, { page })
+
+    public fun <T : Page, R : Any> to(page: T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R): R =
+        browser.driver.get(resolveUrl(page.url())).run { at(page, waitTimeout, waitRetryInterval, body) }
+
     // wait preset wait
-    fun <T : Page> to(pageFactory: () -> T, wait: WaitPreset) = pageFactory().let { to(it, wait, { it }) }
-    fun <T : Page, R : Any> to(pageFactory: () -> T, wait: WaitPreset, body: T.() -> R) = to(pageFactory(), wait, body)
-    fun <T : Page> to(page: T, wait: WaitPreset) = to(page, wait, { page })
-    fun <T : Page, R : Any> to(page: T, wait: WaitPreset, body: T.() -> R): R = browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
+    public fun <T : Page> to(pageFactory: () -> T, wait: WaitPreset): T = pageFactory().let { to(it, wait, { it }) }
+    public fun <T : Page, R : Any> to(pageFactory: () -> T, wait: WaitPreset, body: T.() -> R): R =
+        to(pageFactory(), wait, body)
+
+    public fun <T : Page> to(page: T, wait: WaitPreset): T = to(page, wait, { page })
+    public fun <T : Page, R : Any> to(page: T, wait: WaitPreset, body: T.() -> R): R =
+        browser.driver.get(resolveUrl(page.url())).run { at(page, wait, body) }
 
     // AT
     // boolean wait
-    fun <T : Page> at(pageFactory: () -> T, wait: Boolean = true) = pageFactory().let { at(it, wait, { it }) }
-    fun <T : Page, R : Any> at(pageFactory: () -> T, wait: Boolean = true, body: T.() -> R) = at(pageFactory(), wait, body)
-    fun <T : Page> at(page: T, wait: Boolean = true) = at(page, wait) { page }
-    fun <T : Page, R : Any> at(page: T, wait: Boolean = true, body: T.() -> R) = atInternal(page, wait, body)
+    public fun <T : Page> at(pageFactory: () -> T, wait: Boolean = true): T = pageFactory().let { at(it, wait, { it }) }
+    public fun <T : Page, R : Any> at(pageFactory: () -> T, wait: Boolean = true, body: T.() -> R): R =
+        at(pageFactory(), wait, body)
+
+    public fun <T : Page> at(page: T, wait: Boolean = true): T = at(page, wait) { page }
+    public fun <T : Page, R : Any> at(page: T, wait: Boolean = true, body: T.() -> R): R = atInternal(page, wait, body)
+
     // string wait
-    fun <T : Page> at(pageFactory: () -> T, wait: String) = pageFactory().let { at(it, wait, { it }) }
-    fun <T : Page, R : Any> at(pageFactory: () -> T, wait: String, body: T.() -> R) = at(pageFactory(), wait, body)
-    fun <T : Page> at(page: T, wait: String) = at(page, wait) { page }
-    fun <T : Page, R : Any> at(page: T, wait: String, body: T.() -> R) = atInternal(page, wait, body)
+    public fun <T : Page> at(pageFactory: () -> T, wait: String): T = pageFactory().let { at(it, wait, { it }) }
+    public fun <T : Page, R : Any> at(pageFactory: () -> T, wait: String, body: T.() -> R): R =
+        at(pageFactory(), wait, body)
+
+    public fun <T : Page> at(page: T, wait: String): T = at(page, wait) { page }
+    public fun <T : Page, R : Any> at(page: T, wait: String, body: T.() -> R): R = atInternal(page, wait, body)
+
     // number wait
-    fun <T : Page> at(pageFactory: () -> T, wait: Number) = pageFactory().let { at(it, wait, { it }) }
-    fun <T : Page, R : Any> at(pageFactory: () -> T, wait: Number, body: T.() -> R) = at(pageFactory(), wait, body)
-    fun <T : Page> at(page: T, wait: Number) = at(page, wait) { page }
-    fun <T : Page, R : Any> at(page: T, wait: Number, body: T.() -> R) = atInternal(page, wait, body)
+    public fun <T : Page> at(pageFactory: () -> T, wait: Number): T = pageFactory().let { at(it, wait, { it }) }
+    public fun <T : Page, R : Any> at(pageFactory: () -> T, wait: Number, body: T.() -> R): R =
+        at(pageFactory(), wait, body)
+
+    public fun <T : Page> at(page: T, wait: Number): T = at(page, wait) { page }
+    public fun <T : Page, R : Any> at(page: T, wait: Number, body: T.() -> R): R = atInternal(page, wait, body)
+
     // timeout + retry interval wait
-    fun <T : Page> at(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number) = pageFactory().let { at(it, waitTimeout, waitRetryInterval, { it }) }
-    fun <T : Page, R : Any> at(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R) = at(pageFactory(), waitTimeout, waitRetryInterval, body)
-    fun <T : Page> at(page: T, waitTimeout: Number, waitRetryInterval: Number) = at(page, waitTimeout, waitRetryInterval) { page }
-    fun <T : Page, R : Any> at(page: T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R) = atInternal(page, WaitPreset(waitTimeout, waitRetryInterval), body)
+    public fun <T : Page> at(pageFactory: () -> T, waitTimeout: Number, waitRetryInterval: Number): T =
+        pageFactory().let { at(it, waitTimeout, waitRetryInterval, { it }) }
+
+    public fun <T : Page, R : Any> at(
+        pageFactory: () -> T,
+        waitTimeout: Number,
+        waitRetryInterval: Number,
+        body: T.() -> R
+    ): R = at(pageFactory(), waitTimeout, waitRetryInterval, body)
+
+    public fun <T : Page> at(page: T, waitTimeout: Number, waitRetryInterval: Number): T =
+        at(page, waitTimeout, waitRetryInterval) { page }
+
+    public fun <T : Page, R : Any> at(page: T, waitTimeout: Number, waitRetryInterval: Number, body: T.() -> R): R =
+        atInternal(page, WaitPreset(waitTimeout, waitRetryInterval), body)
+
     // wait preset wait
-    fun <T : Page> at(pageFactory: () -> T, wait: WaitPreset) = pageFactory().let { at(it, wait, { it }) }
-    fun <T : Page, R : Any> at(pageFactory: () -> T, wait: WaitPreset, body: T.() -> R) = at(pageFactory(), wait, body)
-    fun <T : Page> at(page: T, wait: WaitPreset) = at(page, wait) { page }
-    fun <T : Page, R : Any> at(page: T, wait: WaitPreset, body: T.() -> R) = atInternal(page, wait, body)
+    public fun <T : Page> at(pageFactory: () -> T, wait: WaitPreset): T = pageFactory().let { at(it, wait, { it }) }
+    public fun <T : Page, R : Any> at(pageFactory: () -> T, wait: WaitPreset, body: T.() -> R): R =
+        at(pageFactory(), wait, body)
+
+    public fun <T : Page> at(page: T, wait: WaitPreset): T = at(page, wait) { page }
+    public fun <T : Page, R : Any> at(page: T, wait: WaitPreset, body: T.() -> R): R = atInternal(page, wait, body)
 
     // VIA
-    fun <T : Page, R : Any> T.via(body: T.() -> R) = body(this)
+    public fun <T : Page, R : Any> T.via(body: T.() -> R): R = body(this)
+
     /**
      * @param classValidator Used just to explicitly declare type of body context. Useful for fluent api usage.
      */
-    fun <T : Page, R : Any> T.via(classValidator: KClass<T>, body: T.() -> R) = body(this)
+    public fun <T : Page, R : Any> T.via(classValidator: KClass<T>, body: T.() -> R): R = body(this)
 
     // HELPERS
     private fun resolveUrl(urlSuffix: String): String {

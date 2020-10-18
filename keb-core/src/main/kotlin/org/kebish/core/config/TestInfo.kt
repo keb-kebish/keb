@@ -5,8 +5,8 @@ package org.kebish.core.config
  *
  * If needs to be extended - do not hesitate to contact us http://kebish.org
  */
-class TestInfo(
+public class TestInfo(
     /** e.g. "org.kebish.tests.Sample Keb Test" */
-    val reportPath: String
+    public val reportPath: String
 )
 
