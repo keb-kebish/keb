@@ -5,7 +5,7 @@ import org.kebish.core.config.TestInfo
 import org.kebish.core.tool.ScreenshotMaker
 import java.io.File
 
-class ScreenshotReporter : ReportsDirReporter() {
+public class ScreenshotReporter : ReportsDirReporter() {
 
 
     override fun report(testInfo: TestInfo, browser: Browser) {

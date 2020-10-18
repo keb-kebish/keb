@@ -3,7 +3,7 @@ package org.kebish.core.module.form
 import org.kebish.core.module.Module
 import org.openqa.selenium.WebElement
 
-abstract class FormElement(scope: WebElement?) : Module(scope) {
+public abstract class FormElement(scope: WebElement?) : Module(scope) {
 
     protected val formElement: WebElement = scope ?: throw IllegalArgumentException("No root for form element.")
 
@@ -14,15 +14,15 @@ abstract class FormElement(scope: WebElement?) : Module(scope) {
         checkType()
     }
 
-    abstract fun getInputType(): String
+    public abstract fun getInputType(): String
 
-    fun isDisabled() = hasAttribute("disabled")
+    public fun isDisabled(): Boolean = hasAttribute("disabled")
 
-    fun isEnabled() = !isDisabled()
+    public fun isEnabled(): Boolean = !isDisabled()
 
-    fun isReadOnly() = hasAttribute("readonly")
+    public fun isReadOnly(): Boolean = hasAttribute("readonly")
 
-    fun isEditable() = !isReadOnly()
+    public fun isEditable(): Boolean = !isReadOnly()
 
     private fun checkTag() {
         val tag = formElement.tagName

@@ -3,12 +3,12 @@ package org.kebish.core.page
 import org.kebish.core.*
 import org.kebish.core.browser.Browser
 
-abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
+public abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
 
     override lateinit var browser: Browser
 
-    open fun url(): String = ""
-    open fun at(): Any =
+    public open fun url(): String = ""
+    public open fun at(): Any =
         if (browser.config.atVerifierRequired) {
             throw AtVerifierNotDefined(this)
         } else {
@@ -22,7 +22,7 @@ abstract class Page : ContentSupport, ModuleSupport, NavigationSupport, WaitSupp
     }
 }
 
-class AtVerifierNotDefined(page: Page) :
+public class AtVerifierNotDefined(page: Page) :
     RuntimeException(
         "Required 'at' verifier for page '${page.javaClass.simpleName}' is not defined. " +
                 "Define page verifier or disable its requirement in the configuration."

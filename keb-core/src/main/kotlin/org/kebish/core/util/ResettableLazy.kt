@@ -2,8 +2,7 @@ package org.kebish.core.util
 
 import kotlin.reflect.KProperty
 
-
-class ResettableLazy<T : Any>(val onReset: (T) -> Unit, val initializer: () -> T) {
+internal class ResettableLazy<T : Any>(val onReset: (T) -> Unit, val initializer: () -> T) {
 
     private var value: T? = null
 

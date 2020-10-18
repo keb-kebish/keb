@@ -4,9 +4,9 @@ import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 
-abstract class Selector<T> {
-    abstract val selector: T
-    fun getWebElement(): WebElement {
+public abstract class Selector<T> {
+    public abstract val selector: T
+    public fun getWebElement(): WebElement {
         val context = findElements()
         return when {
             context.isEmpty() -> EmptyWebElement(selector.toString())
@@ -15,7 +15,7 @@ abstract class Selector<T> {
         }
     }
 
-    fun getWebElements(): List<WebElement> {
+    public fun getWebElements(): List<WebElement> {
         val context = findElements()
         return when {
             context.isEmpty() -> EmptyWebElementList(selector.toString())
@@ -26,25 +26,27 @@ abstract class Selector<T> {
     protected abstract fun findElements(): List<WebElement>
 }
 
-class CssSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
+public class CssSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.cssSelector(selector))
-    override fun toString() = "CSS selector '$selector'"
+    override fun toString(): String = "CSS selector '$selector'"
 }
 
-class HtmlSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
+public class HtmlSelector(override val selector: String, private val searchContext: SearchContext) :
+    Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.tagName(selector))
-    override fun toString() = "HTML tag '$selector'"
+    override fun toString(): String = "HTML tag '$selector'"
 }
 
-class XPathSelector(override val selector: String, private val searchContext: SearchContext) : Selector<String>() {
+public class XPathSelector(override val selector: String, private val searchContext: SearchContext) :
+    Selector<String>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(By.xpath(selector))
-    override fun toString() = "XPath '$selector'"
+    override fun toString(): String = "XPath '$selector'"
 }
 
-class BySelector(override val selector: By, private val searchContext: SearchContext) : Selector<By>() {
+public class BySelector(override val selector: By, private val searchContext: SearchContext) : Selector<By>() {
     override fun findElements(): List<WebElement> = searchContext.findElements(selector)
-    override fun toString() = "By '$selector'"
+    override fun toString(): String = "By '$selector'"
 }
 
-class TooManyElementsException(selectedBy: String, elementsSize: Int) :
+public class TooManyElementsException(selectedBy: String, elementsSize: Int) :
     RuntimeException("Expecting only single element for $selectedBy, but got $elementsSize")

@@ -2,8 +2,8 @@ package org.kebish.core.module.form
 
 import org.openqa.selenium.WebElement
 
-class TextInput(scope: WebElement) : TextLikeInput(scope) {
+public class TextInput(scope: WebElement) : TextLikeInput(scope) {
 
-    override fun getInputType() = "text"
+    override fun getInputType(): String = "text"
 
 }

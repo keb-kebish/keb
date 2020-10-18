@@ -2,17 +2,17 @@ package org.kebish.core.module.form
 
 import org.openqa.selenium.WebElement
 
-class Checkbox(scope: WebElement) : FormElement(scope) {
+public class Checkbox(scope: WebElement) : FormElement(scope) {
 
-    override fun getInputType() = "checkbox"
+    override fun getInputType(): String = "checkbox"
 
-    fun isChecked() = formElement.isSelected
+    public fun isChecked(): Boolean = formElement.isSelected
 
-    fun check() {
+    public fun check() {
         if (!isChecked()) formElement.click()
     }
 
-    fun uncheck() {
+    public fun uncheck() {
         if (isChecked()) formElement.click()
     }
 

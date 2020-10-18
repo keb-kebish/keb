@@ -9,21 +9,23 @@ import org.openqa.selenium.NoSuchElementException
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) : ReadOnlyProperty<ContentSupport, T> {
+public class Content<T : Any?>(private val contentInitializer: ContentInitializer<T>) :
+    ReadOnlyProperty<ContentSupport, T> {
     override operator fun getValue(thisRef: ContentSupport, property: KProperty<*>): T {
         return contentInitializer.initialize(thisRef.browser)
     }
 }
 
-interface ContentInitializer<T : Any?> {
-    fun initialize(browser: Browser): T
+public interface ContentInitializer<T : Any?> {
+    public fun initialize(browser: Browser): T
 }
 
-class CachingContentInitializer<T : Any?>(
+public class CachingContentInitializer<T : Any?>(
     private val cache: Boolean,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
     private object UNINITIALIZED_VALUE
+
     private var cachedValue: Any? = UNINITIALIZED_VALUE
     override fun initialize(browser: Browser): T {
         return if (cache) {
@@ -38,7 +40,7 @@ class CachingContentInitializer<T : Any?>(
 }
 
 
-class WaitingContentInitializer<T : Any?>(
+public class WaitingContentInitializer<T : Any?>(
     private val waitConfig: Any,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
@@ -49,7 +51,7 @@ class WaitingContentInitializer<T : Any?>(
     }
 }
 
-class RequiredCheckingContentInitializer<T : Any?>(
+public class RequiredCheckingContentInitializer<T : Any?>(
     private val required: Boolean,
     private val decorated: ContentInitializer<T>
 ) : ContentInitializer<T> {
@@ -67,12 +69,12 @@ class RequiredCheckingContentInitializer<T : Any?>(
     }
 }
 
-class ContentProvidingInitializer<T>(private val initializer: () -> T) : ContentInitializer<T> {
+public class ContentProvidingInitializer<T>(private val initializer: () -> T) : ContentInitializer<T> {
     override fun initialize(browser: Browser): T {
         return initializer()
     }
 }
 
-interface EmptyContent {
-    val missingContentSelector: String
+public interface EmptyContent {
+    public val missingContentSelector: String
 }

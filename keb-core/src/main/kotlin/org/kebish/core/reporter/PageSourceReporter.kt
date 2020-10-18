@@ -4,7 +4,7 @@ import org.kebish.core.browser.Browser
 import org.kebish.core.config.TestInfo
 import java.io.File
 
-class PageSourceReporter : ReportsDirReporter() {
+public class PageSourceReporter : ReportsDirReporter() {
 
     override fun report(testInfo: TestInfo, browser: Browser) {
         if (!browser.isDriverInitialized()) {

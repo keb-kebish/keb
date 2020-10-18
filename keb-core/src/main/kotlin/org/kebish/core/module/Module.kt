@@ -7,7 +7,8 @@ import org.kebish.core.WaitSupport
 import org.kebish.core.browser.Browser
 import org.openqa.selenium.WebElement
 
-abstract class Module(val scope: WebElement? = null) : ContentSupport, ModuleSupport, NavigationSupport, WaitSupport {
+public abstract class Module(public val scope: WebElement? = null) : ContentSupport, ModuleSupport, NavigationSupport,
+    WaitSupport {
 
     override lateinit var browser: Browser
 

@@ -5,9 +5,9 @@ import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
 import java.io.File
 
-class ScreenshotMaker(val browser: Browser) {
+public class ScreenshotMaker(public val browser: Browser) {
 
-    fun takeScreenshot(destination: File) {
+    public fun takeScreenshot(destination: File) {
         val screenshotDriver = determineScreenshotDriver(browser)
 
 

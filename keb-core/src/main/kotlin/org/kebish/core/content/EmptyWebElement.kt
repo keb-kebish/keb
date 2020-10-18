@@ -2,7 +2,7 @@ package org.kebish.core.content
 
 import org.openqa.selenium.*
 
-class EmptyWebElement(override val missingContentSelector: String) : WebElement, EmptyContent {
+public class EmptyWebElement(override val missingContentSelector: String) : WebElement, EmptyContent {
 
     override fun isDisplayed(): Boolean {
         return false
@@ -73,4 +73,4 @@ class EmptyWebElement(override val missingContentSelector: String) : WebElement,
     }
 }
 
-class EmptyWebElementException(message: String) : RuntimeException(message)
+public class EmptyWebElementException(message: String) : RuntimeException(message)
