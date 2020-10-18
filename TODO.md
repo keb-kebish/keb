@@ -9,7 +9,6 @@
    - relative = based on baseUrl  (if set)
    - absolute 
    
-- support for screenshots
 - videos (https://www.ignatiuz.com/blog/selenium/recording-of-test-execution-using-atutestrecorder/, ATUTestRecorder)   
    
    
@@ -25,36 +24,22 @@
      is really awful. .getAttribute('valeu') for input i really don't like
    - We realized, that  `WebElement.getAttribute("value")` is not nice. And that we can solve it by normal prepared modules: 
      `val input by content { module(InputModule(css("#selector"))) }`
-
-- Browser should have possibility to directly get and set url. 
-  This should not been required:
-   ```browser.driver.get("localhost:8080")```
-  something like `browser.url` and `browser.setUrl()` or someting...
    
 - Keb should provide support for obtaining WebDriver (Firefox, chrome)
   - There is library (something like "web driver manager") which provide this
   - So that user doesn't have to investigate how to obtain driver
   
-- By default we don't want to close browser after each test
-    - Share browser between tests.  DONE
-      (plus do it configurable) TODO
-        - Probably Implementation of "KebTest" will be needed.
-        - Let there some possibility to write tests, which use multiple Browsers...
-        - Clear browser between tests.
-           - In the same way as Geb
-           - plus close browser dialogs - the same way as Scaler do
-           - if test open multiple tabs/windows - it should reduce it to one
-           - Do it configurable
+- Possibility to write tests, which use multiple Browsers...
 
 - We want to capture images on fail test (maybe even on every test)
 
-- In at() verifier use for example assertJ - so that we can have nice error message, when it fails
+- Maybe Consider - In at() verifier use for example assertJ - so that we can have nice error message, when it fails
 
 - at() - waiting
    - in at (and to) should be possible to override waiting timeout
    - at(::LongLoadingPage, wait: 30, retryInterval: 200)
    
-- lateinit browser not initialized
+- lateinit browser not initialized   -  Improve error message
   - Kdyz delas stranku a primo se do ni selecti obsah,
   - Tak vyleti     lateinit browser   has not been initialized
     - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku 
@@ -99,8 +84,6 @@
   
 ## Other
 
-- Document way, how to use WebDriverManager - So everybody is able to use it
-
 - verify, that setup project and write first working tests is as simple and prepared as possible
      - samples and on boarding have to be super easy
 
@@ -122,6 +105,8 @@
       - and then the first example would work and it is even more readable     
      
 ## Documentation       
+
+- Document way, how to use WebDriverManager - So everybody is able to use it
 
 - Initial documentation section
     - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
