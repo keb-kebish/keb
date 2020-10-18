@@ -2,6 +2,7 @@ package org.kebish.core.browser
 
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.config.kebConfig
@@ -24,5 +25,21 @@ internal class BrowserTest {
 
         // and is exactly expected constant
         assertThat(pageSourceResult).isSameAs(Browser.NO_PAGE_SOURCE_SUBSTITUTE)
+    }
+
+    @Test
+    fun `title will delegate to driver title`() {
+        // given
+        val driverMock = mock<WebDriver>()
+        given(driverMock.title).willReturn("Mocked Title")
+        val browser = Browser(kebConfig { driver = { driverMock } })
+
+        // when
+        val title = browser.title
+
+        // then
+        assertThat(title).isEqualTo("Mocked Title")
+        verify(driverMock).title
+
     }
 }

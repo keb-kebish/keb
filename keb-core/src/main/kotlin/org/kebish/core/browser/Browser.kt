@@ -40,12 +40,14 @@ public class Browser(public var config: Configuration) : ContentSupport, Navigat
             config.baseUrl = value
         }
 
-
     public var url: String
         get() = driver.currentUrl
-        set(url) = driver.get(url) //TODO work with baseUrl - e.g. baseUrl=kebis.org, then  set("hello") will open "kebish.org/hello"
+        set(url) = driver.get(url) //TODO work with baseUrl - e.g. baseUrl=kebish.org, then  set("hello") will open "kebish.org/hello"
 
     public fun refresh(): Unit = driver.navigate().refresh()
+
+    public val title: String
+        get() = driver.title
 
     override val browser: Browser get() = this
 
