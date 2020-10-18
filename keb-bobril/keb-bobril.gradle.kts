@@ -16,6 +16,10 @@ plugins {
     // Publish plugins - end
 }
 
+kotlin {
+    explicitApi()
+}
+
 // Publish - start
 bintray {
     user = org.kebish.Bintray.user
