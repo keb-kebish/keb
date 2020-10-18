@@ -46,7 +46,7 @@ class KotlinHomePage : Page() {
     val footer by content { module(FooterModule(html("footer"))) }
 
     fun openDocumentation(): KotlinDocumentationPage {
-        menu.menuItems.first { it.text.contains("learn", ignoreCase = true) }.click()
+        menu.menuItems.first { it.text.contains("Docs", ignoreCase = true) }.click()
         return at(::KotlinDocumentationPage)
     }
 
@@ -67,6 +67,6 @@ class NavMenuModule(scope: WebElement) : Module(scope) {
 }
 
 class FooterModule(scope: WebElement) : Module(scope) {
-    val licenseNotice by content { css(".terms-copyright") }
+    val licenseNotice by content { css(".terms-foundation_link[href*=LICENSE]") }
     val sponsor by content { css(".terms-sponsor") }
 }
