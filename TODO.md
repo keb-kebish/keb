@@ -98,6 +98,7 @@
 
   
 ## Other
+- turn on    Kotlin  explicitApi()   mode
 
 - Document way, how to use WebDriverManager - So everybody is able to use it
 

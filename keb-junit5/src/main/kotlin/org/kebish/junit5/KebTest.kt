@@ -8,20 +8,20 @@ import org.kebish.core.config.Configuration
 import org.kebish.core.config.TestInfo
 import org.kebish.core.test.KebTestBase
 
-abstract class KebTest(config: Configuration) : KebTestBase(config) {
+public abstract class KebTest(config: Configuration) : KebTestBase(config) {
 
     @RegisterExtension
     @JvmField
-    val kebAfterTest = KebAfterTest(this)
+    internal val kebAfterTest: KebAfterTest = KebAfterTest(this)
 
     @BeforeEach
-    fun beforeEachTestJunit5() {
+    private fun beforeEachTestJunit5() {
         super.beforeEachTest()
     }
 
 }
 
-class KebAfterTest(val kebTest: KebTest) : AfterTestExecutionCallback {
+internal class KebAfterTest(private val kebTest: KebTest) : AfterTestExecutionCallback {
 
     override fun afterTestExecution(context: ExtensionContext) {
         val failed = context.executionException.isPresent
