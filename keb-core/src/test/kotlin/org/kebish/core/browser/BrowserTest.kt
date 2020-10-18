@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.config.kebConfig
+import org.mockito.Mockito.RETURNS_DEEP_STUBS
 import org.openqa.selenium.WebDriver
 
 internal class BrowserTest {
@@ -40,6 +41,18 @@ internal class BrowserTest {
         // then
         assertThat(title).isEqualTo("Mocked Title")
         verify(driverMock).title
+    }
 
+    @Test
+    fun `refresh will delegate to driver refresh`() {
+        // given
+        val driverMock = mock<WebDriver>(defaultAnswer = RETURNS_DEEP_STUBS)
+        val browser = Browser(kebConfig { driver = { driverMock } })
+
+        // when
+        browser.refresh()
+
+        // then
+        verify(driverMock.navigate()).refresh()
     }
 }
