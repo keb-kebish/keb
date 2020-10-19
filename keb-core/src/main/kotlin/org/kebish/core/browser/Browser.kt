@@ -5,6 +5,7 @@ import org.kebish.core.ModuleSupport
 import org.kebish.core.NavigationSupport
 import org.kebish.core.WaitSupport
 import org.kebish.core.config.Configuration
+import org.kebish.core.util.RelativeUrlResolver
 import org.kebish.core.util.ResettableLazy
 import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.WebDriver
@@ -40,9 +41,7 @@ public class Browser(public var config: Configuration) : ContentSupport, Navigat
             config.baseUrl = value
         }
 
-    public var url: String
-        get() = driver.currentUrl
-        set(url) = driver.get(url) //TODO work with baseUrl - e.g. baseUrl=kebish.org, then  set("hello") will open "kebish.org/hello"
+    public var url: String by RelativeUrlResolver(this)
 
     public fun refresh(): Unit = driver.navigate().refresh()
 

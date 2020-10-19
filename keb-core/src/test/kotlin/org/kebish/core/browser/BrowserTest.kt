@@ -2,7 +2,7 @@ package org.kebish.core.browser
 
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.kebish.core.config.kebConfig
@@ -40,7 +40,7 @@ internal class BrowserTest {
 
         // then
         assertThat(title).isEqualTo("Mocked Title")
-        verify(driverMock).title
+        then(driverMock).should().title
     }
 
     @Test
@@ -53,6 +53,6 @@ internal class BrowserTest {
         browser.refresh()
 
         // then
-        verify(driverMock.navigate()).refresh()
+        then(driverMock.navigate()).should().refresh()
     }
 }

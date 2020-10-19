@@ -1,11 +1,7 @@
 # TODOs
 ## Core functionality
 
-- support for method  browser.navigate("www.kebish.org") or some similar shortcut 
-   browser.navigate
-   browser.go
-   browser.get
-   browser.url
+-- browser.url
    - relative = based on baseUrl  (if set)
    - absolute 
    
