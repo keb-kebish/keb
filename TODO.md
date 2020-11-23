@@ -168,3 +168,21 @@
        And luckyli it seems to be possible
       
       
+
+## Keb Sample app
+- Upper persist navigation bar
+   - this will be done by module and or inheritance   
+- Sidebar - which can be shown/hidden
+   - This will be page object
+- page with multiple tabs
+   - abstract page for common things
+   - Then separate Page, which inherits abstract page
+- Lazy loading content
+   - validator waits until page is loaded and prepared
+   - optimal = lazy loading content of table   
+- Login form
+   - rest login in all tests
+   - Test for login
+   
+s   
+   
