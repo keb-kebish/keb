@@ -10,11 +10,12 @@ Is's purpose is to demonstrate usage of "Kebish".
 
 ## Dev Notes
 
-user:pass = admin:pass  
+passwords:  
+user:pass, admin:pass  
 stored in `application.properties`
 
 
 Hello World Rest  
-http://localhost:8080/hello?name=Vondr
+http://localhost:8097/hello?name=Vondr
 
 
