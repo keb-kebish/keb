@@ -2,7 +2,6 @@ package org.kebish.core.reporter
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.io.TempDir
 import org.kebish.core.browser.Browser
 import org.kebish.core.config.TestInfo
 import org.kebish.core.config.kebConfig
@@ -10,7 +9,6 @@ import org.kebish.junit5.KebTest
 import org.kebish.usage.test.util.extendable.Extendable
 import org.kebish.usage.test.util.extendable.ExtendableImpl
 import java.io.File
-import java.nio.file.Path
 
 class PathTestReporter : ReportsDirReporter() {
     lateinit var testInfo: TestInfo
@@ -40,7 +38,7 @@ class ReporterReportPathTest : KebTest(kebConfig { }),
     @Test
     @Order(1)
     @Suppress("NonAsciiCharacters")
-    fun `žluťoučký kůň`(@TempDir tmpDri: Path) {
+    fun `žluťoučký kůň`() {
 
     }
 
