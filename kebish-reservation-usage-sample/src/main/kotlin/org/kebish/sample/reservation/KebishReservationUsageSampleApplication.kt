@@ -11,11 +11,6 @@ fun main(args: Array<String>) {
 }
 
 @SpringBootApplication
-@RestController
 class KebishReservationUsageSampleApplication {
 
-    @GetMapping("/hello")
-    fun hello(@RequestParam(value = "name", defaultValue = "World") name: String): String {
-        return String.format("Hello %s!", name)
-    }
 }
