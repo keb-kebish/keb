@@ -360,7 +360,7 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - David Richter
 
 ### Change log
-- **1.0*
+- **1.0**
     - _Breaking changes_
         - Changed package names
     - RelativeUrlResolver - Browser.url - can accept relative url
