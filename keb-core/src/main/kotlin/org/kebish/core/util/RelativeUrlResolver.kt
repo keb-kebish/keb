@@ -41,7 +41,7 @@ internal class RelativeUrlResolver(val browser: Browser) {
 
 }
 
-private class NoBaseUrlDefinedException : RuntimeException(
+public class NoBaseUrlDefinedException : RuntimeException(
     "There is no base URL configured and it was requested. " +
             "(quick solution: you can set 'baseUrl' in your KebConfig, or use absolute url)"
 )

@@ -41,6 +41,16 @@ public class Browser(public var config: Configuration) : ContentSupport, Navigat
             config.baseUrl = value
         }
 
+    /**
+     * Set url of the Browser. In other words "Page which should be opened".
+     *
+     * If you pass relative url. Then it is appended to KebConfig.baseUrl.
+     *
+     * e.g.:
+     *  - baseUrl is "http://kebish.org"
+     *  - when you call `broser.url = "relative-url"`
+     *  - then page "http://kebish.org/relative-url" is opened.
+     */
     public var url: String by RelativeUrlResolver(this)
 
     public fun refresh(): Unit = driver.navigate().refresh()

@@ -5,8 +5,10 @@ import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.then
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.kebish.core.config.kebConfig
+import org.kebish.core.util.NoBaseUrlDefinedException
 import org.openqa.selenium.WebDriver
 
 internal class BrowserGetSetUrlTest {
@@ -85,16 +87,33 @@ internal class BrowserGetSetUrlTest {
         assertThat(urlCaptor.firstValue).isEqualTo("https://kebish.org")
     }
 
+    @Test
+    fun `set relative url throws exception when no baseUrl is defined`() {
+        // given
+        val (_, browser) = init()
 
-    private fun init(baseUrl: String): Pair<WebDriver, Browser> {
+        // when
+        val code = { browser.url = "relative-url" }
+
+        // then
+        assertThatThrownBy(code)
+            .isInstanceOf(NoBaseUrlDefinedException::class.java)
+            .hasMessage(
+                "There is no base URL configured and it was requested." +
+                        " (quick solution: you can set 'baseUrl' in your KebConfig, or use absolute url)"
+            )
+    }
+
+
+    private fun init(baseUrl: String = "NOT_DEFINED"): Pair<WebDriver, Browser> {
         val driverMock = mock<WebDriver>()
         val browser = Browser(kebConfig {
             driver = { driverMock }
-            this.baseUrl = baseUrl
+            if (baseUrl != "NOT_DEFINED") {
+                this.baseUrl = baseUrl
+            }
         })
         return Pair(driverMock, browser)
     }
-
-    //TODO NoBaseUrlDefinedException
-
+    
 }

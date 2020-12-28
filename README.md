@@ -360,21 +360,25 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - David Richter
 
 ### Change log
+- **1.0*
+    - _Breaking changes_
+        - Changed package names
+    - RelativeUrlResolver - Browser.url - can accept relative url
 
 - **0.4**
-  - Basic configuration for Browser Management 
-     - **`StaticBrowserProvider`**
-     - `NewBrowserForEachTestProvider`
-     - see ["Browser Management"](#browser-management) section for details
-  - Keb close all windows and tabs after each test
-     - even close forgotten alert dialogs
-     - see section "Browser Management" => "StaticBrowserProvider" => "openNewEmptyWindowAndCloseOtherAfterEachTest"
-  - "Reporter" - possibility to implement own reporters 
-    - ScreenshotReporter - which can take screenshot after test
-    - see ["Reporters"](#reporters) section for details  
-  - PasswordInput module
+    - Basic configuration for Browser Management
+        - **`StaticBrowserProvider`**
+        - `NewBrowserForEachTestProvider`
+        - see ["Browser Management"](#browser-management) section for details
+    - Keb close all windows and tabs after each test
+        - even close forgotten alert dialogs
+        - see section "Browser Management" => "StaticBrowserProvider" => "openNewEmptyWindowAndCloseOtherAfterEachTest"
+    - "Reporter" - possibility to implement own reporters
+        - ScreenshotReporter - which can take screenshot after test
+        - see ["Reporters"](#reporters) section for details
+    - PasswordInput module
 
 - **0.3**
-  - _Breaking changes_ 
-    - KebTest - Take Configuration object instead of Browser
-  - By default keb reuse the same WebDriver (Browser window) and hold it in static field
+    - _Breaking changes_
+        - KebTest - Take Configuration object instead of Browser
+    - By default keb reuse the same WebDriver (Browser window) and hold it in static field
