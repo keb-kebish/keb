@@ -16,6 +16,7 @@ class WebSecurityConfig {
     @Bean
     fun userDetailsService(): UserDetailsService {
         /* For sample application is this hardcoded list of users - good enough. */
+        @Suppress("DEPRECATION")
         val users = listOf(
             User.withDefaultPasswordEncoder()
                 .username("user")

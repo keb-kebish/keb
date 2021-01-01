@@ -1,7 +1,8 @@
 # Reservation application
 
+This directory contains separate stand-alone application. 
 This is web application for creating "reservations".  
-Is's purpose is to demonstrate usage of "Kebish".
+Its purpose is to demonstrate usage of "Kebish".
 
 ## How to run
 `gradlew bootRun`
@@ -12,7 +13,7 @@ Is's purpose is to demonstrate usage of "Kebish".
 
 passwords:  
 user:pass, admin:pass  
-stored in `application.properties`
+Hardcoded in class `WebSecurityConfig`
 
 
 Hello World Rest  
