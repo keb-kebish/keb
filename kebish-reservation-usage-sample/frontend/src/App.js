@@ -7,6 +7,10 @@ import {
     Redirect,
     withRouter
 } from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/core';
+import theme from './theme';
+import GlobalStyles from 'src/components/GlobalStyles';
+import NotFoundView from 'src/views/errors/NotFoundView';
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -76,20 +80,24 @@ const AuthButton = withRouter(({history}) => (
 
 function App() {
     return (
-        <Router>
-            <div>
-                <AuthButton/>
+        <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <Router>
+                <div>
+                    <AuthButton/>
 
-                <ul>
-                    <li><Link to="/public">Public Page</Link></li>
-                    <li><Link to="/protected">Protected Page</Link></li>
-                </ul>
+                    <ul>
+                        <li><Link to="/public">Public Page</Link></li>
+                        <li><Link to="/protected">Protected Page</Link></li>
+                    </ul>
 
-                <Route path="/public" component={Public}/>
-                <Route path="/login" component={Login}/>
-                <PrivateRoute path='/protected' component={Protected}/>
-            </div>
-        </Router>
+                    <Route path="/public" component={Public}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/404" component={NotFoundView}/>
+                    <PrivateRoute path='/protected' component={Protected}/>
+                </div>
+            </Router>
+        </ThemeProvider>
     )
 }
 
