@@ -79,6 +79,10 @@ public class Configuration {
 
     public val reports: Reports = Reports()
 
+    public fun reports(dsl: Reports.() -> Unit) {
+        reports.apply(dsl)
+    }
+
     public class Reports(
         /** Directory for reports. For reporters which use it. */
         public var reporterDir: File = File("keb-reports")
