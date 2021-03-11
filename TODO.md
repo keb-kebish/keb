@@ -1,16 +1,24 @@
 # TODOs
+
 ## Core functionality
 
+- ScreenshotMaker - Make default screenshot / html when browser is not initialized - with message "Browser is not
+  initialized"
+    - why test will fail, someone will search for screenshots
+        - if he will find nothing he will be confused
+        - if he find this default screenshot he will know, that browser was not initialized and that screenshot wasn't
+          lost
+
 -- browser.url
-   - relative = based on baseUrl  (if set)
-   - absolute 
-   
-- videos (https://www.ignatiuz.com/blog/selenium/recording-of-test-execution-using-atutestrecorder/, ATUTestRecorder)   
-   
-   
+
+- relative = based on baseUrl  (if set)
+- absolute
+
+- videos (https://www.ignatiuz.com/blog/selenium/recording-of-test-execution-using-atutestrecorder/, ATUTestRecorder)
+
+
 - Page and test should have access to "title" - page title by default
-- Content Parameters (wait=true  and  required=false) makes probably no sence together 
-        add there validation with explaining error message 
+- Content Parameters (wait=true and required=false) makes probably no sence together add there validation with explaining error message 
 
 - Prepare support for basic elements via out-of-the-box modules
    - for example, because this:
@@ -81,7 +89,10 @@
 ## Other
 
 - verify, that setup project and write first working tests is as simple and prepared as possible
-     - samples and on boarding have to be super easy
+    - samples and on boarding have to be super easy
+
+- REACT selectors - similar support we have for bobril for bobril - create support for react
+    - https://webdriver.io/blog/2019/04/03/react-selectors.html
 
 - to deprecated repositories gitlab etc. commit message about deprecation and link to kebish.org
 
@@ -91,22 +102,20 @@
 
 - In our pages we need current latest version of our artifact - so everybody can easily search for it
 
-- if i write this
-   val aa by content { ClearableInput(css("#name")) }
-   instead of this
-   val aa by content { module(ClearableInput(css("#name"))) }
-   I get ugly error - browser is not initialized - with no hint what is wrong
-  -- Consider if method module is really needed
-    When content get object instanceOf module - it can be initialize it 
-      - and then the first example would work and it is even more readable     
-     
-## Documentation       
+- if i write this val aa by content { ClearableInput(css("#name")) } instead of this val aa by content { module(
+  ClearableInput(css("#name"))) } I get ugly error - browser is not initialized - with no hint what is wrong -- Consider
+  if method module is really needed When content get object instanceOf module - it can be initialize it - and then the
+  first example would work and it is even more readable
+
+## Documentation
+
+- Reporters Documentation - document default values
 
 - Document way, how to use WebDriverManager - So everybody is able to use it
 
 - Initial documentation section
-    - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný) 
-    - what it resolve for you  = advantages = why use keb
+    - what is Keb  (primarne pro psani testu, lze pouzit i pro scraping, ale na to neni primarně laděný)
+    - what it resolve for you = advantages = why use keb
         - browser management
         - page objects
         - modules
@@ -114,13 +123,13 @@
         - powerful content selectors
         - extendable
         - advice you, how to write and manage your tests
-        - screenshots, videos 
+        - screenshots, videos
         - jquery selectors
         - and more...
 
 - write to documentation
-   - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
-   - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
+    - prepared to be easily integrated to testing frameworks (junit5 is prepared other can be easily added)
+    - other selectors can be easily added (html, css, bobril selectors are prepared, other selectors can be easily added)
 
 - Create sample app - covered with KebTest - With all 
     - use it as sample and documentation - How To Write GUI Keb Tests

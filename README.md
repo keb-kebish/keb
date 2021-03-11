@@ -276,13 +276,15 @@ package org.kebish.usage
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.kebish.core.*
+import org.kebish.core.config.kebConfig
+import org.kebish.core.module.Module
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 class KotlinSiteKebTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup() 
+    WebDriverManager.firefoxdriver().setup()
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
 }) {
@@ -303,7 +305,7 @@ class KotlinSiteKebTest : KebTest(kebConfig {
         val docsPage = homePage.openDocumentation()
 
         // then
-        Assertions.assertEquals("Learn Kotlin", docsPage.title.text)
+        Assertions.assertEquals("Kotlin docs", docsPage.title.text)
     }
 
 }
@@ -317,7 +319,7 @@ class KotlinHomePage : Page() {
     val footer by content { module(FooterModule(html("footer"))) }
 
     fun openDocumentation(): KotlinDocumentationPage {
-        menu.menuItems.first { it.text.contains("learn", ignoreCase = true) }.click()
+        menu.menuItems.first { it.text.contains("Docs", ignoreCase = true) }.click()
         return at(::KotlinDocumentationPage)
     }
 
@@ -326,8 +328,8 @@ class KotlinHomePage : Page() {
 }
 
 class KotlinDocumentationPage : Page() {
-    override fun url() = "/docs/reference"
-    override fun at() = title
+    override fun url() = "/docs/home.html"
+    override fun at() = css("ul.toc")
 
     val title by content { html("h1") }
 
@@ -338,7 +340,7 @@ class NavMenuModule(scope: WebElement) : Module(scope) {
 }
 
 class FooterModule(scope: WebElement) : Module(scope) {
-    val licenseNotice by content { css(".terms-copyright") }
+    val licenseNotice by content { css(".terms-foundation_link[href*=LICENSE]") }
     val sponsor by content { css(".terms-sponsor") }
 }
 ```

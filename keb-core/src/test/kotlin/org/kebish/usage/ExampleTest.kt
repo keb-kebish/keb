@@ -32,7 +32,7 @@ class KotlinSiteKebTest : KebTest(kebConfig {
         val docsPage = homePage.openDocumentation()
 
         // then
-        Assertions.assertEquals("Learn Kotlin", docsPage.title.text)
+        Assertions.assertEquals("Kotlin docs", docsPage.title.text)
     }
 
 }
@@ -55,8 +55,8 @@ class KotlinHomePage : Page() {
 }
 
 class KotlinDocumentationPage : Page() {
-    override fun url() = "/docs/reference"
-    override fun at() = title
+    override fun url() = "/docs/home.html"
+    override fun at() = css("ul.toc")
 
     val title by content { html("h1") }
 
