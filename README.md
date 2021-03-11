@@ -236,7 +236,7 @@ Reporters work like plugins. A custom reporter can be configured or prepared Rep
 e.g - save `png` and `html` after each failed test:
 ```kotlin  
     kebConfig  {
-        reports.apply {
+        reports {
             reporterDir = File("keb-reports")
             testFailReporters.add(ScreenshotReporter())
             testFailReporters.add(PageSourceReporter())
