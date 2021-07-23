@@ -49,25 +49,34 @@
     - Šlo by se tam hooknout na getter a vratit nějakou víc vysvetlujici hlasku 
     
 - in wait is used "Any" - to configure waiting presets, use static types
- 
+
 - keb config have to be "inheritable"
-   c = kebConfig{someOptions};  c.extend {some local custom options}   
-   
+  c = kebConfig{someOptions}; c.extend {some local custom options}
+
 - browser.baseUrl - why it is directly on browser? should not it be just in configuration?
 
 - at in page do not accept lambda - maybe it could accept it and execute it
 
 - Logger
 
--  Support for Javascript - See Geb "Javascript, AJAX and dynamic pages"
+- write version of browser: https://stackoverflow.com/questions/12556163/get-browser-version-using-selenium-webdriver
 
-- Keb rerun failed tests - reseni pluginem do gradlu - viz d.richter 
-   
+- Support for Javascript - See Geb "Javascript, AJAX and dynamic pages"
+
+- Keb rerun failed tests - reseni pluginem do gradlu - viz d.richter
+
+
+- Highlight support for easy highligt of web elements:
+  ```
+  def we = browser.find("div.app-header-btn-title",text: "Initial draft").singleElement()
+  ((org.openqa.selenium.JavascriptExecutor)browser.driver).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", we)
+  ```
+
 ## Keb configuration
 
 - do configuration immutable
-   - it will be easier to inherit configuration
-   - and safely do changes in configuration, which affects only one particular test in one thread
+    - it will be easier to inherit configuration
+    - and safely do changes in configuration, which affects only one particular test in one thread
 
 - KebConfig can be defined global, or locally overridden by test  "probably not so important for the beginning"
 
