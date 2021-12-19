@@ -38,13 +38,13 @@ fun buildParam(s: String) = project.findProperty(s) as String?
 //
 //}
 //
-//publishing {
-//    publications {
-//        create<MavenPublication>("keb-publish-artifact") {
-//            from(components["java"])
-//        }
-//    }
-//}
+publishing {
+    publications {
+        create<MavenPublication>("keb-publish-artifact") {
+            from(components["java"])
+        }
+    }
+}
 
 
 java {
