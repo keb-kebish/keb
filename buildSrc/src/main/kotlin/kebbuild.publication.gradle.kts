@@ -10,8 +10,17 @@ plugins {
     signing
 }
 
+//TODO TODO TODO "!!!!!!!!!!!!!!!!!
+// Write, where is the key stored
+
+//TODO write readme - what has to be set into gradle properties (without passwords)
+
 signing {          //TODO maybe turn off for snapshots (see geb)
     sign(configurations.archives.get())
+    // TODO write hint where key and connected stuff is stored
+    publishing.publications.configureEach {
+        sign(this)
+    }
 }
 
 
@@ -49,7 +58,7 @@ publishing {
         create<MavenPublication>("keb-publish-artifact") {
             from(components["java"])
             pom {
-                //name.set("kebish") // TODO  check if it is set by module name
+                name.set("Keb - Kebish")
                 url.set("http://kebish.org/")
                 description.set("Keb is a https://gebish.org inspired Selenium wrapper written in Kotlin that allows you to modularize pages of your web application into logic units represented by Kotlin classes.")
                 inceptionYear.set("2018")
@@ -61,15 +70,15 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/keb-kebish/keb")
+                    url.set("https://github.comhttps://github.com/keb-kebish/keb.git/keb-kebish/keb")
                 }
                 developers {
                     developer {
-                        id.set("bugs84")
+//                        id.set("bugs84")
                         name.set("Jan Vondrouš")
                     }
                     developer {
-                        id.set("horca")
+//                        id.set("horca")
                         name.set("Michal Horčičko")
                     }
                 }
@@ -78,8 +87,7 @@ publishing {
     }
 }
 
-
 java {
     withSourcesJar()
-    //withJavadocJar()
+    withJavadocJar()
 }
