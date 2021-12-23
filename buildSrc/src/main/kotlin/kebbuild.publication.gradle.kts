@@ -57,24 +57,24 @@ fun buildParam(s: String) = project.findProperty(s) as String?
 //
 publishing {
     repositories {
-//        maven {
-//            name = "OSSRH-Release"
-//            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-//            credentials {
-//                username = project.properties["ossrhUsername"].toString()
-//                password = project.properties["ossrhPassword"].toString()
-//            }
-//        }
         maven {
-            name = "OSSRH-Snapshot"
-            url = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            name = "OSSRH-Release"
+            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
                 username = project.properties["ossrhUsername"].toString()
                 password = project.properties["ossrhPassword"].toString()
-//                username = System.getenv("MAVEN_USERNAME")
-//                password = System.getenv("MAVEN_PASSWORD")
             }
         }
+//        maven {
+//            name = "OSSRH-Snapshot"
+//            url = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+//            credentials {
+//                username = project.properties["ossrhUsername"].toString()
+//                password = project.properties["ossrhPassword"].toString()
+////                username = System.getenv("MAVEN_USERNAME")
+////                password = System.getenv("MAVEN_PASSWORD")
+//            }
+//        }
     }
 
     publications {
