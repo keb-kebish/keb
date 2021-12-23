@@ -253,8 +253,8 @@ repositories {
     jcenter()
 }
 
-val kebVersion = "1.0"
-dependencies{
+val kebVersion = "1.1"
+dependencies {
   testImplementation("org.kebish:keb-core:$kebVersion")
   testImplementation("org.kebish:keb-junit5:$kebVersion")
   testImplementation("org.kebish:keb-bobril:$kebVersion")
@@ -362,6 +362,10 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - David Richter
 
 ### Change log
+
+- **1.1**
+    - Migrated from jCenter to mavenCentral
+
 - **1.0**
     - _Breaking changes_
         - Changed package names

@@ -14,8 +14,8 @@ Release plugin would help :)
 - copy ./README.md to `./docs/README.md`
 
 ###### Remove snapshot from version
-- In main build.gradle.kts set version e.g. 
-`version = "1.1"`
+- In main `buildSrc/src/main/kotlin/kebbuild.project-info.gradle.kts` set version e.g.
+  `version = "1.1"`
 
 - commit push
 - create tag e.g. "1.1"

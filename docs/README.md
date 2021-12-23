@@ -236,7 +236,7 @@ Reporters work like plugins. A custom reporter can be configured or prepared Rep
 e.g - save `png` and `html` after each failed test:
 ```kotlin  
     kebConfig  {
-        reports.apply {
+        reports {
             reporterDir = File("keb-reports")
             testFailReporters.add(ScreenshotReporter())
             testFailReporters.add(PageSourceReporter())
@@ -253,8 +253,8 @@ repositories {
     jcenter()
 }
 
-val kebVersion = "1.0"
-dependencies{
+val kebVersion = "1.1"
+dependencies {
   testImplementation("org.kebish:keb-core:$kebVersion")
   testImplementation("org.kebish:keb-junit5:$kebVersion")
   testImplementation("org.kebish:keb-bobril:$kebVersion")
@@ -270,19 +270,22 @@ If you use Keb in tests you will probably use configuration `testImplementation`
 
 
 ## Full usage - keb + JUnit
+
 ```kotlin
 package org.kebish.usage
 
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.kebish.core.*
+import org.kebish.core.config.kebConfig
+import org.kebish.core.module.Module
+import org.kebish.core.page.Page
 import org.kebish.junit5.KebTest
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 
 class KotlinSiteKebTest : KebTest(kebConfig {
-    WebDriverManager.firefoxdriver().setup() 
+    WebDriverManager.firefoxdriver().setup()
     driver = { FirefoxDriver() }
     baseUrl = "https://kotlinlang.org"
 }) {
@@ -303,7 +306,7 @@ class KotlinSiteKebTest : KebTest(kebConfig {
         val docsPage = homePage.openDocumentation()
 
         // then
-        Assertions.assertEquals("Learn Kotlin", docsPage.title.text)
+        Assertions.assertEquals("Kotlin docs", docsPage.title.text)
     }
 
 }
@@ -317,7 +320,7 @@ class KotlinHomePage : Page() {
     val footer by content { module(FooterModule(html("footer"))) }
 
     fun openDocumentation(): KotlinDocumentationPage {
-        menu.menuItems.first { it.text.contains("learn", ignoreCase = true) }.click()
+        menu.menuItems.first { it.text.contains("Docs", ignoreCase = true) }.click()
         return at(::KotlinDocumentationPage)
     }
 
@@ -326,8 +329,8 @@ class KotlinHomePage : Page() {
 }
 
 class KotlinDocumentationPage : Page() {
-    override fun url() = "/docs/reference"
-    override fun at() = title
+    override fun url() = "/docs/home.html"
+    override fun at() = css("ul.toc")
 
     val title by content { html("h1") }
 
@@ -338,7 +341,7 @@ class NavMenuModule(scope: WebElement) : Module(scope) {
 }
 
 class FooterModule(scope: WebElement) : Module(scope) {
-    val licenseNotice by content { css(".terms-copyright") }
+    val licenseNotice by content { css(".terms-foundation_link[href*=LICENSE]") }
     val sponsor by content { css(".terms-sponsor") }
 }
 ```
@@ -360,7 +363,11 @@ Do not hesitate to contact us at [info@kebish.org](mailto:info@kebish.org)
 - David Richter
 
 ### Change log
-- **1.0*
+
+- **1.1**
+    - Migrated from jCenter to mavenCentral
+
+- **1.0**
     - _Breaking changes_
         - Changed package names
     - RelativeUrlResolver - Browser.url - can accept relative url
