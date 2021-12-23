@@ -1,3 +1,5 @@
+import java.net.URI
+
 //import com.jfrog.bintray.gradle.BintrayExtension
 //import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 //import org.gradle.api.tasks.testing.logging.TestLogEvent.*
@@ -54,6 +56,27 @@ fun buildParam(s: String) = project.findProperty(s) as String?
 //}
 //
 publishing {
+    repositories {
+//        maven {
+//            name = "OSSRH-Release"
+//            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+//            credentials {
+//                username = project.properties["ossrhUsername"].toString()
+//                password = project.properties["ossrhPassword"].toString()
+//            }
+//        }
+        maven {
+            name = "OSSRH-Snapshot"
+            url = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            credentials {
+                username = project.properties["ossrhUsername"].toString()
+                password = project.properties["ossrhPassword"].toString()
+//                username = System.getenv("MAVEN_USERNAME")
+//                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+
     publications {
         create<MavenPublication>("keb-publish-artifact") {
             from(components["java"])
