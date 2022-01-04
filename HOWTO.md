@@ -21,11 +21,13 @@ Release plugin would help :)
 - create tag e.g. "1.1"
 
 
-###### Upload to Bintray
-Run command:
+###### Upload Maven Central
 
-`gradlew bintrayUpload -PbintrayApiKey=<API_KEY>` //TODO replace with mavenCentral  
-<API_KEY> - is in email _"Keb - Kebish - Bintray API Key"_
+Run command:
+`gradlew publish`
+
+Note credentials and secret signing key have to be setup in `gradle.properties`
+Instructions can be found here https://drive.google.com/drive/folders/1mjguZXZkCqyLBUPAhzNBohnfGSIp8XZe
 
 ###### Prepare next snapshot version
 
@@ -33,6 +35,10 @@ Run command:
   `version = "1.2-SNAPSHOT"`
 
 - commit push
+
+###### Then Release in sonartype to sync into maven central
+
+- follow these instructions https://central.sonatype.org/publish/release/
 
 
 
