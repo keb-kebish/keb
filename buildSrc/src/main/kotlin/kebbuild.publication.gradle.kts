@@ -6,14 +6,9 @@ plugins {
     signing
 }
 
-//TODO TODO TODO "!!!!!!!!!!!!!!!!!
-// Write, where is the key stored
-
-//TODO write readme - what has to be set into gradle properties (without passwords)
-
+// Link to instructions about private/public key are written in HOWTO.md
 signing {          //TODO maybe turn off for snapshots (see geb)
     sign(configurations.archives.get())
-    // TODO write hint where key and connected stuff is stored
     publishing.publications.configureEach {
         sign(this)
     }
