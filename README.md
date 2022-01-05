@@ -245,12 +245,12 @@ e.g - save `png` and `html` after each failed test:
 ```     
 
 ## Installation
-Relesed jar files are available in jcenter().
+Relesed jar files are available in mavenCentral().
 
 Gradle setup:
 ```kotlin
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 val kebVersion = "1.1"

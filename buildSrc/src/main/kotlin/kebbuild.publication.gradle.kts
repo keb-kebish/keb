@@ -60,7 +60,7 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.comhttps://github.com/keb-kebish/keb.git/keb-kebish/keb")
+                    url.set("https://github.com/keb-kebish/keb.git")
                 }
                 developers {
                     developer {
