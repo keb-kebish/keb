@@ -245,7 +245,7 @@ e.g - save `png` and `html` after each failed test:
 ```     
 
 ## Installation
-Relesed jar files are available in mavenCentral().
+Released jar files are available in mavenCentral().
 
 Gradle setup:
 ```kotlin

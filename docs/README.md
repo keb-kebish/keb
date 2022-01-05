@@ -245,12 +245,12 @@ e.g - save `png` and `html` after each failed test:
 ```     
 
 ## Installation
-Relesed jar files are available in jcenter().
+Released jar files are available in mavenCentral().
 
 Gradle setup:
 ```kotlin
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 val kebVersion = "1.1"
@@ -270,7 +270,6 @@ If you use Keb in tests you will probably use configuration `testImplementation`
 
 
 ## Full usage - keb + JUnit
-
 ```kotlin
 package org.kebish.usage
 
