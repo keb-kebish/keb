@@ -274,4 +274,5 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
-# End of https://www.gitignore.io/api/git,java,linux,macos,gradle,kotlin,windows,intellij,jetbrains+all
+/codemr/
+
