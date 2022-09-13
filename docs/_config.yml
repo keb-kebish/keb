@@ -1,4 +1,5 @@
-theme: jekyll-theme-tactile
+# theme: jekyll-theme-tactile
+theme: jekyll-theme-minimal
 title: Keb Kebish
 description: Keb Kebish - Selenium based Page Object Pattern implementation in Kotlin
 google_analytics: UA-158606986-1
