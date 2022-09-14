@@ -1,7 +1,10 @@
 # theme: jekyll-theme-tactile
-theme: jekyll-theme-minimal
+# theme: jekyll-theme-minimal
+remote_theme: pages-themes/tactile@v0.2.0
 title: Keb Kebish
 description: Keb Kebish - Selenium based Page Object Pattern implementation in Kotlin
 google_analytics: UA-158606986-1
 github:
   public: true
+plugins:
+- jekyll-remote-theme
